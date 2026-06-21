@@ -13,20 +13,21 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     // --- VENDOR REGISTRATION ---
     if (isset($_POST['Action_Insert'])) {
         $shopName       = trim($_POST['ShopName'] ?? '');
+        $vendorEmail    = trim($_POST['VendorEmail'] ?? '');
         $vendorPassword = $_POST['VendorPassword'] ?? '';
 
-        if ($shopName === '' || $vendorPassword === '') {
-            redirectWithMessage('VendorRegister.html', 'error', 'Shop name and password are required.');
+        if ($shopName === '' || $vendorEmail === '' || $vendorPassword === '') {
+            redirectWithMessage('VendorRegister.html', 'error', 'Shop name, email, and password are required.');
         }
 
         $hashed = password_hash($vendorPassword, PASSWORD_DEFAULT);
 
-        $existing = db_fetch_one($pdo, 'SELECT "VendorID" FROM vendor WHERE "ShopName" = ?', [$shopName]);
+        $existing = db_fetch_one($pdo, 'SELECT "VendorID" FROM vendor WHERE "ShopName" = ? OR "Email" = ?', [$shopName, $vendorEmail]);
         if ($existing) {
-            redirectWithMessage('VendorRegister.html', 'error', 'Shop name already exists.');
+            redirectWithMessage('VendorRegister.html', 'error', 'Shop name or email already exists.');
         }
 
-        $rows = db_execute($pdo, 'INSERT INTO vendor ("ShopName", "VendorPassword") VALUES (?, ?)', [$shopName, $hashed]);
+        $rows = db_execute($pdo, 'INSERT INTO vendor ("ShopName", "Email", "VendorPassword") VALUES (?, ?, ?)', [$shopName, $vendorEmail, $hashed]);
         if ($rows > 0) {
             redirectWithMessage('VendorLogin.html', 'success', 'Registration successful. Please login.');
         }
