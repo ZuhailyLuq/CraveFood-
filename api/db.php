@@ -3,11 +3,30 @@
 // Database connection using PDO for PostgreSQL (Supabase)
 // Environment variables are set in Vercel dashboard (or .env for local)
 
-$db_host     = getenv('DB_HOST')     ?: ($_ENV['DB_HOST'] ?? 'db.zuojozzmfokpfemqcxcg.supabase.co');
-$db_port     = getenv('DB_PORT')     ?: ($_ENV['DB_PORT'] ?? '5432');
-$db_name     = getenv('DB_NAME')     ?: ($_ENV['DB_NAME'] ?? 'postgres');
-$db_user     = getenv('DB_USER')     ?: ($_ENV['DB_USER'] ?? 'postgres');
-$db_password = getenv('DB_PASSWORD') ?: ($_ENV['DB_PASSWORD'] ?? '');
+/**
+ * Retrieve an environment variable from all possible sources.
+ * vercel-php may expose vars via $_SERVER, $_ENV, or getenv().
+ */
+function env(string $key, string $default = ''): string {
+    // 1. getenv() — works on most PHP setups
+    $val = getenv($key);
+    if ($val !== false && $val !== '') return $val;
+
+    // 2. $_ENV — populated when variables_order includes 'E'
+    if (isset($_ENV[$key]) && $_ENV[$key] !== '') return $_ENV[$key];
+
+    // 3. $_SERVER — vercel-php often injects env vars here
+    if (isset($_SERVER[$key]) && $_SERVER[$key] !== '') return $_SERVER[$key];
+
+    return $default;
+}
+
+// Supabase Connection Pooler (IPv4, Transaction mode)
+$db_host     = env('DB_HOST',     'aws-0-ap-northeast-1.pooler.supabase.com');
+$db_port     = env('DB_PORT',     '6543');
+$db_name     = env('DB_NAME',     'postgres');
+$db_user     = env('DB_USER',     'postgres.zuojozzmfokpfemqcxcg');
+$db_password = env('DB_PASSWORD', 'Latte26@Masbro24');
 
 try {
     $dsn = "pgsql:host={$db_host};port={$db_port};dbname={$db_name};sslmode=require";
