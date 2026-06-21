@@ -7,6 +7,7 @@
  * Retrieve an environment variable from all possible sources.
  * vercel-php may expose vars via $_SERVER, $_ENV, or getenv().
  */
+if (!function_exists('env')) {
 function env(string $key, string $default = ''): string {
     // 1. getenv() â€” works on most PHP setups
     $val = getenv($key);
@@ -19,6 +20,7 @@ function env(string $key, string $default = ''): string {
     if (isset($_SERVER[$key]) && $_SERVER[$key] !== '') return $_SERVER[$key];
 
     return $default;
+}
 }
 
 // Try DATABASE_URL first (single connection string), then individual vars

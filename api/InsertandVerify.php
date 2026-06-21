@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/session.php';
-include('db.php');
-include('db_helpers.php');
+require_once 'db.php';
+require_once 'db_helpers.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
