@@ -20,7 +20,7 @@ if ($orderId <= 0) {
 $orderSql = 'SELECT o."OrderID", o."Status", mf."FoodName", u."Username"
              FROM orders o
              INNER JOIN menu_food mf ON mf."FoodID" = o."FoodID"
-             LEFT JOIN "user" u ON u."UserID" = o."UserID"
+             LEFT JOIN "user" u ON u."UserId" = o."UserID"
              WHERE o."OrderID" = ? AND mf."VendorID" = ?
              LIMIT 1';
 $order = db_fetch_one($pdo, $orderSql, [$orderId, $vendorId]);

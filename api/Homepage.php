@@ -56,7 +56,7 @@ if ($isSearch) {
 
 // Pull user dietary preference
 if ($userId > 0) {
-    $prefRow = db_fetch_one($pdo, 'SELECT "DietaryPreference" FROM "user" WHERE "UserID" = ?', [$userId]);
+    $prefRow = db_fetch_one($pdo, 'SELECT "DietaryPreference" FROM "user" WHERE "UserId" = ?', [$userId]);
     if ($prefRow) {
         $userDietPreference = trim((string)$prefRow['DietaryPreference']);
     }
