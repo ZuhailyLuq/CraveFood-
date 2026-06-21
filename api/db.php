@@ -22,9 +22,17 @@ try {
     );
 } catch (PDOException $e) {
     http_response_code(500);
-    // Don't expose details in production
-    error_log('DB Connection failed: ' . $e->getMessage());
-    die(json_encode(['error' => 'Database connection failed. Please try again later.']));
+    // Temporarily expose details for debugging connection failure
+    die(json_encode([
+        'error' => 'Database connection failed: ' . $e->getMessage(),
+        'debug' => [
+            'host' => $db_host,
+            'port' => $db_port,
+            'name' => $db_name,
+            'user' => $db_user,
+            'has_password' => !empty($db_password)
+        ]
+    ]));
 }
 
 // Backwards-compatibility shim: keep $conn alias pointing to $pdo
