@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**
  * PDO helper functions to replace mysqli_* calls throughout the app.
  * This shim layer keeps the rewrite minimal and safe.
