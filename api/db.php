@@ -3,15 +3,16 @@
 // Database connection using PDO for PostgreSQL (Supabase)
 // Environment variables are set in Vercel dashboard (or .env for local)
 
-$db_host     = getenv('DB_HOST')     ?: 'db.zuojozzmfokpfemqcxcg.supabase.co';
-$db_port     = getenv('DB_PORT')     ?: '5432';
-$db_name     = getenv('DB_NAME')     ?: 'postgres';
-$db_user     = getenv('DB_USER')     ?: 'postgres';
-$db_password = getenv('DB_PASSWORD') ?: '';
+$db_host     = getenv('DB_HOST')     ?: ($_ENV['DB_HOST'] ?? 'db.zuojozzmfokpfemqcxcg.supabase.co');
+$db_port     = getenv('DB_PORT')     ?: ($_ENV['DB_PORT'] ?? '5432');
+$db_name     = getenv('DB_NAME')     ?: ($_ENV['DB_NAME'] ?? 'postgres');
+$db_user     = getenv('DB_USER')     ?: ($_ENV['DB_USER'] ?? 'postgres');
+$db_password = getenv('DB_PASSWORD') ?: ($_ENV['DB_PASSWORD'] ?? '');
 
 try {
+    $dsn = "pgsql:host={$db_host};port={$db_port};dbname={$db_name};sslmode=require";
     $pdo = new PDO(
-        "pgsql:host={$db_host};port={$db_port};dbname={$db_name}",
+        $dsn,
         $db_user,
         $db_password,
         [
