@@ -60,7 +60,7 @@ $shopName = htmlspecialchars((string)$vendor['ShopName']);
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
     <!-- Global styles -->
-    <link rel="stylesheet" href="../style.css?v=20260621-7">
+    <link rel="stylesheet" href="../style.css?v=<?= time() ?>">
 
     <?php if ($hasMap): ?>
     <!-- Leaflet CSS -->

@@ -30,7 +30,7 @@ $adminNotifs = db_fetch_all($pdo,
 <html>
 <head>
     <title>Vendor Dashboard - CraveFood</title>
-    <link rel="stylesheet" href="style.css?v=20260621-4">
+    <link rel="stylesheet" href="style.css?v=<?= time() ?>">
     <style>
         .admin-notif-banner {
             background: #fff3cd;
@@ -128,7 +128,7 @@ $adminNotifs = db_fetch_all($pdo,
     <?php if (count($adminNotifs) > 0): ?>
         <?php foreach ($adminNotifs as $notif): ?>
             <div class="admin-notif-banner" id="notif-<?php echo (int)$notif['NotificationID']; ?>">
-                <span class="notif-icon">ðŸ””</span>
+                <span class="notif-icon">&#128276;</span>
                 <div class="notif-body">
                     <div class="notif-msg"><?php echo htmlspecialchars($notif['Message']); ?></div>
                     <div class="notif-time">Received: <?php echo date('d M Y, h:i A', strtotime($notif['CreatedAt'])); ?></div>

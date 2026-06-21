@@ -61,7 +61,7 @@ if ($status === 'cancelled') {
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../style.css?v=20260621-4">
+    <link rel="stylesheet" href="../style.css?v=<?= time() ?>">
     <meta http-equiv="refresh" content="20">
     
     <style>

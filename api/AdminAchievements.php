@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $achievementId = (int)($_POST['achievement_id'] ?? 0);
         $title = trim($_POST['title'] ?? '');
         $description = trim($_POST['description'] ?? '');
-        $icon = trim($_POST['icon'] ?? 'ðŸ†');
+        $icon = trim($_POST['icon'] ?? '&#127942;');
         $criteriaType = trim($_POST['criteria_type'] ?? '');
         $criteriaValue = (float)($_POST['criteria_value'] ?? 0);
         $rewardType = trim($_POST['reward_type'] ?? '');
@@ -132,7 +132,7 @@ if ($editId > 0) {
 <html>
 <head>
     <title>Manage Achievements - CraveFood Admin</title>
-    <link rel="stylesheet" href="../style.css?v=20260621-4">
+    <link rel="stylesheet" href="../style.css?v=<?= time() ?>">
     <style>
         .admin-wrap { max-width: 1080px; margin: 0 auto; padding: 30px 20px; }
         .admin-title { color: #c1121f; font-size: 1.8rem; margin-bottom: 6px; }
@@ -335,7 +335,7 @@ if ($editId > 0) {
                         <div>
                             <label for="icon">Icon</label>
                             <input type="text" id="icon" name="icon" maxlength="20"
-                                   value="<?php echo htmlspecialchars($editAchievement['Icon'] ?? 'ðŸ†'); ?>">
+                                   value="<?php echo htmlspecialchars($editAchievement['Icon'] ?? '&#127942;'); ?>">
                         </div>
                         <div class="full-width">
                             <label for="description">Description</label>

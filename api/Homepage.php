@@ -116,7 +116,7 @@ foreach ($_SESSION['cart']['items'] as $ci) {
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../style.css?v=20260621-7">
+    <link rel="stylesheet" href="../style.css?v=<?= time() ?>">
     <meta name="description" content="CraveFood - Discover nearby campus cafeterias and stalls, explore menus, and find dishes that fit your health and dietary preferences.">
     <style>
         /* â”€â”€ Inter font override â”€â”€ */

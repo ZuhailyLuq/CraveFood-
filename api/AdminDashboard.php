@@ -85,8 +85,8 @@ function humanDays($days) {
 /* â”€â”€ Helper: trend chip HTML â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 function trendChip($pct) {
     if ($pct === null) return '<div class="stat-trend neutral">&mdash; no trend data</div>';
-    if ($pct > 0) return '<div class="stat-trend up">â–² +' . $pct . '% this week</div>';
-    if ($pct < 0) return '<div class="stat-trend down">â–¼ ' . $pct . '% this week</div>';
+    if ($pct > 0) return '<div class="stat-trend up">&#9650; +' . $pct . '% this week</div>';
+    if ($pct < 0) return '<div class="stat-trend down">&#9660; ' . $pct . '% this week</div>';
     return '<div class="stat-trend neutral">â†’ unchanged this week</div>';
 }
 ?>
@@ -96,7 +96,7 @@ function trendChip($pct) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard - CraveFood</title>
-    <link rel="stylesheet" href="../style.css?v=20260621-5">
+    <link rel="stylesheet" href="../style.css?v=<?= time() ?>">
     <style>
         /* â”€â”€ Layout â”€â”€ */
         .admin-wrap {
@@ -442,7 +442,7 @@ function trendChip($pct) {
         <!-- â”€â”€ Welcome Header â”€â”€ -->
         <div class="welcome-header">
             <div class="welcome-text">
-                <h1>ðŸ‘‹ Welcome, <?php echo $adminName; ?></h1>
+                <h1>&#128075; Welcome, <?php echo $adminName; ?></h1>
                 <p>Admin Dashboard &mdash; here's your system overview for today.</p>
             </div>
             <div class="welcome-date"><?php echo date('l, d F Y'); ?></div>
@@ -668,15 +668,15 @@ function trendChip($pct) {
             .then(function (r) { return r.json(); })
             .then(function (data) {
                 if (data.success) {
-                    showToast('âœ“ Notification sent to ' + shopName);
-                    if (btn) { btn.textContent = 'âœ“ Sent'; btn.disabled = true; }
+                    showToast('&#10003; Notification sent to ' + shopName);
+                    if (btn) { btn.textContent = '&#10003; Sent'; btn.disabled = true; }
                 } else {
-                    showToast('âœ— ' + (data.message || 'Failed to notify.'), true);
+                    showToast('&#10007; ' + (data.message || 'Failed to notify.'), true);
                     if (btn) { btn.disabled = false; btn.innerHTML = '<svg viewBox="0 0 24 24" style="width:13px;height:13px;fill:currentColor;"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg> Notify'; }
                 }
             })
             .catch(function () {
-                showToast('âœ— Network error.', true);
+                showToast('&#10007; Network error.', true);
                 if (btn) { btn.disabled = false; btn.textContent = 'Notify'; }
             });
     }
@@ -694,20 +694,20 @@ function trendChip($pct) {
             .then(function (r) { return r.json(); })
             .then(function (data) {
                 if (data.success) {
-                    showToast('âœ“ ' + data.message);
+                    showToast('&#10003; ' + data.message);
                     /* disable all individual notify buttons too */
                     document.querySelectorAll('.btn-notify').forEach(function (b) {
-                        b.disabled = true; b.textContent = 'âœ“ Sent';
+                        b.disabled = true; b.textContent = '&#10003; Sent';
                     });
-                    if (btn) { btn.textContent = 'âœ“ All Notified'; }
+                    if (btn) { btn.textContent = '&#10003; All Notified'; }
                 } else {
-                    showToast('âœ— ' + (data.message || 'Failed.'), true);
-                    if (btn) { btn.disabled = false; btn.textContent = 'ðŸ”” Notify All Outdated'; }
+                    showToast('&#10007; ' + (data.message || 'Failed.'), true);
+                    if (btn) { btn.disabled = false; btn.textContent = '&#128276; Notify All Outdated'; }
                 }
             })
             .catch(function () {
-                showToast('âœ— Network error.', true);
-                if (btn) { btn.disabled = false; btn.textContent = 'ðŸ”” Notify All Outdated'; }
+                showToast('&#10007; Network error.', true);
+                if (btn) { btn.disabled = false; btn.textContent = '&#128276; Notify All Outdated'; }
             });
     }
     </script>

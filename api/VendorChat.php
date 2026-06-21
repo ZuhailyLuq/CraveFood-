@@ -37,7 +37,7 @@ $customerName = $order['Username'] ?? 'Customer';
 <html>
 <head>
     <title>Chat - Order #<?php echo $orderId; ?> - CraveFood</title>
-    <link rel="stylesheet" href="../style.css?v=20260621-7">
+    <link rel="stylesheet" href="../style.css?v=<?= time() ?>">
     <style>
         .chat-container {
             max-width: 700px;
@@ -188,7 +188,7 @@ $customerName = $order['Username'] ?? 'Customer';
 
         <div class="chat-header">
             <div>
-                <h2>ðŸ’¬ <?php echo htmlspecialchars($customerName); ?></h2>
+                <h2>&#128172; <?php echo htmlspecialchars($customerName); ?></h2>
                 <span class="chat-order-info">Order #<?php echo $orderId; ?> &mdash; <?php echo htmlspecialchars($order['FoodName']); ?></span>
             </div>
             <span class="chat-status-badge"><?php echo htmlspecialchars($order['Status']); ?></span>

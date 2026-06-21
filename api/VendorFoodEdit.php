@@ -107,7 +107,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['Action_Update'])) {
 <html>
 <head>
     <title>Edit Food - Vendor - CraveFood</title>
-    <link rel="stylesheet" href="../style.css?v=20260621-7">
+    <link rel="stylesheet" href="../style.css?v=<?= time() ?>">
     <style>
         .image-preview-box {
             margin-top: 10px;

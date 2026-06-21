@@ -94,7 +94,7 @@ if ($sessionUserId > 0) {
 <html>
 <head>
     <title>Advance Search Results - CraveFood</title>
-    <link rel="stylesheet" href="../style.css?v=20260621-4">
+    <link rel="stylesheet" href="../style.css?v=<?= time() ?>">
     <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
     <style>
