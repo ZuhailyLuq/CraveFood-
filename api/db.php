@@ -38,7 +38,7 @@ if (!empty($database_url)) {
     $db_port     = env('DB_PORT',     '5432');
     $db_name     = env('DB_NAME',     'postgres');
     $db_user     = env('DB_USER',     'postgres.zuojozzmfokpfemqcxcg');
-    $db_password = env('DB_PASSWORD', 'Latte26@Masbro24');
+    $db_password = env('DB_PASSWORD', 'Masbro24andLatte26');
 }
 
 try {
