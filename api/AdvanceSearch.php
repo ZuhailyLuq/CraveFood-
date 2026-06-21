@@ -632,18 +632,6 @@ $vendorJson = json_encode($vendorMapData, JSON_UNESCAPED_UNICODE);
                 </div>
             </div>
 
-            <?php if ($hasRating): ?>
-            <!-- Min Rating -->
-            <div class="as-filter-group">
-                <label class="as-filter-label">Min Rating</label>
-                <div class="as-slider-row">
-                    <input class="as-slider" type="range" id="f-min-rating"
-                           min="0" max="5" step="0.5"
-                           value="<?php echo htmlspecialchars($minRating ?: '0'); ?>">
-                    <span class="as-slider-value" id="ratingLabel"><?php echo htmlspecialchars($minRating ?: '0'); ?> â˜…</span>
-                </div>
-            </div>
-            <?php endif; ?>
 
             <div class="as-divider"></div>
 
@@ -674,11 +662,11 @@ $vendorJson = json_encode($vendorMapData, JSON_UNESCAPED_UNICODE);
                     <div class="as-vendor-meta">
                         <span class="as-vendor-badge red"><?php echo $v['matchedItems']; ?> item<?php echo $v['matchedItems']!==1?'s':''; ?></span>
                         <?php if ($v['latitude'] && $v['longitude']): ?>
-                        <span class="as-vendor-badge"><?php echo ($v['distanceKm'] !== null) ? 'ðŸ“ ' . $v['distanceKm'] . ' km' : 'ðŸ“ On map'; ?></span>
+                        <span class="as-vendor-badge"><?php echo ($v['distanceKm'] !== null) ? '&#128205; ' . $v['distanceKm'] . ' km' : '&#128205; On map'; ?></span>
                         <?php endif; ?>
                     </div>
                     <a class="as-vendor-view-btn" href="VendorInfo.php?vendor_id=<?php echo $v['vendorId']; ?>">
-                        View menu â†’
+                        View menu →
                     </a>
                 </div>
                 <?php endforeach; ?>
@@ -927,7 +915,7 @@ document.addEventListener('DOMContentLoaded', function() {
     var ratingLabel  = document.getElementById('ratingLabel');
     if (ratingSlider && ratingLabel) {
         ratingSlider.addEventListener('input', function() {
-            ratingLabel.textContent = this.value + ' â˜…';
+            ratingLabel.innerHTML = this.value + ' &#9733;';
         });
         ratingSlider.addEventListener('change', function() {
             applyFilters();

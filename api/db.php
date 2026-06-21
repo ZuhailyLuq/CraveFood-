@@ -35,9 +35,9 @@ if (!empty($database_url)) {
     $db_user = $params['user'] ?? '';
     $db_password = urldecode($params['pass'] ?? '');
 } else {
-    // Supabase Connection Pooler (IPv4, Session mode for broader compat)
+    // Supabase Connection Pooler (Transaction mode for Serverless speed)
     $db_host     = env('DB_HOST',     'aws-1-ap-northeast-1.pooler.supabase.com');
-    $db_port     = env('DB_PORT',     '5432');
+    $db_port     = env('DB_PORT',     '6543');
     $db_name     = env('DB_NAME',     'postgres');
     $db_user     = env('DB_USER',     'postgres.zuojozzmfokpfemqcxcg');
     $db_password = env('DB_PASSWORD', 'Masbro24andLatte26');
@@ -50,6 +50,7 @@ try {
         $db_user,
         $db_password,
         [
+            PDO::ATTR_PERSISTENT         => true,
             PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
             PDO::ATTR_EMULATE_PREPARES   => false,

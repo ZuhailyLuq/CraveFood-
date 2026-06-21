@@ -265,7 +265,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function(pos) {
             var uMarker = L.marker([pos.coords.latitude, pos.coords.longitude], { icon: userIcon }).addTo(map);
-            uMarker.bindPopup('<strong style="font-family:Inter,sans-serif;font-size:0.85rem;">ðŸ“ You</strong>');
+            uMarker.bindPopup('<strong style="font-family:Inter,sans-serif;font-size:0.85rem;">&#128205; You</strong>');
             if (markers.length === 0) {
                 map.setView([pos.coords.latitude, pos.coords.longitude], 14);
             }
