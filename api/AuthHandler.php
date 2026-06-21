@@ -61,28 +61,66 @@ if ($authAction === 'register') {
     // --- VENDOR REGISTER ---
     if ($role === 'vendor') {
         $shopName = trim($_POST['reg_shopname'] ?? '');
-        if ($shopName === '') {
-            authRedirect('error', 'Shop name is required.', 'register');
+        $vendorEmail = trim($_POST['reg_vendor_email'] ?? '');
+        
+        if ($shopName === '' || $vendorEmail === '') {
+            authRedirect('error', 'Shop name and email are required.', 'register');
         }
 
         $existing = db_fetch_one($pdo,
-            'SELECT "VendorID" FROM vendor WHERE "ShopName" = ?',
-            [$shopName]
+            'SELECT "VendorID" FROM vendor WHERE "ShopName" = ? OR "Email" = ?',
+            [$shopName, $vendorEmail]
         );
         if ($existing) {
-            authRedirect('error', 'Shop name already exists.', 'register');
+            authRedirect('error', 'Shop name or email already exists.', 'register');
         }
 
         $rows = db_execute($pdo,
-            'INSERT INTO vendor ("ShopName", "VendorPassword") VALUES (?, ?)',
-            [$shopName, $hashed]
+            'INSERT INTO vendor ("ShopName", "Email", "VendorPassword") VALUES (?, ?, ?)',
+            [$shopName, $vendorEmail, $hashed]
         );
         if ($rows > 0) {
             authRedirect('success', 'Vendor registration successful! Please login.');
         }
         authRedirect('error', 'Registration failed. Please try again.', 'register');
     }
+    
+    // --- RESET PASSWORD ---
+    if ($authAction === 'reset_password') {
+        $role = $_POST['role'] ?? 'user';
+        $email = trim($_POST['reset_email'] ?? '');
+        $newPass = $_POST['reset_password'] ?? '';
+        $rePass = $_POST['reset_password_confirm'] ?? '';
 
+        if ($email === '' || $newPass === '' || $rePass === '') {
+            header("Location: ResetPassword.html?type=error&msg=" . urlencode('All fields are required.')); exit();
+        }
+        
+        if ($newPass !== $rePass) {
+            header("Location: ResetPassword.html?type=error&msg=" . urlencode('Passwords do not match.')); exit();
+        }
+        
+        if (strlen($newPass) < 6) {
+            header("Location: ResetPassword.html?type=error&msg=" . urlencode('Password must be at least 6 characters.')); exit();
+        }
+        
+        $hashed = password_hash($newPass, PASSWORD_DEFAULT);
+        
+        if ($role === 'user') {
+            $existing = db_fetch_one($pdo, 'SELECT "UserId" FROM "user" WHERE "Email" = ?', [$email]);
+            if (!$existing) { header("Location: ResetPassword.html?type=error&msg=" . urlencode('Email not found in our system.')); exit(); }
+            
+            db_execute($pdo, 'UPDATE "user" SET "Password" = ? WHERE "Email" = ?', [$hashed, $email]);
+        } 
+        elseif ($role === 'vendor') {
+            $existing = db_fetch_one($pdo, 'SELECT "VendorID" FROM vendor WHERE "Email" = ?', [$email]);
+            if (!$existing) { header("Location: ResetPassword.html?type=error&msg=" . urlencode('Email not found in our system.')); exit(); }
+            
+            db_execute($pdo, 'UPDATE vendor SET "VendorPassword" = ? WHERE "Email" = ?', [$hashed, $email]);
+        }
+        
+        authRedirect('success', 'Password reset successful! You can now login.', 'login');
+    }
 
 }
 
