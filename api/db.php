@@ -21,12 +21,25 @@ function env(string $key, string $default = ''): string {
     return $default;
 }
 
-// Supabase Connection Pooler (IPv4, Transaction mode)
-$db_host     = env('DB_HOST',     'aws-0-ap-northeast-1.pooler.supabase.com');
-$db_port     = env('DB_PORT',     '6543');
-$db_name     = env('DB_NAME',     'postgres');
-$db_user     = env('DB_USER',     'postgres.zuojozzmfokpfemqcxcg');
-$db_password = env('DB_PASSWORD', 'Latte26@Masbro24');
+// Try DATABASE_URL first (single connection string), then individual vars
+$database_url = env('DATABASE_URL', '');
+
+if (!empty($database_url)) {
+    // Parse the DATABASE_URL connection string
+    $params = parse_url($database_url);
+    $db_host = $params['host'] ?? '';
+    $db_port = $params['port'] ?? '6543';
+    $db_name = ltrim($params['path'] ?? '/postgres', '/');
+    $db_user = $params['user'] ?? '';
+    $db_password = urldecode($params['pass'] ?? '');
+} else {
+    // Supabase Connection Pooler (IPv4, Session mode for broader compat)
+    $db_host     = env('DB_HOST',     'aws-0-ap-northeast-1.pooler.supabase.com');
+    $db_port     = env('DB_PORT',     '5432');
+    $db_name     = env('DB_NAME',     'postgres');
+    $db_user     = env('DB_USER',     'postgres.zuojozzmfokpfemqcxcg');
+    $db_password = env('DB_PASSWORD', 'Latte26@Masbro24');
+}
 
 try {
     $dsn = "pgsql:host={$db_host};port={$db_port};dbname={$db_name};sslmode=require";
