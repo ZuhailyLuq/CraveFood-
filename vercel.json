@@ -4,15 +4,15 @@
       "runtime": "vercel-php@0.7.2"
     }
   },
-  "routes": [
-    { "src": "/style.css", "dest": "/style.css" },
-    { "src": "/uploads/(.*)", "dest": "/uploads/$1" },
-    { "src": "/Login.html", "dest": "/Login.html" },
-    { "src": "/Register.html", "dest": "/Register.html" },
-    { "src": "/VendorLogin.html", "dest": "/VendorLogin.html" },
-    { "src": "/VendorRegister.html", "dest": "/VendorRegister.html" },
-    { "src": "/api/(.*)", "dest": "/api/$1" },
-    { "src": "/([^.]+)\\.php$", "dest": "/api/$1.php" },
-    { "src": "/", "dest": "/api/Homepage.php" }
+  "rewrites": [
+    { "source": "/api/:path*", "destination": "/api/:path*" },
+    { "source": "/uploads/:path*", "destination": "/uploads/:path*" },
+    { "source": "/style.css", "destination": "/style.css" },
+    { "source": "/Login.html", "destination": "/Login.html" },
+    { "source": "/Register.html", "destination": "/Register.html" },
+    { "source": "/VendorLogin.html", "destination": "/VendorLogin.html" },
+    { "source": "/VendorRegister.html", "destination": "/VendorRegister.html" },
+    { "source": "/:name.php", "destination": "/api/:name.php" },
+    { "source": "/", "destination": "/api/Homepage.php" }
   ]
 }
