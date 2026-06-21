@@ -11,7 +11,7 @@ if (!isset($_SESSION['UserID'])) {
 $userId  = (int)$_SESSION['UserID'];
 $orderId = isset($_GET['order_id']) ? (int)$_GET['order_id'] : 0;
 
-// Schema fixed in Supabase â€” no column sniffing needed
+// Schema fixed in Supabase &mdash; no column sniffing needed
 if ($orderId <= 0) {
     $latest = db_fetch_one($pdo,
         'SELECT "OrderID" FROM orders WHERE "UserID" = ? ORDER BY "OrderID" DESC LIMIT 1',

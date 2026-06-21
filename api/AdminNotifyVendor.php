@@ -7,7 +7,7 @@ header('Content-Type: application/json');
 
 $action = trim($_POST['action'] ?? '');
 
-// Vendor dismiss handler â€” before admin check so vendors can access it
+// Vendor dismiss handler &mdash; before admin check so vendors can access it
 if ($action === 'dismiss' && isset($_SESSION['VendorID'])) {
     $notifId  = (int)($_POST['notification_id'] ?? 0);
     $vendorId = (int)$_SESSION['VendorID'];

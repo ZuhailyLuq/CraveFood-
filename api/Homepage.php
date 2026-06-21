@@ -925,7 +925,7 @@ foreach ($_SESSION['cart']['items'] as $ci) {
         <!-- â”€â”€ Breadcrumb â”€â”€ -->
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="Homepage.php">Home</a>
-            <span class="breadcrumb-sep">â€º</span>
+            <span class="breadcrumb-sep">&rsaquo;</span>
             <span class="breadcrumb-current">Search Results</span>
         </nav>
 

@@ -399,7 +399,7 @@ if (!isset($unusedClaims)) {
                                     <option value="<?php echo (int)$claim['ClaimID']; ?>"
                                             data-reward-type="<?php echo htmlspecialchars($claim['RewardType']); ?>"
                                             data-reward-value="<?php echo htmlspecialchars((string)$claim['RewardValue']); ?>">
-                                        <?php echo htmlspecialchars($claim['DiscountCode']); ?> â€”
+                                        <?php echo htmlspecialchars($claim['DiscountCode']); ?> &mdash;
                                         <?php echo htmlspecialchars($claim['Title']); ?>
                                         (<?php echo htmlspecialchars(getRewardTypeLabel($claim['RewardType'], $claim['RewardValue'])); ?>)
                                     </option>

@@ -111,7 +111,7 @@ $vendorJson = json_encode($vendorMapData, JSON_UNESCAPED_UNICODE);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Advanced Search â€“ CraveFood</title>
+    <title>Advanced Search &ndash; CraveFood</title>
     <meta name="description" content="Advanced search to find food by budget, dietary tag, category, radius and order mode on CraveFood.">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -416,7 +416,7 @@ $vendorJson = json_encode($vendorMapData, JSON_UNESCAPED_UNICODE);
             height: 100%;
         }
 
-        /* Vendor count pill â€” top-center of map */
+        /* Vendor count pill &mdash; top-center of map */
         .as-map-pill {
             position: absolute;
             top: 14px;
@@ -437,7 +437,7 @@ $vendorJson = json_encode($vendorMapData, JSON_UNESCAPED_UNICODE);
         }
         .as-map-pill span { color: #c1121f; }
 
-        /* Circular locate button â€” bottom-right of map */
+        /* Circular locate button &mdash; bottom-right of map */
         .as-locate-btn {
             position: absolute;
             bottom: 80px;
@@ -494,7 +494,7 @@ $vendorJson = json_encode($vendorMapData, JSON_UNESCAPED_UNICODE);
         }
 
         /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-           RESPONSIVE â€” Mobile / Tablet
+           RESPONSIVE &mdash; Mobile / Tablet
         â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
         @media (max-width: 860px) {
             .as-shell {
@@ -545,7 +545,7 @@ $vendorJson = json_encode($vendorMapData, JSON_UNESCAPED_UNICODE);
             <!-- Keyword -->
             <div class="as-filter-group">
                 <label class="as-filter-label" for="f-keyword">Keyword</label>
-                <input class="as-input" type="text" id="f-keyword" placeholder="e.g. Nasi Lemak, Chickenâ€¦"
+                <input class="as-input" type="text" id="f-keyword" placeholder="e.g. Nasi Lemak, Chicken..."
                        value="<?php echo htmlspecialchars($keyword); ?>">
             </div>
 
@@ -837,7 +837,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 userMarker.setLatLng([userLat, userLng]);
             } else {
                 userMarker = L.marker([userLat, userLng], { icon: userIcon }).addTo(map);
-                userMarker.bindPopup('<strong style="font-family:Inter,sans-serif;font-size:0.85rem;">ðŸ“ You are here</strong>');
+                userMarker.bindPopup('<strong style="font-family:Inter,sans-serif;font-size:0.85rem;">&#128205; You are here</strong>');
             }
 
             drawRadiusCircle();
@@ -859,7 +859,7 @@ document.addEventListener('DOMContentLoaded', function() {
         userLng = parseFloat(urlParams.get('user_lng'));
         if (!isNaN(userLat) && !isNaN(userLng)) {
             userMarker = L.marker([userLat, userLng], { icon: userIcon }).addTo(map);
-            userMarker.bindPopup('<strong style="font-family:Inter,sans-serif;font-size:0.85rem;">ðŸ“ You are here</strong>');
+            userMarker.bindPopup('<strong style="font-family:Inter,sans-serif;font-size:0.85rem;">&#128205; You are here</strong>');
             drawRadiusCircle();
         }
     }
@@ -871,7 +871,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             if (!userMarker) {
                 userMarker = L.marker([userLat, userLng], { icon: userIcon }).addTo(map);
-                userMarker.bindPopup('<strong style="font-family:Inter,sans-serif;font-size:0.85rem;">ðŸ“ You are here</strong>');
+                userMarker.bindPopup('<strong style="font-family:Inter,sans-serif;font-size:0.85rem;">&#128205; You are here</strong>');
             } else {
                 userMarker.setLatLng([userLat, userLng]);
             }
@@ -891,7 +891,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-       RADIUS SLIDER â€” live update
+       RADIUS SLIDER &mdash; live update
     â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
     var radiusSlider = document.getElementById('f-radius');
     var radiusLabel  = document.getElementById('radiusLabel');
@@ -909,7 +909,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-       RATING SLIDER â€” live update
+       RATING SLIDER &mdash; live update
     â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
     var ratingSlider = document.getElementById('f-min-rating');
     var ratingLabel  = document.getElementById('ratingLabel');

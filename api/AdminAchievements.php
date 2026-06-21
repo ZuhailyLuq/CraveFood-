@@ -475,7 +475,7 @@ if ($editId > 0) {
                                                 echo '<span class="tag-pill">' . htmlspecialchars(trim($tag)) . '</span>';
                                             }
                                         } else {
-                                            echo '<span style="color:#aaa;">â€”</span>';
+                                            echo '<span style="color:#aaa;">&mdash;</span>';
                                         }
                                         ?>
                                     </td>

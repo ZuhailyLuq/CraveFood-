@@ -304,7 +304,7 @@ $vendorName = $order['ShopName'] ?? ('Vendor #' . $order['VendorID']);
                     </div>
                     <div class="header-info">
                         <h2 class="vendor-name"><?php echo htmlspecialchars($vendorName); ?></h2>
-                        <span class="context-text">Order #<?php echo $orderId; ?> â€” <?php echo htmlspecialchars($order['FoodName']); ?></span>
+                        <span class="context-text">Order #<?php echo $orderId; ?> &mdash; <?php echo htmlspecialchars($order['FoodName']); ?></span>
                     </div>
                 </div>
                 <div class="header-right">

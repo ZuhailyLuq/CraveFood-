@@ -9,14 +9,14 @@
  */
 if (!function_exists('env')) {
 function env(string $key, string $default = ''): string {
-    // 1. getenv() â€” works on most PHP setups
+    // 1. getenv() &mdash; works on most PHP setups
     $val = getenv($key);
     if ($val !== false && $val !== '') return $val;
 
-    // 2. $_ENV â€” populated when variables_order includes 'E'
+    // 2. $_ENV &mdash; populated when variables_order includes 'E'
     if (isset($_ENV[$key]) && $_ENV[$key] !== '') return $_ENV[$key];
 
-    // 3. $_SERVER â€” vercel-php often injects env vars here
+    // 3. $_SERVER &mdash; vercel-php often injects env vars here
     if (isset($_SERVER[$key]) && $_SERVER[$key] !== '') return $_SERVER[$key];
 
     return $default;

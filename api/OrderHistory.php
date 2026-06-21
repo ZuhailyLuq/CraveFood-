@@ -10,7 +10,7 @@ if (!isset($_SESSION['UserID'])) {
 
 $userId = (int)$_SESSION['UserID'];
 
-// Schema is fixed â€” OrderDate column exists in Supabase as "OrderDate"
+// Schema is fixed &mdash; OrderDate column exists in Supabase as "OrderDate"
 $orders = db_fetch_all($pdo,
     'SELECT o."OrderID", o."OrderType", o."PickupTime", o."TotalAmount", o."Status",
             o."CancelReason", o."OrderDate" AS CreatedDate,

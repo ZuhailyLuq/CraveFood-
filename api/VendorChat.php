@@ -189,7 +189,7 @@ $customerName = $order['Username'] ?? 'Customer';
         <div class="chat-header">
             <div>
                 <h2>ðŸ’¬ <?php echo htmlspecialchars($customerName); ?></h2>
-                <span class="chat-order-info">Order #<?php echo $orderId; ?> â€” <?php echo htmlspecialchars($order['FoodName']); ?></span>
+                <span class="chat-order-info">Order #<?php echo $orderId; ?> &mdash; <?php echo htmlspecialchars($order['FoodName']); ?></span>
             </div>
             <span class="chat-status-badge"><?php echo htmlspecialchars($order['Status']); ?></span>
         </div>

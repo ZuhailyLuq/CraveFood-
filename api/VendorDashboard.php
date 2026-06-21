@@ -11,7 +11,7 @@ if (!isset($_SESSION['VendorID'])) {
 $vendorId = (int)$_SESSION['VendorID'];
 $shopName = (string)($_SESSION['ShopName'] ?? '');
 
-// Schema is fixed in Supabase â€” all columns exist
+// Schema is fixed in Supabase &mdash; all columns exist
 $hasStatus = $hasDietaryTag = $hasCategory = $hasDescription = $hasPrice = true;
 
 $items = db_fetch_all($pdo,

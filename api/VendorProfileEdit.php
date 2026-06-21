@@ -217,7 +217,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-       VENDOR MAP â€” click to pin location
+       VENDOR MAP &mdash; click to pin location
     â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
     var savedLat = parseFloat(document.getElementById('Latitude').value);
     var savedLng = parseFloat(document.getElementById('Longitude').value);
@@ -253,7 +253,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     if (hasExisting) {
         marker = L.marker([savedLat, savedLng], { icon: pinIcon, draggable: true }).addTo(map);
-        marker.bindPopup('<strong style="font-family:Inter,sans-serif;font-size:0.85rem;">ðŸ“ Your store</strong>').openPopup();
+        marker.bindPopup('<strong style="font-family:Inter,sans-serif;font-size:0.85rem;">&#128205; Your store</strong>').openPopup();
 
         /* Allow dragging to reposition */
         marker.on('dragend', function(e) {
@@ -275,7 +275,7 @@ document.addEventListener('DOMContentLoaded', function() {
             marker.setLatLng([lat, lng]);
         } else {
             marker = L.marker([lat, lng], { icon: pinIcon, draggable: true }).addTo(map);
-            marker.bindPopup('<strong style="font-family:Inter,sans-serif;font-size:0.85rem;">ðŸ“ Your store</strong>');
+            marker.bindPopup('<strong style="font-family:Inter,sans-serif;font-size:0.85rem;">&#128205; Your store</strong>');
 
             marker.on('dragend', function(ev) {
                 var pos = ev.target.getLatLng();

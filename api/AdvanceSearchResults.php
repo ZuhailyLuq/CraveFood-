@@ -236,7 +236,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         '</div>';
                 });
                 if (v.Foods.length > 5) {
-                    foodList += '<div style="color:#aaa;font-style:italic;">+' + (v.Foods.length - 5) + ' moreâ€¦</div>';
+                    foodList += '<div style="color:#aaa;font-style:italic;">+' + (v.Foods.length - 5) + ' more...</div>';
                 }
                 foodList += '</div>';
             }

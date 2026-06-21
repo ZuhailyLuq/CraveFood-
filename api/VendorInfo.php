@@ -51,7 +51,7 @@ $shopName = htmlspecialchars((string)$vendor['ShopName']);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo $shopName; ?> â€“ CraveFood</title>
+    <title><?php echo $shopName; ?> &ndash; CraveFood</title>
     <meta name="description" content="View the menu and details for <?php echo $shopName; ?> on CraveFood.">
 
     <!-- Inter font -->
@@ -100,7 +100,7 @@ $shopName = htmlspecialchars((string)$vendor['ShopName']);
         .vi-breadcrumb-sep { color: #d5d5d5; font-size: 0.72rem; }
         .vi-breadcrumb-current { color: #555; font-weight: 600; }
 
-        /* Mobile back link â€” hidden on desktop */
+        /* Mobile back link &mdash; hidden on desktop */
         .vi-back-link {
             display: none;
             align-items: center;
@@ -121,7 +121,7 @@ $shopName = htmlspecialchars((string)$vendor['ShopName']);
         }
 
         /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-           PROFILE CARD â€” Desktop: 50/50 split
+           PROFILE CARD &mdash; Desktop: 50/50 split
         â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
         .vi-profile-card {
             background: #ffffff;
@@ -242,7 +242,7 @@ $shopName = htmlspecialchars((string)$vendor['ShopName']);
             cursor: not-allowed;
             transform: none;
         }
-        /* Button variant â€“ open in maps (blue tint) */
+        /* Button variant &ndash; open in maps (blue tint) */
         .vi-navigate-btn.btn-maps-app {
             background: #1a73e8;
             box-shadow: 0 4px 14px rgba(26,115,232,0.30);
@@ -315,7 +315,7 @@ $shopName = htmlspecialchars((string)$vendor['ShopName']);
         /* Route polyline colour used in JS */
         .vi-route-line-ref { stroke: #1a73e8; }
 
-        /* Right column â€“ map */
+        /* Right column &ndash; map */
         .vi-right-col {
             position: relative;
             min-height: 380px;
@@ -547,7 +547,7 @@ $shopName = htmlspecialchars((string)$vendor['ShopName']);
         .vi-empty-menu p { font-size: 1rem; font-weight: 600; color: #bbb; margin: 0; }
 
         /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-           TOAST â€” top-right
+           TOAST &mdash; top-right
         â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
         .cart-toast {
             position: fixed;
@@ -561,7 +561,7 @@ $shopName = htmlspecialchars((string)$vendor['ShopName']);
             font-size: 0.88rem;
             box-shadow: 0 6px 24px rgba(26,92,53,0.28);
             z-index: 10001;
-            /* Hidden by default â€” display:none prevents phantom height */
+            /* Hidden by default &mdash; display:none prevents phantom height */
             display: none;
             align-items: center;
             gap: 12px;
@@ -596,7 +596,7 @@ $shopName = htmlspecialchars((string)$vendor['ShopName']);
         .toast-undo:hover { color: #fff; }
 
         /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-           PENDING ORDER PILL â€” fixed bottom-center
+           PENDING ORDER PILL &mdash; fixed bottom-center
         â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
         .pending-pill {
             position: fixed;
@@ -643,9 +643,9 @@ $shopName = htmlspecialchars((string)$vendor['ShopName']);
         <!-- â•â•â•â•â•â• BREADCRUMB (desktop/tablet) â•â•â•â•â•â• -->
         <nav class="vi-breadcrumb" aria-label="Breadcrumb">
             <a href="Homepage.php">Home</a>
-            <span class="vi-breadcrumb-sep">â€º</span>
+            <span class="vi-breadcrumb-sep">&rsaquo;</span>
             <a href="Homepage.php?search_submitted=1&search=">Restaurants</a>
-            <span class="vi-breadcrumb-sep">â€º</span>
+            <span class="vi-breadcrumb-sep">&rsaquo;</span>
             <span class="vi-breadcrumb-current"><?php echo $shopName; ?></span>
         </nav>
 
@@ -729,11 +729,11 @@ $shopName = htmlspecialchars((string)$vendor['ShopName']);
                     <div class="vi-route-info" id="routeInfoBlock" aria-live="polite">
                         <div class="vi-route-stat">
                             <span class="vi-route-stat-label">Distance</span>
-                            <span class="vi-route-stat-value" id="routeDistance">â€“</span>
+                            <span class="vi-route-stat-value" id="routeDistance">&ndash;</span>
                         </div>
                         <div class="vi-route-stat">
                             <span class="vi-route-stat-label">ETA</span>
-                            <span class="vi-route-stat-value" id="routeETA">â€“</span>
+                            <span class="vi-route-stat-value" id="routeETA">&ndash;</span>
                         </div>
                     </div>
                     <div class="vi-route-info-error" id="routeErrorBlock"></div>
@@ -765,7 +765,7 @@ $shopName = htmlspecialchars((string)$vendor['ShopName']);
                     </button>
                 <?php else: ?>
                     <div class="vi-no-map-right">
-                        <p>ðŸ“ Location map not available</p>
+                        <p>&#128205; Location map not available</p>
                     </div>
                 <?php endif; ?>
             </div>
@@ -938,7 +938,7 @@ document.addEventListener('DOMContentLoaded', function() {
        VENDOR INFO MAP
     â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
     var mapEl = document.getElementById('vendorInfoMap');
-    if (!mapEl) return; // no map on page â€” map code below requires Leaflet
+    if (!mapEl) return; // no map on page &mdash; map code below requires Leaflet
 
     var vendorLat = <?php echo $hasMap ? (float)$vendor['Latitude'] : 0; ?>;
     var vendorLng = <?php echo $hasMap ? (float)$vendor['Longitude'] : 0; ?>;
@@ -987,7 +987,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 userMarker.setLatLng([userLat, userLng]);
             } else {
                 userMarker = L.marker([userLat, userLng], { icon: userIcon }).addTo(map);
-                userMarker.bindPopup('<strong style="font-family:Inter,sans-serif;font-size:0.85rem;">ðŸ“ You</strong>');
+                userMarker.bindPopup('<strong style="font-family:Inter,sans-serif;font-size:0.85rem;">&#128205; You</strong>');
             }
             var bounds = L.latLngBounds([
                 [vendorLat, vendorLng],
@@ -1007,7 +1007,7 @@ document.addEventListener('DOMContentLoaded', function() {
             userLng = pos.coords.longitude;
             if (!userMarker) {
                 userMarker = L.marker([userLat, userLng], { icon: userIcon }).addTo(map);
-                userMarker.bindPopup('<strong style="font-family:Inter,sans-serif;font-size:0.85rem;">ðŸ“ You</strong>');
+                userMarker.bindPopup('<strong style="font-family:Inter,sans-serif;font-size:0.85rem;">&#128205; You</strong>');
             }
         }, function() {}, { enableHighAccuracy: true, timeout: 8000 });
     }
@@ -1032,7 +1032,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         if (userLat === null || userLng === null) {
             // Try to get location first
-            label.textContent = 'Locatingâ€¦';
+            label.textContent = 'Locating...';
             btn.disabled = true;
             navigator.geolocation.getCurrentPosition(function(pos) {
                 userLat = pos.coords.latitude;
@@ -1056,7 +1056,7 @@ document.addEventListener('DOMContentLoaded', function() {
         var btn = document.getElementById('showRouteBtn');
         var label = document.getElementById('routeBtnLabel');
         btn.disabled = true;
-        label.textContent = 'Loadingâ€¦';
+        label.textContent = 'Loading...';
 
         var url = 'https://router.project-osrm.org/route/v1/driving/' +
                   userLng + ',' + userLat + ';' + vendorLng + ',' + vendorLat +

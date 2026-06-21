@@ -31,7 +31,7 @@ function weekCountPDO(PDO $pdo, string $table, string $col, int $weeksAgo): int 
     return (int)($row['c'] ?? 0);
 }
 
-// User trend â€” use "CreatedAt" column
+// User trend &mdash; use "CreatedAt" column
 $userTrend = null;
 try {
     $u1 = weekCountPDO($pdo, 'user', 'CreatedAt', 0);
@@ -76,7 +76,7 @@ foreach ($vendorRows as $v) {
 
 /* â”€â”€ Helper: natural-language "days since" â”€â”€â”€â”€â”€ */
 function humanDays($days) {
-    if ($days === null) return 'â€”';
+    if ($days === null) return '&mdash;';
     if ($days === 0)    return 'Today';
     if ($days === 1)    return 'Yesterday';
     return $days . ' days ago';
@@ -84,7 +84,7 @@ function humanDays($days) {
 
 /* â”€â”€ Helper: trend chip HTML â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 function trendChip($pct) {
-    if ($pct === null) return '<div class="stat-trend neutral">â€” no trend data</div>';
+    if ($pct === null) return '<div class="stat-trend neutral">&mdash; no trend data</div>';
     if ($pct > 0) return '<div class="stat-trend up">â–² +' . $pct . '% this week</div>';
     if ($pct < 0) return '<div class="stat-trend down">â–¼ ' . $pct . '% this week</div>';
     return '<div class="stat-trend neutral">â†’ unchanged this week</div>';
@@ -443,7 +443,7 @@ function trendChip($pct) {
         <div class="welcome-header">
             <div class="welcome-text">
                 <h1>ðŸ‘‹ Welcome, <?php echo $adminName; ?></h1>
-                <p>Admin Dashboard â€” here's your system overview for today.</p>
+                <p>Admin Dashboard &mdash; here's your system overview for today.</p>
             </div>
             <div class="welcome-date"><?php echo date('l, d F Y'); ?></div>
         </div>
@@ -501,7 +501,7 @@ function trendChip($pct) {
 
                 <!-- Panel Header -->
                 <div class="vendor-panel-header">
-                    <h2>ðŸ“‹ Vendor Profile Health</h2>
+                    <h2>&#128205;‹ Vendor Profile Health</h2>
                     <p>Vendors who haven't updated their profile in over <?php echo $thresholdDays; ?> days are flagged. Send reminders to keep information current.</p>
                 </div>
 
@@ -522,7 +522,7 @@ function trendChip($pct) {
                     <div class="toolbar-right">
                         <div class="toolbar-search">
                             <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
-                            <input type="text" id="vendorSearch" placeholder="Search vendorsâ€¦" oninput="filterTable()">
+                            <input type="text" id="vendorSearch" placeholder="Search vendors..." oninput="filterTable()">
                         </div>
                         <div class="toolbar-filter">
                             <select id="statusFilter" onchange="filterTable()">
@@ -658,7 +658,7 @@ function trendChip($pct) {
     /* â”€â”€ Individual notify â”€â”€ */
     function notifyVendor(vendorId, shopName) {
         var btn = document.getElementById('btn-notify-' + vendorId);
-        if (btn) { btn.disabled = true; btn.textContent = 'Sendingâ€¦'; }
+        if (btn) { btn.disabled = true; btn.textContent = 'Sending...'; }
 
         var fd = new FormData();
         fd.append('action', 'notify');
@@ -684,7 +684,7 @@ function trendChip($pct) {
     /* â”€â”€ Notify All â”€â”€ */
     function notifyAllOutdated() {
         var btn = document.getElementById('btnNotifyAll');
-        if (btn) { btn.disabled = true; btn.textContent = 'Sendingâ€¦'; }
+        if (btn) { btn.disabled = true; btn.textContent = 'Sending...'; }
 
         var fd = new FormData();
         fd.append('action', 'notify_all_outdated');
