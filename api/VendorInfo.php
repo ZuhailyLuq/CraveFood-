@@ -808,7 +808,7 @@ $shopName = htmlspecialchars((string)$vendor['ShopName']);
 
                     <div class="vi-food-actions">
                         <div class="vi-qty-stepper" data-qty-stepper>
-                            <button type="button" class="qty-btn" data-qty-action="decrease" aria-label="Decrease">âˆ’</button>
+                            <button type="button" class="qty-btn" data-qty-action="decrease" aria-label="Decrease">&minus;</button>
                             <input type="number" min="1" value="1" data-qty-input
                                    id="vq-<?php echo $row['FoodID']; ?>" aria-label="Quantity">
                             <button type="button" class="qty-btn" data-qty-action="increase" aria-label="Increase">+</button>

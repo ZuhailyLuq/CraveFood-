@@ -465,7 +465,7 @@ $activeOrder = db_fetch_one($pdo,
                         <div class="item-right">
                             <div class="qty-subtotal-group">
                                 <div class="cart-qty-stepper">
-                                    <button type="button" class="cart-qty-btn" onclick="updateCartQty(<?php echo $item['FoodID']; ?>, -1)">âˆ’</button>
+                                    <button type="button" class="cart-qty-btn" onclick="updateCartQty(<?php echo $item['FoodID']; ?>, -1)">&minus;</button>
                                     <input type="number" class="cart-qty-input" id="qty-<?php echo $item['FoodID']; ?>" value="<?php echo $item['Quantity']; ?>" min="1" onchange="setCartQty(<?php echo $item['FoodID']; ?>, this.value)">
                                     <button type="button" class="cart-qty-btn" onclick="updateCartQty(<?php echo $item['FoodID']; ?>, 1)">+</button>
                                 </div>

@@ -903,7 +903,7 @@ foreach ($_SESSION['cart']['items'] as $ci) {
                                 <p class="rec-card-price">RM <?php echo number_format($row['Price'], 2); ?></p>
                                 <div class="stepper-add-wrap">
                                     <div class="qty-stepper" data-qty-stepper>
-                                        <button type="button" class="qty-btn" data-qty-action="decrease" aria-label="Decrease">âˆ’</button>
+                                        <button type="button" class="qty-btn" data-qty-action="decrease" aria-label="Decrease">&minus;</button>
                                         <input type="number" min="1" value="1" class="qty-input-stepper" data-qty-input id="rq-<?php echo $row['FoodID']; ?>" aria-label="Quantity">
                                         <button type="button" class="qty-btn" data-qty-action="increase" aria-label="Increase">+</button>
                                     </div>
@@ -1080,7 +1080,7 @@ foreach ($_SESSION['cart']['items'] as $ci) {
                     <!-- Actions -->
                     <div class="fi-actions">
                         <div class="fi-stepper" data-qty-stepper>
-                            <button type="button" class="qty-btn" data-qty-action="decrease" aria-label="Decrease">âˆ’</button>
+                            <button type="button" class="qty-btn" data-qty-action="decrease" aria-label="Decrease">&minus;</button>
                             <input type="number" min="1" value="1"
                                    class="qty-input-stepper" data-qty-input
                                    id="sq-<?php echo $row['FoodID']; ?>" aria-label="Quantity">
