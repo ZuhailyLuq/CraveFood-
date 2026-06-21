@@ -84,8 +84,6 @@ if ($authAction === 'register') {
         }
         authRedirect('error', 'Registration failed. Please try again.', 'register');
     }
-    }
-
 }
 
 // =====================

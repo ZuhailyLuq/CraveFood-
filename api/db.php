@@ -8,6 +8,10 @@
  * vercel-php may expose vars via $_SERVER, $_ENV, or getenv().
  */
 if (!function_exists('env')) {
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 function env(string $key, string $default = ''): string {
     // 1. getenv() &mdash; works on most PHP setups
     $val = getenv($key);
