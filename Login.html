@@ -272,7 +272,6 @@
                 <select name="role" id="registerRole" class="role-select" onchange="updateRegisterFields()">
                     <option value="user">User</option>
                     <option value="vendor">Vendor</option>
-                    <option value="admin">Admin</option>
                 </select>
 
                 <div id="regUserFields" class="user-fields show">
@@ -287,13 +286,6 @@
                 <div id="regVendorFields" class="vendor-fields">
                     <label for="regShopName">Shop Name</label>
                     <input type="text" name="reg_shopname" id="regShopName" placeholder="Choose a shop name" maxlength="100">
-                </div>
-
-                <div id="regAdminFields" class="admin-fields">
-                    <label for="regAdminName">Admin Username</label>
-                    <input type="text" name="reg_admin_name" id="regAdminName" placeholder="Choose an admin username" maxlength="50">
-                    <label for="regAdminEmail">Admin Email</label>
-                    <input type="email" name="reg_admin_email" id="regAdminEmail" placeholder="Enter admin email" maxlength="255">
                 </div>
 
                 <label for="regPassword">Password</label>
@@ -343,7 +335,6 @@
             var role = document.getElementById('registerRole').value;
             document.getElementById('regUserFields').className = 'user-fields' + (role === 'user' ? ' show' : '');
             document.getElementById('regVendorFields').className = 'vendor-fields' + (role === 'vendor' ? ' show' : '');
-            document.getElementById('regAdminFields').className = 'admin-fields' + (role === 'admin' ? ' show' : '');
         }
 
         function togglePassword(inputId) {

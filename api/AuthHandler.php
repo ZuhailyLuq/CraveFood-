@@ -83,32 +83,7 @@ if ($authAction === 'register') {
         authRedirect('error', 'Registration failed. Please try again.', 'register');
     }
 
-    // --- ADMIN REGISTER ---
-    if ($role === 'admin') {
-        $adminName  = trim($_POST['reg_admin_name'] ?? '');
-        $adminEmail = trim($_POST['reg_admin_email'] ?? '');
 
-        if ($adminName === '' || $adminEmail === '') {
-            authRedirect('error', 'Admin username and email are required.', 'register');
-        }
-
-        $existing = db_fetch_one($pdo,
-            'SELECT "AdminID" FROM admin WHERE "AdminUsername" = ? OR "Email" = ?',
-            [$adminName, $adminEmail]
-        );
-        if ($existing) {
-            authRedirect('error', 'Admin username or email already exists.', 'register');
-        }
-
-        $rows = db_execute($pdo,
-            'INSERT INTO admin ("AdminUsername", "Email", "Password") VALUES (?, ?, ?)',
-            [$adminName, $adminEmail, $hashed]
-        );
-        if ($rows > 0) {
-            authRedirect('success', 'Admin registration successful! Please login.');
-        }
-        authRedirect('error', 'Registration failed. Please try again.', 'register');
-    }
 }
 
 // =====================
