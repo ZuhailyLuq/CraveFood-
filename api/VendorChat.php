@@ -1,5 +1,5 @@
 <?php
-session_start();
+require_once __DIR__ . '/session.php';
 include('db.php');
 include('db_helpers.php');
 
@@ -184,12 +184,12 @@ $customerName = $order['Username'] ?? 'Customer';
     </div>
 
     <div class="chat-container">
-        <a href="VendorOrders.php" class="btn-return" style="margin-bottom: 10px;">← Back to Orders</a>
+        <a href="VendorOrders.php" class="btn-return" style="margin-bottom: 10px;">â† Back to Orders</a>
 
         <div class="chat-header">
             <div>
-                <h2>💬 <?php echo htmlspecialchars($customerName); ?></h2>
-                <span class="chat-order-info">Order #<?php echo $orderId; ?> — <?php echo htmlspecialchars($order['FoodName']); ?></span>
+                <h2>ðŸ’¬ <?php echo htmlspecialchars($customerName); ?></h2>
+                <span class="chat-order-info">Order #<?php echo $orderId; ?> â€” <?php echo htmlspecialchars($order['FoodName']); ?></span>
             </div>
             <span class="chat-status-badge"><?php echo htmlspecialchars($order['Status']); ?></span>
         </div>

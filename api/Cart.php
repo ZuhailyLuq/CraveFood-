@@ -1,5 +1,5 @@
 <?php
-session_start();
+require_once __DIR__ . '/session.php';
 include('db.php');
 include('db_helpers.php');
 
@@ -43,7 +43,7 @@ $activeOrder = db_fetch_one($pdo,
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../style.css?v=20260621-7">
     <style>
-        /* ── Reset & base ── */
+        /* â”€â”€ Reset & base â”€â”€ */
         *, body { font-family: 'Inter', 'Segoe UI', sans-serif; box-sizing: border-box; }
         body { background: #ffffff; margin: 0; padding: 0; color: #1e1e1e; }
 
@@ -53,7 +53,7 @@ $activeOrder = db_fetch_one($pdo,
             padding: 40px 20px 100px; /* bottom pad for pending pill */
         }
 
-        /* ── Header ── */
+        /* â”€â”€ Header â”€â”€ */
         .cart-header {
             margin-bottom: 24px;
             text-align: center;
@@ -87,7 +87,7 @@ $activeOrder = db_fetch_one($pdo,
             font-weight: 700;
         }
 
-        /* ── Empty State ── */
+        /* â”€â”€ Empty State â”€â”€ */
         .cart-empty {
             background: #fff;
             border-radius: 20px;
@@ -111,7 +111,7 @@ $activeOrder = db_fetch_one($pdo,
             margin: 0 0 20px;
         }
 
-        /* ── Unified List Card ── */
+        /* â”€â”€ Unified List Card â”€â”€ */
         .cart-items-card {
             background: #fff;
             border-radius: 20px;
@@ -271,7 +271,7 @@ $activeOrder = db_fetch_one($pdo,
             fill: currentColor;
         }
 
-        /* ── Summary Card ── */
+        /* â”€â”€ Summary Card â”€â”€ */
         .summary-card {
             background: #fff;
             border-radius: 20px;
@@ -348,9 +348,9 @@ $activeOrder = db_fetch_one($pdo,
             box-shadow: 0 8px 24px rgba(193,18,31,0.25);
         }
 
-        /* ════════════════════════════════
+        /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
            PENDING ORDER PILL
-        ════════════════════════════════ */
+        â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
         .pending-pill {
             position: fixed;
             bottom: 24px;
@@ -382,7 +382,7 @@ $activeOrder = db_fetch_one($pdo,
             50%      { box-shadow: 0 12px 40px rgba(193,18,31,0.26), 0 4px 14px rgba(0,0,0,0.1); }
         }
 
-        /* ── Responsive ── */
+        /* â”€â”€ Responsive â”€â”€ */
         @media (max-width: 600px) {
             .cart-item {
                 flex-direction: column;
@@ -465,7 +465,7 @@ $activeOrder = db_fetch_one($pdo,
                         <div class="item-right">
                             <div class="qty-subtotal-group">
                                 <div class="cart-qty-stepper">
-                                    <button type="button" class="cart-qty-btn" onclick="updateCartQty(<?php echo $item['FoodID']; ?>, -1)">−</button>
+                                    <button type="button" class="cart-qty-btn" onclick="updateCartQty(<?php echo $item['FoodID']; ?>, -1)">âˆ’</button>
                                     <input type="number" class="cart-qty-input" id="qty-<?php echo $item['FoodID']; ?>" value="<?php echo $item['Quantity']; ?>" min="1" onchange="setCartQty(<?php echo $item['FoodID']; ?>, this.value)">
                                     <button type="button" class="cart-qty-btn" onclick="updateCartQty(<?php echo $item['FoodID']; ?>, 1)">+</button>
                                 </div>
@@ -501,14 +501,14 @@ $activeOrder = db_fetch_one($pdo,
                 </div>
 
                 <div class="summary-actions">
-                    <a href="OrderOption.php?from_cart=1" class="btn-proceed">Proceed to Order →</a>
+                    <a href="OrderOption.php?from_cart=1" class="btn-proceed">Proceed to Order â†’</a>
                 </div>
             </div>
 
         <?php endif; ?>
     </div>
 
-    <!-- ══════ PENDING ORDER PILL ══════ -->
+    <!-- â•â•â•â•â•â• PENDING ORDER PILL â•â•â•â•â•â• -->
     <?php if ($activeOrder): ?>
     <a href="OrderStatus.php?order_id=<?php echo (int)$activeOrder['OrderID']; ?>" class="pending-pill" aria-label="View pending order">
         <span class="pending-pill-icon">

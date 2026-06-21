@@ -1,5 +1,5 @@
 <?php
-session_start();
+require_once __DIR__ . '/session.php';
 include('db.php');
 include('db_helpers.php');
 include('achievement_helpers.php');
@@ -29,7 +29,7 @@ $noticeType = isset($_GET['type']) ? $_GET['type'] : 'success';
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../style.css?v=20260621-7">
     <style>
-        /* ── Reset & base ── */
+        /* â”€â”€ Reset & base â”€â”€ */
         *, body { font-family: 'Inter', 'Segoe UI', sans-serif; }
         body { background: #ffffff; margin: 0; padding: 0; color: #1e1e1e; }
 
@@ -58,7 +58,7 @@ $noticeType = isset($_GET['type']) ? $_GET['type'] : 'success';
             margin: 0 auto;
         }
 
-        /* ── Grid Layout ── */
+        /* â”€â”€ Grid Layout â”€â”€ */
         .achievement-grid {
             display: grid;
             grid-template-columns: 1fr;
@@ -71,7 +71,7 @@ $noticeType = isset($_GET['type']) ? $_GET['type'] : 'success';
             .achievement-grid { grid-template-columns: repeat(3, 1fr); }
         }
 
-        /* ── Card Styles ── */
+        /* â”€â”€ Card Styles â”€â”€ */
         .achievement-card {
             background: #fff;
             border: 1px solid #e0e0e0;
@@ -288,9 +288,9 @@ $noticeType = isset($_GET['type']) ? $_GET['type'] : 'success';
             transform: translateX(-50%) translateY(-8px);
         }
 
-        /* ════════════════════════════════
+        /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
            PENDING ORDER PILL
-        ════════════════════════════════ */
+        â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
         .pending-pill {
             position: fixed;
             bottom: 24px;
@@ -428,7 +428,7 @@ $noticeType = isset($_GET['type']) ? $_GET['type'] : 'success';
         <?php endif; ?>
     </div>
 
-    <!-- ══════ PENDING ORDER PILL ══════ -->
+    <!-- â•â•â•â•â•â• PENDING ORDER PILL â•â•â•â•â•â• -->
     <?php if ($activeOrder): ?>
     <a href="OrderStatus.php?order_id=<?php echo (int)$activeOrder['OrderID']; ?>" class="pending-pill" aria-label="View pending order">
         <span class="pending-pill-icon">

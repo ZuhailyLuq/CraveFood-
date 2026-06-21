@@ -1,5 +1,5 @@
 <?php
-session_start();
+require_once __DIR__ . '/session.php';
 include('db.php');
 include('db_helpers.php');
 
@@ -206,7 +206,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <script>
 document.addEventListener('DOMContentLoaded', function() {
 
-    /* ── Navbar active link ── */
+    /* â”€â”€ Navbar active link â”€â”€ */
     var page = window.location.pathname.split('/').pop().toLowerCase() || 'homepage.php';
     if (page === '' || page === 'index.php') page = 'homepage.php';
     document.querySelectorAll('.nav-links a').forEach(function(link) {
@@ -216,9 +216,9 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    /* ══════════════════════════════════
-       VENDOR MAP — click to pin location
-    ══════════════════════════════════ */
+    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+       VENDOR MAP â€” click to pin location
+    â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
     var savedLat = parseFloat(document.getElementById('Latitude').value);
     var savedLng = parseFloat(document.getElementById('Longitude').value);
 
@@ -240,7 +240,7 @@ document.addEventListener('DOMContentLoaded', function() {
     setTimeout(function() { map.invalidateSize(); }, 200);
     setTimeout(function() { map.invalidateSize(); }, 600);
 
-    /* ── Custom pin icon ── */
+    /* â”€â”€ Custom pin icon â”€â”€ */
     var pinIcon = L.divIcon({
         className: '',
         html: '<div style="width:28px;height:28px;background:#c1121f;border:3px solid #fff;border-radius:50%;box-shadow:0 2px 10px rgba(193,18,31,0.4);"></div>',
@@ -248,12 +248,12 @@ document.addEventListener('DOMContentLoaded', function() {
         iconAnchor: [14, 14]
     });
 
-    /* ── Place existing marker if lat/lng are saved ── */
+    /* â”€â”€ Place existing marker if lat/lng are saved â”€â”€ */
     var marker = null;
 
     if (hasExisting) {
         marker = L.marker([savedLat, savedLng], { icon: pinIcon, draggable: true }).addTo(map);
-        marker.bindPopup('<strong style="font-family:Inter,sans-serif;font-size:0.85rem;">📍 Your store</strong>').openPopup();
+        marker.bindPopup('<strong style="font-family:Inter,sans-serif;font-size:0.85rem;">ðŸ“ Your store</strong>').openPopup();
 
         /* Allow dragging to reposition */
         marker.on('dragend', function(e) {
@@ -263,7 +263,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    /* ── Click on map to place / move pin ── */
+    /* â”€â”€ Click on map to place / move pin â”€â”€ */
     map.on('click', function(e) {
         var lat = e.latlng.lat;
         var lng = e.latlng.lng;
@@ -275,7 +275,7 @@ document.addEventListener('DOMContentLoaded', function() {
             marker.setLatLng([lat, lng]);
         } else {
             marker = L.marker([lat, lng], { icon: pinIcon, draggable: true }).addTo(map);
-            marker.bindPopup('<strong style="font-family:Inter,sans-serif;font-size:0.85rem;">📍 Your store</strong>');
+            marker.bindPopup('<strong style="font-family:Inter,sans-serif;font-size:0.85rem;">ðŸ“ Your store</strong>');
 
             marker.on('dragend', function(ev) {
                 var pos = ev.target.getLatLng();
@@ -296,9 +296,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
 });
 
-/* ══════════════════════════════════
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
    IMAGE PREVIEW / REMOVE helpers
-══════════════════════════════════ */
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 function previewImage(input) {
     var preview = document.getElementById('imagePreview');
     var img = document.getElementById('previewImg');

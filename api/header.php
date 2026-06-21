@@ -1,7 +1,5 @@
 <?php
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
+require_once __DIR__ . '/session.php';
 $_cartBadgeCount = 0;
 if (isset($_SESSION['cart']['items'])) {
     foreach ($_SESSION['cart']['items'] as $_bci) {
@@ -42,7 +40,7 @@ if (isset($_SESSION['cart']['items'])) {
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    /* ── Navbar active link highlighting ── */
+    /* â”€â”€ Navbar active link highlighting â”€â”€ */
     var path = window.location.pathname.split('/').pop().toLowerCase() || 'homepage.php';
     if (path === '' || path === 'index.php') path = 'homepage.php';
     

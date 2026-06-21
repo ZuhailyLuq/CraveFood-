@@ -1,5 +1,5 @@
 <?php
-session_start();
+require_once __DIR__ . '/session.php';
 include('db.php');
 include('db_helpers.php');
 include('achievement_helpers.php');
@@ -101,7 +101,7 @@ if (!isset($unusedClaims)) {
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../style.css?v=20260621-7">
     <style>
-        /* ── Reset & base ── */
+        /* â”€â”€ Reset & base â”€â”€ */
         *, body { font-family: 'Inter', 'Segoe UI', sans-serif; box-sizing: border-box; }
         body { background: #ffffff; margin: 0; padding: 0; color: #1e1e1e; }
 
@@ -111,7 +111,7 @@ if (!isset($unusedClaims)) {
             padding: 40px 20px 80px;
         }
 
-        /* ── Navigation ── */
+        /* â”€â”€ Navigation â”€â”€ */
         .nav-back {
             display: inline-block;
             color: #888;
@@ -125,7 +125,7 @@ if (!isset($unusedClaims)) {
             color: #ff2a44;
         }
 
-        /* ── Checkout Card ── */
+        /* â”€â”€ Checkout Card â”€â”€ */
         .checkout-card {
             background: #fff;
             border-radius: 20px;
@@ -157,7 +157,7 @@ if (!isset($unusedClaims)) {
             border: 1px solid #e0e0e0;
         }
 
-        /* ── Items List ── */
+        /* â”€â”€ Items List â”€â”€ */
         .items-list {
             margin-bottom: 24px;
         }
@@ -202,7 +202,7 @@ if (!isset($unusedClaims)) {
             font-size: 1.05rem;
         }
 
-        /* ── Totals Breakdown ── */
+        /* â”€â”€ Totals Breakdown â”€â”€ */
         .totals-breakdown {
             background: #fdfafb;
             border: 1px solid #e0e0e0;
@@ -239,7 +239,7 @@ if (!isset($unusedClaims)) {
             color: #2d2d2d;
         }
 
-        /* ── Forms (Modernized) ── */
+        /* â”€â”€ Forms (Modernized) â”€â”€ */
         .form-group {
             margin-bottom: 20px;
             display: flex;
@@ -289,7 +289,7 @@ if (!isset($unusedClaims)) {
             padding-left: 40px;
         }
 
-        /* ── Final Button ── */
+        /* â”€â”€ Final Button â”€â”€ */
         .btn-confirm {
             display: block;
             width: 100%;
@@ -349,9 +349,9 @@ if (!isset($unusedClaims)) {
                         <div class="item-left">
                             <span class="item-name"><?php echo htmlspecialchars($item['FoodName']); ?></span>
                             <span class="item-meta">
-                                RM <?php echo number_format($item['Price'], 2); ?> × <?php echo $item['Quantity']; ?>
+                                RM <?php echo number_format($item['Price'], 2); ?> Ã— <?php echo $item['Quantity']; ?>
                                 <?php if (!empty($item['DietaryTag'])): ?>
-                                    &nbsp;·&nbsp;<span class="tag"><?php echo htmlspecialchars($item['DietaryTag']); ?></span>
+                                    &nbsp;Â·&nbsp;<span class="tag"><?php echo htmlspecialchars($item['DietaryTag']); ?></span>
                                 <?php endif; ?>
                             </span>
                         </div>
@@ -399,7 +399,7 @@ if (!isset($unusedClaims)) {
                                     <option value="<?php echo (int)$claim['ClaimID']; ?>"
                                             data-reward-type="<?php echo htmlspecialchars($claim['RewardType']); ?>"
                                             data-reward-value="<?php echo htmlspecialchars((string)$claim['RewardValue']); ?>">
-                                        <?php echo htmlspecialchars($claim['DiscountCode']); ?> —
+                                        <?php echo htmlspecialchars($claim['DiscountCode']); ?> â€”
                                         <?php echo htmlspecialchars($claim['Title']); ?>
                                         (<?php echo htmlspecialchars(getRewardTypeLabel($claim['RewardType'], $claim['RewardValue'])); ?>)
                                     </option>

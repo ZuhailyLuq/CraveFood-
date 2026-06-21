@@ -1,5 +1,5 @@
 <?php
-session_start();
+require_once __DIR__ . '/session.php';
 include('db.php');
 include('db_helpers.php');
 
@@ -11,7 +11,7 @@ if (!isset($_SESSION['VendorID'])) {
 $vendorId = (int)$_SESSION['VendorID'];
 $shopName = (string)($_SESSION['ShopName'] ?? '');
 
-// Schema is fixed in Supabase — all columns exist
+// Schema is fixed in Supabase â€” all columns exist
 $hasStatus = $hasDietaryTag = $hasCategory = $hasDescription = $hasPrice = true;
 
 $items = db_fetch_all($pdo,
@@ -128,7 +128,7 @@ $adminNotifs = db_fetch_all($pdo,
     <?php if (count($adminNotifs) > 0): ?>
         <?php foreach ($adminNotifs as $notif): ?>
             <div class="admin-notif-banner" id="notif-<?php echo (int)$notif['NotificationID']; ?>">
-                <span class="notif-icon">🔔</span>
+                <span class="notif-icon">ðŸ””</span>
                 <div class="notif-body">
                     <div class="notif-msg"><?php echo htmlspecialchars($notif['Message']); ?></div>
                     <div class="notif-time">Received: <?php echo date('d M Y, h:i A', strtotime($notif['CreatedAt'])); ?></div>

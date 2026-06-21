@@ -1,5 +1,5 @@
 <?php
-session_start();
+require_once __DIR__ . '/session.php';
 include('db.php');
 include('db_helpers.php');
 
@@ -51,7 +51,7 @@ $shopName = htmlspecialchars((string)$vendor['ShopName']);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo $shopName; ?> – CraveFood</title>
+    <title><?php echo $shopName; ?> â€“ CraveFood</title>
     <meta name="description" content="View the menu and details for <?php echo $shopName; ?> on CraveFood.">
 
     <!-- Inter font -->
@@ -69,7 +69,7 @@ $shopName = htmlspecialchars((string)$vendor['ShopName']);
     <?php endif; ?>
 
     <style>
-        /* ── Base ── */
+        /* â”€â”€ Base â”€â”€ */
         *, body { font-family: 'Inter', 'Segoe UI', sans-serif; }
 
         .vi-page-wrap {
@@ -78,10 +78,10 @@ $shopName = htmlspecialchars((string)$vendor['ShopName']);
             padding: 0 20px 100px;
         }
 
-        /* ════════════════════════════════════════
+        /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
            BREADCRUMB (desktop/tablet)
            BACK LINK (mobile)
-        ════════════════════════════════════════ */
+        â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
         .vi-breadcrumb {
             display: flex;
             align-items: center;
@@ -100,7 +100,7 @@ $shopName = htmlspecialchars((string)$vendor['ShopName']);
         .vi-breadcrumb-sep { color: #d5d5d5; font-size: 0.72rem; }
         .vi-breadcrumb-current { color: #555; font-weight: 600; }
 
-        /* Mobile back link — hidden on desktop */
+        /* Mobile back link â€” hidden on desktop */
         .vi-back-link {
             display: none;
             align-items: center;
@@ -120,9 +120,9 @@ $shopName = htmlspecialchars((string)$vendor['ShopName']);
             .vi-back-link  { display: flex; }
         }
 
-        /* ════════════════════════════════════════
-           PROFILE CARD — Desktop: 50/50 split
-        ════════════════════════════════════════ */
+        /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+           PROFILE CARD â€” Desktop: 50/50 split
+        â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
         .vi-profile-card {
             background: #ffffff;
             border-radius: 20px;
@@ -242,7 +242,7 @@ $shopName = htmlspecialchars((string)$vendor['ShopName']);
             cursor: not-allowed;
             transform: none;
         }
-        /* Button variant – open in maps (blue tint) */
+        /* Button variant â€“ open in maps (blue tint) */
         .vi-navigate-btn.btn-maps-app {
             background: #1a73e8;
             box-shadow: 0 4px 14px rgba(26,115,232,0.30);
@@ -315,7 +315,7 @@ $shopName = htmlspecialchars((string)$vendor['ShopName']);
         /* Route polyline colour used in JS */
         .vi-route-line-ref { stroke: #1a73e8; }
 
-        /* Right column – map */
+        /* Right column â€“ map */
         .vi-right-col {
             position: relative;
             min-height: 380px;
@@ -358,7 +358,7 @@ $shopName = htmlspecialchars((string)$vendor['ShopName']);
         }
         .vi-no-map-right p { color: #ff2a44; opacity: 0.5; font-weight: 600; font-size: 0.88rem; text-align: center; }
 
-        /* ── Responsive: tablet/mobile stacked ── */
+        /* â”€â”€ Responsive: tablet/mobile stacked â”€â”€ */
         @media (max-width: 860px) {
             .vi-profile-card {
                 grid-template-columns: 1fr;
@@ -368,9 +368,9 @@ $shopName = htmlspecialchars((string)$vendor['ShopName']);
             #vendorInfoMap { min-height: 260px; height: 260px; }
         }
 
-        /* ════════════════════════════════════════
+        /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
            MENU SECTION
-        ════════════════════════════════════════ */
+        â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
         .vi-menu-header {
             display: flex;
             align-items: center;
@@ -546,9 +546,9 @@ $shopName = htmlspecialchars((string)$vendor['ShopName']);
         .vi-empty-menu svg { width: 52px; height: 52px; fill: #e8c5ca; margin-bottom: 14px; }
         .vi-empty-menu p { font-size: 1rem; font-weight: 600; color: #bbb; margin: 0; }
 
-        /* ════════════════════════════════════════
-           TOAST — top-right
-        ════════════════════════════════════════ */
+        /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+           TOAST â€” top-right
+        â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
         .cart-toast {
             position: fixed;
             top: 20px;
@@ -561,7 +561,7 @@ $shopName = htmlspecialchars((string)$vendor['ShopName']);
             font-size: 0.88rem;
             box-shadow: 0 6px 24px rgba(26,92,53,0.28);
             z-index: 10001;
-            /* Hidden by default — display:none prevents phantom height */
+            /* Hidden by default â€” display:none prevents phantom height */
             display: none;
             align-items: center;
             gap: 12px;
@@ -595,9 +595,9 @@ $shopName = htmlspecialchars((string)$vendor['ShopName']);
         }
         .toast-undo:hover { color: #fff; }
 
-        /* ════════════════════════════════════════
-           PENDING ORDER PILL — fixed bottom-center
-        ════════════════════════════════════════ */
+        /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+           PENDING ORDER PILL â€” fixed bottom-center
+        â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
         .pending-pill {
             position: fixed;
             bottom: 24px;
@@ -629,27 +629,27 @@ $shopName = htmlspecialchars((string)$vendor['ShopName']);
             50%      { box-shadow: 0 12px 40px rgba(193,18,31,0.26), 0 4px 14px rgba(0,0,0,0.1); }
         }
 
-        /* ── Misc overrides ── */
+        /* â”€â”€ Misc overrides â”€â”€ */
         .navbar h2 { font-family: 'Inter', sans-serif; }
     </style>
 </head>
 <body>
 
-    <!-- ══════ NAVBAR ══════ -->
+    <!-- â•â•â•â•â•â• NAVBAR â•â•â•â•â•â• -->
     <?php include('header.php'); ?>
 
     <div class="vi-page-wrap">
 
-        <!-- ══════ BREADCRUMB (desktop/tablet) ══════ -->
+        <!-- â•â•â•â•â•â• BREADCRUMB (desktop/tablet) â•â•â•â•â•â• -->
         <nav class="vi-breadcrumb" aria-label="Breadcrumb">
             <a href="Homepage.php">Home</a>
-            <span class="vi-breadcrumb-sep">›</span>
+            <span class="vi-breadcrumb-sep">â€º</span>
             <a href="Homepage.php?search_submitted=1&search=">Restaurants</a>
-            <span class="vi-breadcrumb-sep">›</span>
+            <span class="vi-breadcrumb-sep">â€º</span>
             <span class="vi-breadcrumb-current"><?php echo $shopName; ?></span>
         </nav>
 
-        <!-- ══════ BACK LINK (mobile only) ══════ -->
+        <!-- â•â•â•â•â•â• BACK LINK (mobile only) â•â•â•â•â•â• -->
         <a href="javascript:history.back()" class="vi-back-link" aria-label="Go back">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                 <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
@@ -657,7 +657,7 @@ $shopName = htmlspecialchars((string)$vendor['ShopName']);
             Back
         </a>
 
-        <!-- ══════ PROFILE CARD ══════ -->
+        <!-- â•â•â•â•â•â• PROFILE CARD â•â•â•â•â•â• -->
         <div class="vi-profile-card">
 
             <!-- LEFT: Info column -->
@@ -729,11 +729,11 @@ $shopName = htmlspecialchars((string)$vendor['ShopName']);
                     <div class="vi-route-info" id="routeInfoBlock" aria-live="polite">
                         <div class="vi-route-stat">
                             <span class="vi-route-stat-label">Distance</span>
-                            <span class="vi-route-stat-value" id="routeDistance">–</span>
+                            <span class="vi-route-stat-value" id="routeDistance">â€“</span>
                         </div>
                         <div class="vi-route-stat">
                             <span class="vi-route-stat-label">ETA</span>
-                            <span class="vi-route-stat-value" id="routeETA">–</span>
+                            <span class="vi-route-stat-value" id="routeETA">â€“</span>
                         </div>
                     </div>
                     <div class="vi-route-info-error" id="routeErrorBlock"></div>
@@ -765,14 +765,14 @@ $shopName = htmlspecialchars((string)$vendor['ShopName']);
                     </button>
                 <?php else: ?>
                     <div class="vi-no-map-right">
-                        <p>📍 Location map not available</p>
+                        <p>ðŸ“ Location map not available</p>
                     </div>
                 <?php endif; ?>
             </div>
 
         </div><!-- /.vi-profile-card -->
 
-        <!-- ══════ MENU SECTION ══════ -->
+        <!-- â•â•â•â•â•â• MENU SECTION â•â•â•â•â•â• -->
         <div class="vi-menu-header">
             <div class="vi-menu-header-line"></div>
             <h2 class="vi-menu-title">Menu</h2>
@@ -808,7 +808,7 @@ $shopName = htmlspecialchars((string)$vendor['ShopName']);
 
                     <div class="vi-food-actions">
                         <div class="vi-qty-stepper" data-qty-stepper>
-                            <button type="button" class="qty-btn" data-qty-action="decrease" aria-label="Decrease">−</button>
+                            <button type="button" class="qty-btn" data-qty-action="decrease" aria-label="Decrease">âˆ’</button>
                             <input type="number" min="1" value="1" data-qty-input
                                    id="vq-<?php echo $row['FoodID']; ?>" aria-label="Quantity">
                             <button type="button" class="qty-btn" data-qty-action="increase" aria-label="Increase">+</button>
@@ -835,7 +835,7 @@ $shopName = htmlspecialchars((string)$vendor['ShopName']);
 
     </div><!-- /.vi-page-wrap -->
 
-    <!-- ══════ QTY STEPPERS ══════ -->
+    <!-- â•â•â•â•â•â• QTY STEPPERS â•â•â•â•â•â• -->
     <?php if ($hasMap): ?>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
             integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
@@ -844,7 +844,7 @@ $shopName = htmlspecialchars((string)$vendor['ShopName']);
     <script>
 document.addEventListener('DOMContentLoaded', function() {
 
-    /* ── Navbar active link ── */
+    /* â”€â”€ Navbar active link â”€â”€ */
     var page = window.location.pathname.split('/').pop().toLowerCase() || 'homepage.php';
     if (page === '' || page === 'index.php') page = 'homepage.php';
     document.querySelectorAll('.nav-links a').forEach(function(link) {
@@ -852,9 +852,9 @@ document.addEventListener('DOMContentLoaded', function() {
         if (href === page) link.classList.add('active');
     });
 
-    /* ══════════════════════════════════
+    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
        QTY STEPPERS
-    ══════════════════════════════════ */
+    â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
     document.querySelectorAll('[data-qty-stepper]').forEach(function(stepper) {
         var input = stepper.querySelector('[data-qty-input]');
         stepper.querySelectorAll('.qty-btn').forEach(function(btn) {
@@ -869,9 +869,9 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    /* ══════════════════════════════════
+    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
        ADD TO CART (AJAX)
-    ══════════════════════════════════ */
+    â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
     window.addToCart = function(foodId, qty) {
         qty = parseInt(qty) || 1;
         var vendorId = <?php echo $vendorId; ?>;
@@ -889,7 +889,7 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(function(data) {
                 if (data.success) {
                     showToast(data.message || 'Added to cart!');
-                    // ── Update navbar cart badge live ──
+                    // â”€â”€ Update navbar cart badge live â”€â”€
                     var badge = document.getElementById('navCartBadge');
                     if (badge) {
                         var count = data.cart_count || 0;
@@ -913,7 +913,7 @@ document.addEventListener('DOMContentLoaded', function() {
             });
     };
 
-    /* ── Toast ── */
+    /* â”€â”€ Toast â”€â”€ */
     var toastTimer = null;
     function showToast(msg, isError) {
         var toast = document.querySelector('.cart-toast');
@@ -934,11 +934,11 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 3000);
     }
 
-    /* ══════════════════════════════════
+    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
        VENDOR INFO MAP
-    ══════════════════════════════════ */
+    â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
     var mapEl = document.getElementById('vendorInfoMap');
-    if (!mapEl) return; // no map on page — map code below requires Leaflet
+    if (!mapEl) return; // no map on page â€” map code below requires Leaflet
 
     var vendorLat = <?php echo $hasMap ? (float)$vendor['Latitude'] : 0; ?>;
     var vendorLng = <?php echo $hasMap ? (float)$vendor['Longitude'] : 0; ?>;
@@ -954,7 +954,7 @@ document.addEventListener('DOMContentLoaded', function() {
     setTimeout(function() { map.invalidateSize(); }, 200);
     setTimeout(function() { map.invalidateSize(); }, 600);
 
-    /* ── Vendor marker ── */
+    /* â”€â”€ Vendor marker â”€â”€ */
     var vendorIcon = L.divIcon({
         className: '',
         html: '<div style="width:30px;height:30px;background:#ff2a44;border:3px solid #fff;border-radius:50%;box-shadow:0 2px 10px rgba(193,18,31,0.4);"></div>',
@@ -966,7 +966,7 @@ document.addEventListener('DOMContentLoaded', function() {
     var vendorMarker = L.marker([vendorLat, vendorLng], { icon: vendorIcon }).addTo(map);
     vendorMarker.bindPopup('<strong style="font-family:Inter,sans-serif;">' + escapeHtml(shopName) + '</strong>').openPopup();
 
-    /* ── User location ── */
+    /* â”€â”€ User location â”€â”€ */
     var userIcon = L.divIcon({
         className: '',
         html: '<div style="width:16px;height:16px;background:#3b82f6;border:3px solid #fff;border-radius:50%;box-shadow:0 2px 8px rgba(59,130,246,0.5);"></div>',
@@ -987,7 +987,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 userMarker.setLatLng([userLat, userLng]);
             } else {
                 userMarker = L.marker([userLat, userLng], { icon: userIcon }).addTo(map);
-                userMarker.bindPopup('<strong style="font-family:Inter,sans-serif;font-size:0.85rem;">📍 You</strong>');
+                userMarker.bindPopup('<strong style="font-family:Inter,sans-serif;font-size:0.85rem;">ðŸ“ You</strong>');
             }
             var bounds = L.latLngBounds([
                 [vendorLat, vendorLng],
@@ -1007,14 +1007,14 @@ document.addEventListener('DOMContentLoaded', function() {
             userLng = pos.coords.longitude;
             if (!userMarker) {
                 userMarker = L.marker([userLat, userLng], { icon: userIcon }).addTo(map);
-                userMarker.bindPopup('<strong style="font-family:Inter,sans-serif;font-size:0.85rem;">📍 You</strong>');
+                userMarker.bindPopup('<strong style="font-family:Inter,sans-serif;font-size:0.85rem;">ðŸ“ You</strong>');
             }
         }, function() {}, { enableHighAccuracy: true, timeout: 8000 });
     }
 
-    /* ══════════════════════════════════
+    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
        SHOW ROUTE (OSRM free routing)
-    ══════════════════════════════════ */
+    â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
     var routeShown = false;
 
     window.handleRouteBtn = function() {
@@ -1032,7 +1032,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         if (userLat === null || userLng === null) {
             // Try to get location first
-            label.textContent = 'Locating…';
+            label.textContent = 'Locatingâ€¦';
             btn.disabled = true;
             navigator.geolocation.getCurrentPosition(function(pos) {
                 userLat = pos.coords.latitude;
@@ -1056,7 +1056,7 @@ document.addEventListener('DOMContentLoaded', function() {
         var btn = document.getElementById('showRouteBtn');
         var label = document.getElementById('routeBtnLabel');
         btn.disabled = true;
-        label.textContent = 'Loading…';
+        label.textContent = 'Loadingâ€¦';
 
         var url = 'https://router.project-osrm.org/route/v1/driving/' +
                   userLng + ',' + userLat + ';' + vendorLng + ',' + vendorLat +
@@ -1112,7 +1112,7 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('routeInfoBlock').classList.remove('visible');
     }
 
-    /* ── Helper ── */
+    /* â”€â”€ Helper â”€â”€ */
     function escapeHtml(text) {
         var div = document.createElement('div');
         div.appendChild(document.createTextNode(text));

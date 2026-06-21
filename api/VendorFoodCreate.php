@@ -1,5 +1,5 @@
 <?php
-session_start();
+require_once __DIR__ . '/session.php';
 include('db.php');
 
 if (!isset($_SESSION['VendorID'])) {
@@ -134,7 +134,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['Action_Save'])) {
             <div class="form-group">
                 <label>Product Image</label>
                 <label for="Image" class="file-upload-label" id="uploadLabel">
-                    <span class="upload-icon">📷</span>
+                    <span class="upload-icon">ðŸ“·</span>
                     <span class="upload-text">Click to choose an image from your device</span>
                 </label>
                 <input type="file" id="Image" name="Image" accept="image/jpeg,image/png,image/gif,image/webp" required class="file-input-hidden" onchange="previewImage(this)">

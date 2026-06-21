@@ -1,5 +1,5 @@
 <?php
-session_start();
+require_once __DIR__ . '/session.php';
 include('db.php');
 include('db_helpers.php');
 
@@ -10,7 +10,7 @@ if (!isset($_SESSION['UserID'])) {
 
 $userId = (int)$_SESSION['UserID'];
 
-// Schema is fixed — OrderDate column exists in Supabase as "OrderDate"
+// Schema is fixed â€” OrderDate column exists in Supabase as "OrderDate"
 $orders = db_fetch_all($pdo,
     'SELECT o."OrderID", o."OrderType", o."PickupTime", o."TotalAmount", o."Status",
             o."CancelReason", o."OrderDate" AS CreatedDate,
@@ -60,7 +60,7 @@ $activeOrder = db_fetch_one($pdo,
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../style.css?v=20260621-7">
     <style>
-        /* ── Reset & base ── */
+        /* â”€â”€ Reset & base â”€â”€ */
         *, body { font-family: 'Inter', 'Segoe UI', sans-serif; box-sizing: border-box; }
         body { background: #ffffff; margin: 0; padding: 0; color: #1e1e1e; }
 
@@ -99,7 +99,7 @@ $activeOrder = db_fetch_one($pdo,
             margin: 0;
         }
 
-        /* ── Accordion List ── */
+        /* â”€â”€ Accordion List â”€â”€ */
         .history-list {
             display: flex;
             flex-direction: column;
@@ -316,9 +316,9 @@ $activeOrder = db_fetch_one($pdo,
             border: 1px solid #e0e0e0;
         }
 
-        /* ════════════════════════════════
+        /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
            PENDING ORDER PILL
-        ════════════════════════════════ */
+        â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
         .pending-pill {
             position: fixed;
             bottom: 24px;
@@ -499,7 +499,7 @@ $activeOrder = db_fetch_one($pdo,
         <?php endif; ?>
     </div>
 
-    <!-- ══════ PENDING ORDER PILL ══════ -->
+    <!-- â•â•â•â•â•â• PENDING ORDER PILL â•â•â•â•â•â• -->
     <?php if ($activeOrder): ?>
     <a href="OrderStatus.php?order_id=<?php echo (int)$activeOrder['OrderID']; ?>" class="pending-pill" aria-label="View pending order">
         <span class="pending-pill-icon">

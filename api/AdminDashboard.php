@@ -1,5 +1,5 @@
 <?php
-session_start();
+require_once __DIR__ . '/session.php';
 include('db.php');
 include('db_helpers.php');
 
@@ -11,7 +11,7 @@ if (!isset($_SESSION['AdminID'])) {
 $adminId   = (int)$_SESSION['AdminID'];
 $adminName = htmlspecialchars($_SESSION['AdminUsername'] ?? 'Admin');
 
-/* ── Stat counts ─────────────────────────────── */
+/* â”€â”€ Stat counts â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 $userRow   = db_fetch_one($pdo, 'SELECT COUNT(*) AS c FROM "user"');
 $vendorRow = db_fetch_one($pdo, 'SELECT COUNT(*) AS c FROM vendor');
 $orderRow  = db_fetch_one($pdo, 'SELECT COUNT(*) AS c FROM orders');
@@ -20,7 +20,7 @@ $userCount   = (int)($userRow['c']   ?? 0);
 $vendorCount = (int)($vendorRow['c'] ?? 0);
 $orderCount  = (int)($orderRow['c']  ?? 0);
 
-/* ── Weekly trends ──────────────────────────── */
+/* â”€â”€ Weekly trends â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 function weekCountPDO(PDO $pdo, string $table, string $col, int $weeksAgo): int {
     $start = date('Y-m-d', strtotime("-" . ($weeksAgo + 1) . " week"));
     $end   = date('Y-m-d', strtotime("-{$weeksAgo} week"));
@@ -31,7 +31,7 @@ function weekCountPDO(PDO $pdo, string $table, string $col, int $weeksAgo): int 
     return (int)($row['c'] ?? 0);
 }
 
-// User trend — use "CreatedAt" column
+// User trend â€” use "CreatedAt" column
 $userTrend = null;
 try {
     $u1 = weekCountPDO($pdo, 'user', 'CreatedAt', 0);
@@ -47,7 +47,7 @@ try {
     $orderTrend = ($o2 > 0) ? round((($o1 - $o2) / $o2) * 100) : ($o1 > 0 ? 100 : 0);
 } catch (Exception $e) { $orderTrend = null; }
 
-/* ── Vendor update status ────────────────────── */
+/* â”€â”€ Vendor update status â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 $thresholdDays = 30;
 $vendorRows    = db_fetch_all($pdo, 'SELECT "VendorID", "ShopName", "LastUpdate" FROM vendor ORDER BY "LastUpdate" ASC');
 $vendors       = [];
@@ -74,20 +74,20 @@ foreach ($vendorRows as $v) {
     ];
 }
 
-/* ── Helper: natural-language "days since" ───── */
+/* â”€â”€ Helper: natural-language "days since" â”€â”€â”€â”€â”€ */
 function humanDays($days) {
-    if ($days === null) return '—';
+    if ($days === null) return 'â€”';
     if ($days === 0)    return 'Today';
     if ($days === 1)    return 'Yesterday';
     return $days . ' days ago';
 }
 
-/* ── Helper: trend chip HTML ─────────────────── */
+/* â”€â”€ Helper: trend chip HTML â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 function trendChip($pct) {
-    if ($pct === null) return '<div class="stat-trend neutral">— no trend data</div>';
-    if ($pct > 0) return '<div class="stat-trend up">▲ +' . $pct . '% this week</div>';
-    if ($pct < 0) return '<div class="stat-trend down">▼ ' . $pct . '% this week</div>';
-    return '<div class="stat-trend neutral">→ unchanged this week</div>';
+    if ($pct === null) return '<div class="stat-trend neutral">â€” no trend data</div>';
+    if ($pct > 0) return '<div class="stat-trend up">â–² +' . $pct . '% this week</div>';
+    if ($pct < 0) return '<div class="stat-trend down">â–¼ ' . $pct . '% this week</div>';
+    return '<div class="stat-trend neutral">â†’ unchanged this week</div>';
 }
 ?>
 <!DOCTYPE html>
@@ -98,14 +98,14 @@ function trendChip($pct) {
     <title>Admin Dashboard - CraveFood</title>
     <link rel="stylesheet" href="../style.css?v=20260621-5">
     <style>
-        /* ── Layout ── */
+        /* â”€â”€ Layout â”€â”€ */
         .admin-wrap {
             max-width: 1100px;
             margin: 0 auto;
             padding: 36px 24px 60px;
         }
 
-        /* ── Welcome header ── */
+        /* â”€â”€ Welcome header â”€â”€ */
         .welcome-header {
             display: flex;
             align-items: flex-start;
@@ -132,7 +132,7 @@ function trendChip($pct) {
             margin-top: 6px;
         }
 
-        /* ── Section divider ── */
+        /* â”€â”€ Section divider â”€â”€ */
         .section-gap { margin-bottom: 40px; }
         .section-label {
             font-size: 0.75rem;
@@ -143,7 +143,7 @@ function trendChip($pct) {
             margin-bottom: 14px;
         }
 
-        /* ── Stat Cards ── */
+        /* â”€â”€ Stat Cards â”€â”€ */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -208,7 +208,7 @@ function trendChip($pct) {
         .stat-trend.down    { background: #fce8e6; color: #c5221f; }
         .stat-trend.neutral { background: #f5f5f5; color: #999; }
 
-        /* ── Vendor Section Panel ── */
+        /* â”€â”€ Vendor Section Panel â”€â”€ */
         .vendor-panel {
             background: #fff;
             border: 1px solid #f0f0f0;
@@ -232,7 +232,7 @@ function trendChip($pct) {
             margin: 0 0 20px;
         }
 
-        /* ── Action Toolbar ── */
+        /* â”€â”€ Action Toolbar â”€â”€ */
         .action-toolbar {
             display: flex;
             align-items: center;
@@ -314,7 +314,7 @@ function trendChip($pct) {
         }
         .toolbar-filter select:focus { border-color: #c1121f; }
 
-        /* ── Vendor Table ── */
+        /* â”€â”€ Vendor Table â”€â”€ */
         .vendor-status-table {
             width: 100%;
             border-collapse: collapse;
@@ -398,7 +398,7 @@ function trendChip($pct) {
         .empty-state svg { width: 48px; height: 48px; fill: #e8e8e8; margin-bottom: 14px; }
         .empty-state p { margin: 0; font-size: 0.9rem; }
 
-        /* ── Toast ── */
+        /* â”€â”€ Toast â”€â”€ */
         .toast-admin {
             position: fixed;
             bottom: 30px;
@@ -422,7 +422,7 @@ function trendChip($pct) {
         .toast-admin.show { opacity: 1; transform: translateY(0); }
         .toast-admin.toast-error { background: #c5221f; }
 
-        /* ── No-results row ── */
+        /* â”€â”€ No-results row â”€â”€ */
         #no-results-row { display: none; }
         #no-results-row td { text-align: center; padding: 36px; color: #bbb; font-size: 0.9rem; }
     </style>
@@ -439,16 +439,16 @@ function trendChip($pct) {
 
     <div class="admin-wrap">
 
-        <!-- ── Welcome Header ── -->
+        <!-- â”€â”€ Welcome Header â”€â”€ -->
         <div class="welcome-header">
             <div class="welcome-text">
-                <h1>👋 Welcome, <?php echo $adminName; ?></h1>
-                <p>Admin Dashboard — here's your system overview for today.</p>
+                <h1>ðŸ‘‹ Welcome, <?php echo $adminName; ?></h1>
+                <p>Admin Dashboard â€” here's your system overview for today.</p>
             </div>
             <div class="welcome-date"><?php echo date('l, d F Y'); ?></div>
         </div>
 
-        <!-- ── Stat Cards ── -->
+        <!-- â”€â”€ Stat Cards â”€â”€ -->
         <div class="section-gap">
             <div class="section-label">Key Metrics</div>
             <div class="stats-grid">
@@ -494,14 +494,14 @@ function trendChip($pct) {
             </div>
         </div>
 
-        <!-- ── Vendor Update Status Section ── -->
+        <!-- â”€â”€ Vendor Update Status Section â”€â”€ -->
         <div class="section-gap">
             <div class="section-label">Vendor Update Status</div>
             <div class="vendor-panel">
 
                 <!-- Panel Header -->
                 <div class="vendor-panel-header">
-                    <h2>📋 Vendor Profile Health</h2>
+                    <h2>ðŸ“‹ Vendor Profile Health</h2>
                     <p>Vendors who haven't updated their profile in over <?php echo $thresholdDays; ?> days are flagged. Send reminders to keep information current.</p>
                 </div>
 
@@ -522,7 +522,7 @@ function trendChip($pct) {
                     <div class="toolbar-right">
                         <div class="toolbar-search">
                             <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
-                            <input type="text" id="vendorSearch" placeholder="Search vendors…" oninput="filterTable()">
+                            <input type="text" id="vendorSearch" placeholder="Search vendorsâ€¦" oninput="filterTable()">
                         </div>
                         <div class="toolbar-filter">
                             <select id="statusFilter" onchange="filterTable()">
@@ -619,7 +619,7 @@ function trendChip($pct) {
     <div class="toast-admin" id="adminToast"></div>
 
     <script>
-    /* ── Navbar active link ── */
+    /* â”€â”€ Navbar active link â”€â”€ */
     document.addEventListener('DOMContentLoaded', function () {
         var page  = window.location.pathname.split('/').pop().toLowerCase() || 'homepage.php';
         if (page === '' || page === 'index.php') page = 'homepage.php';
@@ -629,7 +629,7 @@ function trendChip($pct) {
         });
     });
 
-    /* ── Toast helper ── */
+    /* â”€â”€ Toast helper â”€â”€ */
     function showToast(msg, isError) {
         var t = document.getElementById('adminToast');
         t.textContent = msg;
@@ -637,7 +637,7 @@ function trendChip($pct) {
         setTimeout(function () { t.className = 'toast-admin' + (isError ? ' toast-error' : ''); }, 3500);
     }
 
-    /* ── Client-side search + filter ── */
+    /* â”€â”€ Client-side search + filter â”€â”€ */
     function filterTable() {
         var search = document.getElementById('vendorSearch').value.toLowerCase().trim();
         var status = document.getElementById('statusFilter').value;
@@ -655,10 +655,10 @@ function trendChip($pct) {
         if (noResults) noResults.style.display = visible === 0 ? '' : 'none';
     }
 
-    /* ── Individual notify ── */
+    /* â”€â”€ Individual notify â”€â”€ */
     function notifyVendor(vendorId, shopName) {
         var btn = document.getElementById('btn-notify-' + vendorId);
-        if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
+        if (btn) { btn.disabled = true; btn.textContent = 'Sendingâ€¦'; }
 
         var fd = new FormData();
         fd.append('action', 'notify');
@@ -668,23 +668,23 @@ function trendChip($pct) {
             .then(function (r) { return r.json(); })
             .then(function (data) {
                 if (data.success) {
-                    showToast('✓ Notification sent to ' + shopName);
-                    if (btn) { btn.textContent = '✓ Sent'; btn.disabled = true; }
+                    showToast('âœ“ Notification sent to ' + shopName);
+                    if (btn) { btn.textContent = 'âœ“ Sent'; btn.disabled = true; }
                 } else {
-                    showToast('✗ ' + (data.message || 'Failed to notify.'), true);
+                    showToast('âœ— ' + (data.message || 'Failed to notify.'), true);
                     if (btn) { btn.disabled = false; btn.innerHTML = '<svg viewBox="0 0 24 24" style="width:13px;height:13px;fill:currentColor;"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg> Notify'; }
                 }
             })
             .catch(function () {
-                showToast('✗ Network error.', true);
+                showToast('âœ— Network error.', true);
                 if (btn) { btn.disabled = false; btn.textContent = 'Notify'; }
             });
     }
 
-    /* ── Notify All ── */
+    /* â”€â”€ Notify All â”€â”€ */
     function notifyAllOutdated() {
         var btn = document.getElementById('btnNotifyAll');
-        if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
+        if (btn) { btn.disabled = true; btn.textContent = 'Sendingâ€¦'; }
 
         var fd = new FormData();
         fd.append('action', 'notify_all_outdated');
@@ -694,20 +694,20 @@ function trendChip($pct) {
             .then(function (r) { return r.json(); })
             .then(function (data) {
                 if (data.success) {
-                    showToast('✓ ' + data.message);
+                    showToast('âœ“ ' + data.message);
                     /* disable all individual notify buttons too */
                     document.querySelectorAll('.btn-notify').forEach(function (b) {
-                        b.disabled = true; b.textContent = '✓ Sent';
+                        b.disabled = true; b.textContent = 'âœ“ Sent';
                     });
-                    if (btn) { btn.textContent = '✓ All Notified'; }
+                    if (btn) { btn.textContent = 'âœ“ All Notified'; }
                 } else {
-                    showToast('✗ ' + (data.message || 'Failed.'), true);
-                    if (btn) { btn.disabled = false; btn.textContent = '🔔 Notify All Outdated'; }
+                    showToast('âœ— ' + (data.message || 'Failed.'), true);
+                    if (btn) { btn.disabled = false; btn.textContent = 'ðŸ”” Notify All Outdated'; }
                 }
             })
             .catch(function () {
-                showToast('✗ Network error.', true);
-                if (btn) { btn.disabled = false; btn.textContent = '🔔 Notify All Outdated'; }
+                showToast('âœ— Network error.', true);
+                if (btn) { btn.disabled = false; btn.textContent = 'ðŸ”” Notify All Outdated'; }
             });
     }
     </script>

@@ -1,5 +1,5 @@
 <?php
-session_start();
+require_once __DIR__ . '/session.php';
 include('db.php');
 include('db_helpers.php');
 include('recommendations.php');
@@ -12,7 +12,7 @@ $hasLat     = true;
 $hasLng     = true;
 $hasLoc     = true;
 
-// ── Current filter values ──
+// â”€â”€ Current filter values â”€â”€
 $keyword   = trim($_GET['keyword']   ?? '');
 $dietary   = trim($_GET['dietary']   ?? '');
 $category  = trim($_GET['category']  ?? '');
@@ -26,7 +26,7 @@ $sort      = trim($_GET['sort'] ?? 'relevance');
 $userLat   = (isset($_GET['user_lat']) && is_numeric($_GET['user_lat'])) ? (float)$_GET['user_lat'] : null;
 $userLng   = (isset($_GET['user_lng']) && is_numeric($_GET['user_lng'])) ? (float)$_GET['user_lng'] : null;
 
-// ── Build vendor query ──
+// â”€â”€ Build vendor query â”€â”€
 $vendorConditions = ['mf."Status" = \'Available\''];
 $params = [];
 
@@ -98,7 +98,7 @@ foreach ($vRes as $v) {
     ];
 }
 
-// ── Active order (pending pill) ──
+// â”€â”€ Active order (pending pill) â”€â”€
 $activeOrder = null;
 if ($userId > 0) {
     $activeOrder = db_fetch_one($pdo, "SELECT \"OrderID\", \"Status\" FROM orders WHERE \"UserID\" = ? AND \"Status\" NOT IN ('Finished','Completed','Cancelled') ORDER BY \"OrderID\" DESC LIMIT 1", [$userId]);
@@ -111,7 +111,7 @@ $vendorJson = json_encode($vendorMapData, JSON_UNESCAPED_UNICODE);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Advanced Search – CraveFood</title>
+    <title>Advanced Search â€“ CraveFood</title>
     <meta name="description" content="Advanced search to find food by budget, dietary tag, category, radius and order mode on CraveFood.">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -122,7 +122,7 @@ $vendorJson = json_encode($vendorMapData, JSON_UNESCAPED_UNICODE);
           integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
 
     <style>
-        /* ── Reset & base ── */
+        /* â”€â”€ Reset & base â”€â”€ */
         *, body { font-family: 'Inter', 'Segoe UI', sans-serif; }
 
         /* Make html+body fill the full viewport with no gaps */
@@ -139,7 +139,7 @@ $vendorJson = json_encode($vendorMapData, JSON_UNESCAPED_UNICODE);
         /* Navbar stays natural height; shell takes all remaining space */
         .navbar { flex-shrink: 0; }
 
-        /* ── SPLIT LAYOUT ── */
+        /* â”€â”€ SPLIT LAYOUT â”€â”€ */
         .as-shell {
             flex: 1;          /* fill all space below navbar */
             min-height: 0;    /* allow flex children to shrink correctly */
@@ -148,9 +148,9 @@ $vendorJson = json_encode($vendorMapData, JSON_UNESCAPED_UNICODE);
             background: #fdf5f6;
         }
 
-        /* ════════════════════════════════
+        /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
            LEFT SIDEBAR
-        ════════════════════════════════ */
+        â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
         .as-sidebar {
             width: 360px;
             min-width: 300px;
@@ -190,7 +190,7 @@ $vendorJson = json_encode($vendorMapData, JSON_UNESCAPED_UNICODE);
             margin: 0;
         }
 
-        /* ── Filter groups ── */
+        /* â”€â”€ Filter groups â”€â”€ */
         .as-filter-group {
             margin-bottom: 18px;
         }
@@ -322,7 +322,7 @@ $vendorJson = json_encode($vendorMapData, JSON_UNESCAPED_UNICODE);
             margin: 16px 0;
         }
 
-        /* ── Result list in sidebar ── */
+        /* â”€â”€ Result list in sidebar â”€â”€ */
         .as-result-header {
             display: flex;
             align-items: center;
@@ -403,9 +403,9 @@ $vendorJson = json_encode($vendorMapData, JSON_UNESCAPED_UNICODE);
         .as-empty-state svg { width: 40px; height: 40px; fill: #f0cfd3; margin-bottom: 10px; display: block; margin-left: auto; margin-right: auto; }
         .as-empty-state p { font-size: 0.85rem; font-weight: 600; color: #bbb; margin: 0; }
 
-        /* ════════════════════════════════
+        /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
            RIGHT MAP AREA
-        ════════════════════════════════ */
+        â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
         .as-map-area {
             flex: 1;
             position: relative;
@@ -416,7 +416,7 @@ $vendorJson = json_encode($vendorMapData, JSON_UNESCAPED_UNICODE);
             height: 100%;
         }
 
-        /* Vendor count pill — top-center of map */
+        /* Vendor count pill â€” top-center of map */
         .as-map-pill {
             position: absolute;
             top: 14px;
@@ -437,7 +437,7 @@ $vendorJson = json_encode($vendorMapData, JSON_UNESCAPED_UNICODE);
         }
         .as-map-pill span { color: #c1121f; }
 
-        /* Circular locate button — bottom-right of map */
+        /* Circular locate button â€” bottom-right of map */
         .as-locate-btn {
             position: absolute;
             bottom: 80px;
@@ -459,9 +459,9 @@ $vendorJson = json_encode($vendorMapData, JSON_UNESCAPED_UNICODE);
         .as-locate-btn.locating svg { fill: #aaa; animation: as-spin 1s linear infinite; }
         @keyframes as-spin { to { transform: rotate(360deg); } }
 
-        /* ════════════════════════════════
+        /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
            PENDING ORDER PILL
-        ════════════════════════════════ */
+        â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
         .pending-pill {
             position: fixed;
             bottom: 24px;
@@ -493,9 +493,9 @@ $vendorJson = json_encode($vendorMapData, JSON_UNESCAPED_UNICODE);
             50%      { box-shadow: 0 12px 40px rgba(193,18,31,0.26), 0 4px 14px rgba(0,0,0,0.1); }
         }
 
-        /* ════════════════════════════════
-           RESPONSIVE — Mobile / Tablet
-        ════════════════════════════════ */
+        /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+           RESPONSIVE â€” Mobile / Tablet
+        â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
         @media (max-width: 860px) {
             .as-shell {
                 flex-direction: column;
@@ -530,10 +530,10 @@ $vendorJson = json_encode($vendorMapData, JSON_UNESCAPED_UNICODE);
 
 <?php include('header.php'); ?>
 
-<!-- ══════ SPLIT SHELL ══════ -->
+<!-- â•â•â•â•â•â• SPLIT SHELL â•â•â•â•â•â• -->
 <div class="as-shell">
 
-    <!-- ══ LEFT SIDEBAR ══ -->
+    <!-- â•â• LEFT SIDEBAR â•â• -->
     <aside class="as-sidebar">
         <div class="as-sidebar-header">
             <h1 class="as-sidebar-title">Advanced Search</h1>
@@ -545,7 +545,7 @@ $vendorJson = json_encode($vendorMapData, JSON_UNESCAPED_UNICODE);
             <!-- Keyword -->
             <div class="as-filter-group">
                 <label class="as-filter-label" for="f-keyword">Keyword</label>
-                <input class="as-input" type="text" id="f-keyword" placeholder="e.g. Nasi Lemak, Chicken…"
+                <input class="as-input" type="text" id="f-keyword" placeholder="e.g. Nasi Lemak, Chickenâ€¦"
                        value="<?php echo htmlspecialchars($keyword); ?>">
             </div>
 
@@ -597,8 +597,8 @@ $vendorJson = json_encode($vendorMapData, JSON_UNESCAPED_UNICODE);
                 <label class="as-filter-label" for="f-sort">Sort By</label>
                 <select class="as-select" id="f-sort">
                     <option value="relevance" <?php if($sort==='relevance') echo 'selected';?>>Newest</option>
-                    <option value="price_asc" <?php if($sort==='price_asc') echo 'selected';?>>Price: Low → High</option>
-                    <option value="price_desc"<?php if($sort==='price_desc') echo 'selected';?>>Price: High → Low</option>
+                    <option value="price_asc" <?php if($sort==='price_asc') echo 'selected';?>>Price: Low â†’ High</option>
+                    <option value="price_desc"<?php if($sort==='price_desc') echo 'selected';?>>Price: High â†’ Low</option>
                 </select>
             </div>
 
@@ -640,7 +640,7 @@ $vendorJson = json_encode($vendorMapData, JSON_UNESCAPED_UNICODE);
                     <input class="as-slider" type="range" id="f-min-rating"
                            min="0" max="5" step="0.5"
                            value="<?php echo htmlspecialchars($minRating ?: '0'); ?>">
-                    <span class="as-slider-value" id="ratingLabel"><?php echo htmlspecialchars($minRating ?: '0'); ?> ★</span>
+                    <span class="as-slider-value" id="ratingLabel"><?php echo htmlspecialchars($minRating ?: '0'); ?> â˜…</span>
                 </div>
             </div>
             <?php endif; ?>
@@ -674,11 +674,11 @@ $vendorJson = json_encode($vendorMapData, JSON_UNESCAPED_UNICODE);
                     <div class="as-vendor-meta">
                         <span class="as-vendor-badge red"><?php echo $v['matchedItems']; ?> item<?php echo $v['matchedItems']!==1?'s':''; ?></span>
                         <?php if ($v['latitude'] && $v['longitude']): ?>
-                        <span class="as-vendor-badge"><?php echo ($v['distanceKm'] !== null) ? '📍 ' . $v['distanceKm'] . ' km' : '📍 On map'; ?></span>
+                        <span class="as-vendor-badge"><?php echo ($v['distanceKm'] !== null) ? 'ðŸ“ ' . $v['distanceKm'] . ' km' : 'ðŸ“ On map'; ?></span>
                         <?php endif; ?>
                     </div>
                     <a class="as-vendor-view-btn" href="VendorInfo.php?vendor_id=<?php echo $v['vendorId']; ?>">
-                        View menu →
+                        View menu â†’
                     </a>
                 </div>
                 <?php endforeach; ?>
@@ -688,7 +688,7 @@ $vendorJson = json_encode($vendorMapData, JSON_UNESCAPED_UNICODE);
         </div><!-- /.as-sidebar-inner -->
     </aside>
 
-    <!-- ══ RIGHT MAP AREA ══ -->
+    <!-- â•â• RIGHT MAP AREA â•â• -->
     <div class="as-map-area">
         <!-- Vendor count pill -->
         <div class="as-map-pill" id="mapPill">
@@ -708,7 +708,7 @@ $vendorJson = json_encode($vendorMapData, JSON_UNESCAPED_UNICODE);
 
 </div><!-- /.as-shell -->
 
-<!-- ══════ PENDING ORDER PILL ══════ -->
+<!-- â•â•â•â•â•â• PENDING ORDER PILL â•â•â•â•â•â• -->
 <?php if ($activeOrder): ?>
 <a href="OrderStatus.php?order_id=<?php echo (int)$activeOrder['OrderID']; ?>"
    class="pending-pill" aria-label="View pending order">
@@ -726,13 +726,13 @@ $vendorJson = json_encode($vendorMapData, JSON_UNESCAPED_UNICODE);
 </a>
 <?php endif; ?>
 
-<!-- ══════ LEAFLET ══════ -->
+<!-- â•â•â•â•â•â• LEAFLET â•â•â•â•â•â• -->
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
         integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
 
-    /* ── Navbar active link ── */
+    /* â”€â”€ Navbar active link â”€â”€ */
     var page = window.location.pathname.split('/').pop().toLowerCase() || 'homepage.php';
     if (page === '' || page === 'index.php') page = 'homepage.php';
     document.querySelectorAll('.nav-links a').forEach(function(link) {
@@ -742,9 +742,9 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    /* ══════════════════════════════════
+    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
        MAP INITIALIZATION
-    ══════════════════════════════════ */
+    â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
     var defaultLat = 3.0738, defaultLng = 101.5183; // Sunway / Subang default
     var defaultZoom = 13;
 
@@ -761,10 +761,10 @@ document.addEventListener('DOMContentLoaded', function() {
     setTimeout(function() { map.invalidateSize(); }, 200);
     setTimeout(function() { map.invalidateSize(); }, 600);
 
-    /* ── Vendor data from PHP ── */
+    /* â”€â”€ Vendor data from PHP â”€â”€ */
     var vendors = <?php echo $vendorJson; ?>;
 
-    /* ── Custom marker icon ── */
+    /* â”€â”€ Custom marker icon â”€â”€ */
     var vendorIcon = L.divIcon({
         className: '',
         html: '<div style="width:30px;height:30px;background:#c1121f;border:3px solid #fff;border-radius:50%;box-shadow:0 2px 8px rgba(0,0,0,0.3);"></div>',
@@ -780,7 +780,7 @@ document.addEventListener('DOMContentLoaded', function() {
         iconAnchor: [9, 9]
     });
 
-    /* ── Place vendor markers ── */
+    /* â”€â”€ Place vendor markers â”€â”€ */
     var markers = [];
     var markerMap = {}; // vendorId -> marker
 
@@ -806,7 +806,7 @@ document.addEventListener('DOMContentLoaded', function() {
         map.fitBounds(group.getBounds().pad(0.15));
     }
 
-    /* ── User location & radius circle ── */
+    /* â”€â”€ User location & radius circle â”€â”€ */
     var userMarker = null;
     var radiusCircle = null;
     var userLat = null, userLng = null;
@@ -849,7 +849,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 userMarker.setLatLng([userLat, userLng]);
             } else {
                 userMarker = L.marker([userLat, userLng], { icon: userIcon }).addTo(map);
-                userMarker.bindPopup('<strong style="font-family:Inter,sans-serif;font-size:0.85rem;">📍 You are here</strong>');
+                userMarker.bindPopup('<strong style="font-family:Inter,sans-serif;font-size:0.85rem;">ðŸ“ You are here</strong>');
             }
 
             drawRadiusCircle();
@@ -871,7 +871,7 @@ document.addEventListener('DOMContentLoaded', function() {
         userLng = parseFloat(urlParams.get('user_lng'));
         if (!isNaN(userLat) && !isNaN(userLng)) {
             userMarker = L.marker([userLat, userLng], { icon: userIcon }).addTo(map);
-            userMarker.bindPopup('<strong style="font-family:Inter,sans-serif;font-size:0.85rem;">📍 You are here</strong>');
+            userMarker.bindPopup('<strong style="font-family:Inter,sans-serif;font-size:0.85rem;">ðŸ“ You are here</strong>');
             drawRadiusCircle();
         }
     }
@@ -883,7 +883,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             if (!userMarker) {
                 userMarker = L.marker([userLat, userLng], { icon: userIcon }).addTo(map);
-                userMarker.bindPopup('<strong style="font-family:Inter,sans-serif;font-size:0.85rem;">📍 You are here</strong>');
+                userMarker.bindPopup('<strong style="font-family:Inter,sans-serif;font-size:0.85rem;">ðŸ“ You are here</strong>');
             } else {
                 userMarker.setLatLng([userLat, userLng]);
             }
@@ -902,9 +902,9 @@ document.addEventListener('DOMContentLoaded', function() {
         }, function() {}, { enableHighAccuracy: true, timeout: 8000 });
     }
 
-    /* ══════════════════════════════════
-       RADIUS SLIDER — live update
-    ══════════════════════════════════ */
+    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+       RADIUS SLIDER â€” live update
+    â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
     var radiusSlider = document.getElementById('f-radius');
     var radiusLabel  = document.getElementById('radiusLabel');
 
@@ -920,23 +920,23 @@ document.addEventListener('DOMContentLoaded', function() {
         applyFilters();
     });
 
-    /* ══════════════════════════════════
-       RATING SLIDER — live update
-    ══════════════════════════════════ */
+    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+       RATING SLIDER â€” live update
+    â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
     var ratingSlider = document.getElementById('f-min-rating');
     var ratingLabel  = document.getElementById('ratingLabel');
     if (ratingSlider && ratingLabel) {
         ratingSlider.addEventListener('input', function() {
-            ratingLabel.textContent = this.value + ' ★';
+            ratingLabel.textContent = this.value + ' â˜…';
         });
         ratingSlider.addEventListener('change', function() {
             applyFilters();
         });
     }
 
-    /* ══════════════════════════════════
+    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
        AUTO-APPLY FILTERS (debounced)
-    ══════════════════════════════════ */
+    â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
     var debounceTimer = null;
 
     function applyFilters() {
@@ -989,9 +989,9 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('f-min-price').addEventListener('change', applyFilters);
     document.getElementById('f-max-price').addEventListener('change', applyFilters);
 
-    /* ══════════════════════════════════
+    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
        ORDER TYPE toggle (Book group)
-    ══════════════════════════════════ */
+    â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
     window.handleOrderTypeChange = function() {
         var ot = document.getElementById('f-order-type').value;
         var pg = document.getElementById('pickup-group');
@@ -999,9 +999,9 @@ document.addEventListener('DOMContentLoaded', function() {
         applyFilters();
     };
 
-    /* ══════════════════════════════════
+    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
        FOCUS VENDOR ON MAP
-    ══════════════════════════════════ */
+    â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
     window.focusVendorOnMap = function(vendorId) {
         var m = markerMap[vendorId];
         if (m) {
@@ -1010,7 +1010,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     };
 
-    /* ── Helper ── */
+    /* â”€â”€ Helper â”€â”€ */
     function escapeHtml(text) {
         var div = document.createElement('div');
         div.appendChild(document.createTextNode(text));

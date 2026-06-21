@@ -50,9 +50,9 @@ function db_last_id(PDO $pdo, string $sequence = ''): string {
  * This helper converts common MySQL-isms in SQL strings for PostgreSQL.
  */
 function pg_sql(string $sql): string {
-    // MySQL RAND() → PostgreSQL RANDOM()
+    // MySQL RAND() â†’ PostgreSQL RANDOM()
     $sql = preg_replace('/\bRAND\(\)/i', 'RANDOM()', $sql);
-    // MySQL backtick identifiers → PostgreSQL double quotes
+    // MySQL backtick identifiers â†’ PostgreSQL double quotes
     $sql = preg_replace('/`([^`]+)`/', '"$1"', $sql);
     // MySQL NOW() is also valid in PostgreSQL, no change needed
     return $sql;

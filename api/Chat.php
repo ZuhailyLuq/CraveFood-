@@ -1,5 +1,5 @@
 <?php
-session_start();
+require_once __DIR__ . '/session.php';
 include('db.php');
 include('db_helpers.php');
 
@@ -45,7 +45,7 @@ $vendorName = $order['ShopName'] ?? ('Vendor #' . $order['VendorID']);
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../style.css?v=20260621-7">
     <style>
-        /* ── Reset & base ── */
+        /* â”€â”€ Reset & base â”€â”€ */
         *, body { font-family: 'Inter', 'Segoe UI', sans-serif; box-sizing: border-box; }
         body { background: #ffffff; margin: 0; padding: 0; color: #1e1e1e; }
 
@@ -71,7 +71,7 @@ $vendorName = $order['ShopName'] ?? ('Vendor #' . $order['VendorID']);
             color: #2d2d2d;
         }
 
-        /* ── Chat Card ── */
+        /* â”€â”€ Chat Card â”€â”€ */
         .chat-card {
             background: #fff;
             border-radius: 20px;
@@ -83,7 +83,7 @@ $vendorName = $order['ShopName'] ?? ('Vendor #' . $order['VendorID']);
             overflow: hidden;
         }
 
-        /* ── Header ── */
+        /* â”€â”€ Header â”€â”€ */
         .chat-header {
             padding: 20px 24px;
             border-bottom: 1px solid #e0e0e0;
@@ -143,7 +143,7 @@ $vendorName = $order['ShopName'] ?? ('Vendor #' . $order['VendorID']);
             letter-spacing: 0.5px;
         }
 
-        /* ── Message Area (Body) ── */
+        /* â”€â”€ Message Area (Body) â”€â”€ */
         .chat-body {
             flex: 1;
             padding: 24px;
@@ -201,7 +201,7 @@ $vendorName = $order['ShopName'] ?? ('Vendor #' . $order['VendorID']);
             color: #888;
         }
 
-        /* ── Input Area (Footer) ── */
+        /* â”€â”€ Input Area (Footer) â”€â”€ */
         .chat-footer {
             padding: 20px 24px;
             border-top: 1px solid #e0e0e0;
@@ -274,7 +274,7 @@ $vendorName = $order['ShopName'] ?? ('Vendor #' . $order['VendorID']);
             font-size: 0.95rem;
         }
 
-        /* ── Responsive ── */
+        /* â”€â”€ Responsive â”€â”€ */
         @media (max-width: 600px) {
             .chat-wrapper { padding: 16px 12px 20px; height: calc(100vh - 60px); }
             .chat-header { padding: 16px; }
@@ -304,7 +304,7 @@ $vendorName = $order['ShopName'] ?? ('Vendor #' . $order['VendorID']);
                     </div>
                     <div class="header-info">
                         <h2 class="vendor-name"><?php echo htmlspecialchars($vendorName); ?></h2>
-                        <span class="context-text">Order #<?php echo $orderId; ?> — <?php echo htmlspecialchars($order['FoodName']); ?></span>
+                        <span class="context-text">Order #<?php echo $orderId; ?> â€” <?php echo htmlspecialchars($order['FoodName']); ?></span>
                     </div>
                 </div>
                 <div class="header-right">

@@ -1,5 +1,5 @@
 <?php
-session_start();
+require_once __DIR__ . '/session.php';
 include('db.php');
 include('db_helpers.php');
 
@@ -7,7 +7,7 @@ header('Content-Type: application/json');
 
 $action = trim($_POST['action'] ?? '');
 
-// Vendor dismiss handler — before admin check so vendors can access it
+// Vendor dismiss handler â€” before admin check so vendors can access it
 if ($action === 'dismiss' && isset($_SESSION['VendorID'])) {
     $notifId  = (int)($_POST['notification_id'] ?? 0);
     $vendorId = (int)$_SESSION['VendorID'];

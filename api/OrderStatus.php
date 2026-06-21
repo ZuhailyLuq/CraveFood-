@@ -1,5 +1,5 @@
 <?php
-session_start();
+require_once __DIR__ . '/session.php';
 include('db.php');
 include('db_helpers.php');
 
@@ -11,7 +11,7 @@ if (!isset($_SESSION['UserID'])) {
 $userId  = (int)$_SESSION['UserID'];
 $orderId = isset($_GET['order_id']) ? (int)$_GET['order_id'] : 0;
 
-// Schema fixed in Supabase — no column sniffing needed
+// Schema fixed in Supabase â€” no column sniffing needed
 if ($orderId <= 0) {
     $latest = db_fetch_one($pdo,
         'SELECT "OrderID" FROM orders WHERE "UserID" = ? ORDER BY "OrderID" DESC LIMIT 1',
@@ -65,7 +65,7 @@ if ($status === 'cancelled') {
     <meta http-equiv="refresh" content="20">
     
     <style>
-        /* ── Reset & base ── */
+        /* â”€â”€ Reset & base â”€â”€ */
         *, body { font-family: 'Inter', 'Segoe UI', sans-serif; box-sizing: border-box; }
         body { background: #ffffff; margin: 0; padding: 0; color: #1e1e1e; }
 
@@ -77,7 +77,7 @@ if ($status === 'cancelled') {
             padding: 40px 20px;
         }
 
-        /* ── Main Order Card ── */
+        /* â”€â”€ Main Order Card â”€â”€ */
         .tracking-card {
             background: #fff;
             width: 100%;
@@ -101,7 +101,7 @@ if ($status === 'cancelled') {
             background: linear-gradient(90deg, #ff2a44, #ff6b6b);
         }
 
-        /* ── Header ── */
+        /* â”€â”€ Header â”€â”€ */
         .tracking-header {
             display: flex;
             justify-content: space-between;
@@ -154,7 +154,7 @@ if ($status === 'cancelled') {
             margin-top: 2px;
         }
 
-        /* ── Cancelled State ── */
+        /* â”€â”€ Cancelled State â”€â”€ */
         .cancelled-banner {
             background: #f8d7da;
             color: #721c24;
@@ -166,7 +166,7 @@ if ($status === 'cancelled') {
             border: 1px solid #f5c6cb;
         }
 
-        /* ── Progress Tracker ── */
+        /* â”€â”€ Progress Tracker â”€â”€ */
         .progress-tracker {
             display: flex;
             justify-content: space-between;
@@ -250,7 +250,7 @@ if ($status === 'cancelled') {
             color: #2d2d2d;
         }
 
-        /* ── Order Summary ── */
+        /* â”€â”€ Order Summary â”€â”€ */
         .summary-box {
             background: #fafafa;
             border: 1px solid #e0e0e0;
@@ -315,7 +315,7 @@ if ($status === 'cancelled') {
             gap: 4px;
         }
 
-        /* ── Action Footer ── */
+        /* â”€â”€ Action Footer â”€â”€ */
         .action-footer {
             text-align: center;
             display: flex;

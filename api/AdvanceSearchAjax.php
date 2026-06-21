@@ -4,7 +4,7 @@
  * Returns JSON array of matching vendors for the Advanced Search live filter.
  * Called by AdvanceSearch.php via fetch() whenever a filter changes.
  */
-session_start();
+require_once __DIR__ . '/session.php';
 include('db.php');
 include('db_helpers.php');
 

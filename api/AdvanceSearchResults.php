@@ -1,5 +1,5 @@
 <?php
-session_start();
+require_once __DIR__ . '/session.php';
 include('db.php');
 include('db_helpers.php');
 include('recommendations.php');
@@ -171,7 +171,7 @@ if ($sessionUserId > 0) {
     <script>
 document.addEventListener('DOMContentLoaded', function() {
 
-    /* ── Navbar active link ── */
+    /* â”€â”€ Navbar active link â”€â”€ */
     var page = window.location.pathname.split('/').pop().toLowerCase() || 'homepage.php';
     if (page === '' || page === 'index.php') page = 'homepage.php';
     document.querySelectorAll('.nav-links a').forEach(function(link) {
@@ -181,9 +181,9 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    /* ══════════════════════════════════
+    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
        RESULTS MAP
-    ══════════════════════════════════ */
+    â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
     var mapEl = document.getElementById('resultsMap');
     if (!mapEl) return;
 
@@ -198,10 +198,10 @@ document.addEventListener('DOMContentLoaded', function() {
     setTimeout(function() { map.invalidateSize(); }, 200);
     setTimeout(function() { map.invalidateSize(); }, 600);
 
-    /* ── Vendor data from PHP ── */
+    /* â”€â”€ Vendor data from PHP â”€â”€ */
     var mapVendors = <?php echo json_encode(array_values($mapVendors), JSON_UNESCAPED_UNICODE); ?>;
 
-    /* ── Custom marker icon ── */
+    /* â”€â”€ Custom marker icon â”€â”€ */
     var vendorIcon = L.divIcon({
         className: '',
         html: '<div style="width:28px;height:28px;background:#c1121f;border:3px solid #fff;border-radius:50%;box-shadow:0 2px 8px rgba(193,18,31,0.35);"></div>',
@@ -217,7 +217,7 @@ document.addEventListener('DOMContentLoaded', function() {
         iconAnchor: [8, 8]
     });
 
-    /* ── Place vendor markers ── */
+    /* â”€â”€ Place vendor markers â”€â”€ */
     var markers = [];
 
     mapVendors.forEach(function(v) {
@@ -236,7 +236,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         '</div>';
                 });
                 if (v.Foods.length > 5) {
-                    foodList += '<div style="color:#aaa;font-style:italic;">+' + (v.Foods.length - 5) + ' more…</div>';
+                    foodList += '<div style="color:#aaa;font-style:italic;">+' + (v.Foods.length - 5) + ' moreâ€¦</div>';
                 }
                 foodList += '</div>';
             }
@@ -261,18 +261,18 @@ document.addEventListener('DOMContentLoaded', function() {
         map.fitBounds(group.getBounds().pad(0.15));
     }
 
-    /* ── User location ── */
+    /* â”€â”€ User location â”€â”€ */
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function(pos) {
             var uMarker = L.marker([pos.coords.latitude, pos.coords.longitude], { icon: userIcon }).addTo(map);
-            uMarker.bindPopup('<strong style="font-family:Inter,sans-serif;font-size:0.85rem;">📍 You</strong>');
+            uMarker.bindPopup('<strong style="font-family:Inter,sans-serif;font-size:0.85rem;">ðŸ“ You</strong>');
             if (markers.length === 0) {
                 map.setView([pos.coords.latitude, pos.coords.longitude], 14);
             }
         }, function() {}, { enableHighAccuracy: true, timeout: 8000 });
     }
 
-    /* ── Helper ── */
+    /* â”€â”€ Helper â”€â”€ */
     function escapeHtml(text) {
         var div = document.createElement('div');
         div.appendChild(document.createTextNode(text));
@@ -280,9 +280,9 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-/* ══════════════════════════════════
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
    SIDEBAR FILTER HELPERS
-══════════════════════════════════ */
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 function updateDietary(radio) {
     document.getElementById('hiddenDietary').value = radio.value;
     document.getElementById('advSearchResultForm').submit();

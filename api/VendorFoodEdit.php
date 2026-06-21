@@ -1,5 +1,5 @@
 <?php
-session_start();
+require_once __DIR__ . '/session.php';
 include('db.php');
 include('db_helpers.php');
 
@@ -225,7 +225,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['Action_Update'])) {
                     </div>
                 <?php endif; ?>
                 <label for="Image" class="file-upload-label" id="uploadLabel" style="margin-top: 8px;">
-                    <span class="upload-icon">📷</span>
+                    <span class="upload-icon">ðŸ“·</span>
                     <span class="upload-text">Click to choose a new image from your device</span>
                 </label>
                 <input type="file" id="Image" name="Image" accept="image/jpeg,image/png,image/gif,image/webp" class="file-input-hidden" onchange="previewImage(this)">

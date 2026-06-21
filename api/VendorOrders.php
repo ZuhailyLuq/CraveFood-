@@ -1,5 +1,5 @@
 <?php
-session_start();
+require_once __DIR__ . '/session.php';
 include('db.php');
 include('db_helpers.php');
 
@@ -139,7 +139,7 @@ $orders = db_fetch_all($pdo,
                                     </form>
                                     <?php if ($order['Status'] !== 'Cancelled' && $order['Status'] !== 'Completed'): ?>
                                         <button type="button" class="btn-danger" style="padding: 6px 12px; margin: 0;" onclick="cancelOrder(<?php echo (int)$order['OrderID']; ?>)">Cancel</button>
-                                        <a href="VendorChat.php?order_id=<?php echo (int)$order['OrderID']; ?>" class="btn-primary" style="padding: 6px 12px; text-decoration: none; font-size: 14px;">💬 Chat</a>
+                                        <a href="VendorChat.php?order_id=<?php echo (int)$order['OrderID']; ?>" class="btn-primary" style="padding: 6px 12px; text-decoration: none; font-size: 14px;">ðŸ’¬ Chat</a>
                                     <?php endif; ?>
                                 </div>
                                 <?php if ($order['Status'] === 'Cancelled' && !empty($order['CancelReason'])): ?>

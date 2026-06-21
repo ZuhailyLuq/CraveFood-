@@ -8,14 +8,14 @@
  * vercel-php may expose vars via $_SERVER, $_ENV, or getenv().
  */
 function env(string $key, string $default = ''): string {
-    // 1. getenv() — works on most PHP setups
+    // 1. getenv() â€” works on most PHP setups
     $val = getenv($key);
     if ($val !== false && $val !== '') return $val;
 
-    // 2. $_ENV — populated when variables_order includes 'E'
+    // 2. $_ENV â€” populated when variables_order includes 'E'
     if (isset($_ENV[$key]) && $_ENV[$key] !== '') return $_ENV[$key];
 
-    // 3. $_SERVER — vercel-php often injects env vars here
+    // 3. $_SERVER â€” vercel-php often injects env vars here
     if (isset($_SERVER[$key]) && $_SERVER[$key] !== '') return $_SERVER[$key];
 
     return $default;

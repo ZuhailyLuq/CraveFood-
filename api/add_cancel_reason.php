@@ -1,5 +1,5 @@
 <?php
-// Migration helper — not needed in production (Supabase schema already includes CancelReason).
+// Migration helper â€” not needed in production (Supabase schema already includes CancelReason).
 // Kept for reference only.
 include('db.php');
 try {

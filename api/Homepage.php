@@ -1,5 +1,5 @@
 <?php
-session_start();
+require_once __DIR__ . '/session.php';
 include('db.php');
 include('db_helpers.php');
 include('recommendations.php');
@@ -119,21 +119,21 @@ foreach ($_SESSION['cart']['items'] as $ci) {
     <link rel="stylesheet" href="../style.css?v=20260621-7">
     <meta name="description" content="CraveFood - Discover nearby campus cafeterias and stalls, explore menus, and find dishes that fit your health and dietary preferences.">
     <style>
-        /* ── Inter font override ── */
+        /* â”€â”€ Inter font override â”€â”€ */
         *, body { box-sizing: border-box; font-family: 'Inter', 'Segoe UI', sans-serif; }
         body { background: #ffffff; color: #2c3e50; line-height: 1.5; padding-bottom: 80px; margin: 0; }
 
-        /* ══════════════════════════════════════════
+        /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
            COLORS & UTILITIES (Eatigo DNA)
            Accents: `#ff2a44` (Coral Red)
-         ══════════════════════════════════════════ */
+         â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
         :root {
             --primary: #ff2a44;
         }
 
-        /* ══════════════════════════════════════════
+        /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
            HOMEPAGE HERO & MASCOT
-         ══════════════════════════════════════════ */
+         â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
         .home-hero-wrap {
             max-width: 1120px;
             margin: 32px auto;
@@ -180,9 +180,9 @@ foreach ($_SESSION['cart']['items'] as $ci) {
             .hero-mascot { display: none; }
         }
 
-        /* ══════════════════════════════════════════
+        /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
            SEARCH BAR (Eatigo Pill Style)
-         ══════════════════════════════════════════ */
+         â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
         .quick-search-shell {
             display: flex;
             align-items: stretch;
@@ -300,9 +300,9 @@ foreach ($_SESSION['cart']['items'] as $ci) {
 
 
 
-        /* ══════════════════════════════════════════
+        /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
            POPULAR / RECOMMENDED FOODS
-         ══════════════════════════════════════════ */
+         â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
         .recommendations-section {
             max-width: 1120px;
             margin: 0 auto 36px;
@@ -479,9 +479,9 @@ foreach ($_SESSION['cart']['items'] as $ci) {
             fill: #ffffff;
         }
 
-        /* ══════════════════════════════════════════
+        /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
            SEARCH RESULTS LAYOUT
-         ══════════════════════════════════════════ */
+         â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
         .breadcrumb {
             max-width: 1120px;
             margin: 16px auto 0;
@@ -706,9 +706,9 @@ foreach ($_SESSION['cart']['items'] as $ci) {
 
 
 
-        /* ══════════════════════════════════════════
+        /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
            TOAST NOTIFICATION
-         ══════════════════════════════════════════ */
+         â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
         .cart-toast {
             position: fixed;
             top: 24px;
@@ -729,9 +729,9 @@ foreach ($_SESSION['cart']['items'] as $ci) {
         .cart-toast.show { opacity: 1; transform: translateY(0); pointer-events: auto; }
         .cart-toast.toast-error { background: #c0392b; box-shadow: 0 4px 16px rgba(192,57,43,0.3); }
 
-        /* ══════════════════════════════════════════
+        /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
            PENDING ORDER PILL
-         ══════════════════════════════════════════ */
+         â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
         .pending-pill {
             position: fixed;
             bottom: 24px;
@@ -757,9 +757,9 @@ foreach ($_SESSION['cart']['items'] as $ci) {
 
 
 
-        /* ══════════════════════════════════════════
+        /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
            RESPONSIVE
-         ══════════════════════════════════════════ */
+         â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
         @media (max-width: 820px) {
             .sr-layout { flex-direction: column; padding: 0 16px 40px; }
             .sr-sidebar { width: 100%; position: static; box-shadow: none; margin-bottom: 20px; }
@@ -903,7 +903,7 @@ foreach ($_SESSION['cart']['items'] as $ci) {
                                 <p class="rec-card-price">RM <?php echo number_format($row['Price'], 2); ?></p>
                                 <div class="stepper-add-wrap">
                                     <div class="qty-stepper" data-qty-stepper>
-                                        <button type="button" class="qty-btn" data-qty-action="decrease" aria-label="Decrease">−</button>
+                                        <button type="button" class="qty-btn" data-qty-action="decrease" aria-label="Decrease">âˆ’</button>
                                         <input type="number" min="1" value="1" class="qty-input-stepper" data-qty-input id="rq-<?php echo $row['FoodID']; ?>" aria-label="Quantity">
                                         <button type="button" class="qty-btn" data-qty-action="increase" aria-label="Increase">+</button>
                                     </div>
@@ -922,14 +922,14 @@ foreach ($_SESSION['cart']['items'] as $ci) {
 
     <?php else: ?>
 
-        <!-- ── Breadcrumb ── -->
+        <!-- â”€â”€ Breadcrumb â”€â”€ -->
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="Homepage.php">Home</a>
-            <span class="breadcrumb-sep">›</span>
+            <span class="breadcrumb-sep">â€º</span>
             <span class="breadcrumb-current">Search Results</span>
         </nav>
 
-        <!-- ── Compact unified search bar ── -->
+        <!-- â”€â”€ Compact unified search bar â”€â”€ -->
         <div class="search-results-bar-wrap">
             <form method="GET" action="Homepage.php" id="searchFilterForm">
                 <input type="hidden" name="search_submitted" value="1">
@@ -966,7 +966,7 @@ foreach ($_SESSION['cart']['items'] as $ci) {
             </form>
         </div>
 
-        <!-- ── Two-column layout ── -->
+        <!-- â”€â”€ Two-column layout â”€â”€ -->
         <div class="sr-layout">
 
             <!-- SIDEBAR -->
@@ -1080,7 +1080,7 @@ foreach ($_SESSION['cart']['items'] as $ci) {
                     <!-- Actions -->
                     <div class="fi-actions">
                         <div class="fi-stepper" data-qty-stepper>
-                            <button type="button" class="qty-btn" data-qty-action="decrease" aria-label="Decrease">−</button>
+                            <button type="button" class="qty-btn" data-qty-action="decrease" aria-label="Decrease">âˆ’</button>
                             <input type="number" min="1" value="1"
                                    class="qty-input-stepper" data-qty-input
                                    id="sq-<?php echo $row['FoodID']; ?>" aria-label="Quantity">
@@ -1126,7 +1126,7 @@ foreach ($_SESSION['cart']['items'] as $ci) {
     <script>
 document.addEventListener('DOMContentLoaded', function() {
 
-    /* ── Navbar active link ── */
+    /* â”€â”€ Navbar active link â”€â”€ */
     var page = window.location.pathname.split('/').pop().toLowerCase() || 'homepage.php';
     if (page === '' || page === 'index.php') page = 'homepage.php';
     document.querySelectorAll('.nav-links a').forEach(function(link) {
@@ -1136,9 +1136,9 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    /* ══════════════════════════════════
+    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
        QTY STEPPERS
-     ══════════════════════════════════ */
+     â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
     document.querySelectorAll('[data-qty-stepper]').forEach(function(stepper) {
         var input = stepper.querySelector('[data-qty-input]');
         if (!input) return;
@@ -1154,9 +1154,9 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    /* ══════════════════════════════════
+    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
        TOAST HELPER
-     ══════════════════════════════════ */
+     â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
     var toastTimer = null;
     function showToast(msg, isError) {
         var toast = document.getElementById('homeCartToast');
@@ -1177,9 +1177,9 @@ document.addEventListener('DOMContentLoaded', function() {
         toastTimer = setTimeout(function() { toast.classList.remove('show'); }, 3000);
     }
 
-    /* ══════════════════════════════════
+    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
        ADD TO CART (AJAX)
-     ══════════════════════════════════ */
+     â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
     window.addToCart = function(foodId, qty) {
         qty = parseInt(qty) || 1;
 
@@ -1193,7 +1193,7 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(function(data) {
                 if (data.success) {
                     showToast(data.message || 'Added to cart!', false);
-                    /* ── Update navbar cart badge live ── */
+                    /* â”€â”€ Update navbar cart badge live â”€â”€ */
                     var badge = document.getElementById('navCartBadge');
                     if (badge) {
                         var count = data.cart_count || 0;
@@ -1221,9 +1221,9 @@ document.addEventListener('DOMContentLoaded', function() {
             .catch(function() { showToast('Network error. Please try again.', true); });
     };
 
-    /* ══════════════════════════════════
+    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
        DATE & TIME VISIBILITY
-     ══════════════════════════════════ */
+     â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
     window.toggleTime = function(prefix) {
         var select = document.getElementById(prefix + 'OrderType');
         var wrap = document.getElementById(prefix + 'PickupWrap');
@@ -1243,9 +1243,9 @@ document.addEventListener('DOMContentLoaded', function() {
         toggleTime('search');
     }
 
-    /* ══════════════════════════════════
+    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
        SIDEBAR DIETARY FILTERS (SUBMIT)
-     ══════════════════════════════════ */
+     â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
     window.applyDietaryFilters = function() {
         var form = document.getElementById('searchFilterForm');
         if (!form) return;

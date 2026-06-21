@@ -1,5 +1,5 @@
 <?php
-session_start();
+require_once __DIR__ . '/session.php';
 include('db.php');
 include('db_helpers.php');
 include('achievement_helpers.php');
@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $achievementId = (int)($_POST['achievement_id'] ?? 0);
         $title = trim($_POST['title'] ?? '');
         $description = trim($_POST['description'] ?? '');
-        $icon = trim($_POST['icon'] ?? '🏆');
+        $icon = trim($_POST['icon'] ?? 'ðŸ†');
         $criteriaType = trim($_POST['criteria_type'] ?? '');
         $criteriaValue = (float)($_POST['criteria_value'] ?? 0);
         $rewardType = trim($_POST['reward_type'] ?? '');
@@ -335,7 +335,7 @@ if ($editId > 0) {
                         <div>
                             <label for="icon">Icon</label>
                             <input type="text" id="icon" name="icon" maxlength="20"
-                                   value="<?php echo htmlspecialchars($editAchievement['Icon'] ?? '🏆'); ?>">
+                                   value="<?php echo htmlspecialchars($editAchievement['Icon'] ?? 'ðŸ†'); ?>">
                         </div>
                         <div class="full-width">
                             <label for="description">Description</label>
@@ -475,7 +475,7 @@ if ($editId > 0) {
                                                 echo '<span class="tag-pill">' . htmlspecialchars(trim($tag)) . '</span>';
                                             }
                                         } else {
-                                            echo '<span style="color:#aaa;">—</span>';
+                                            echo '<span style="color:#aaa;">â€”</span>';
                                         }
                                         ?>
                                     </td>

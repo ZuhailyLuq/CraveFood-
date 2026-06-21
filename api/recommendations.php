@@ -123,7 +123,7 @@ function getRecommendationNote($profile) {
     if (!empty($profile['dietary_tag'])) $parts[] = $profile['dietary_tag'];
     if ($parts === []) return '';
 
-    $label = implode(' · ', $parts);
+    $label = implode(' Â· ', $parts);
     $sourceMap = [
         'search'  => 'Based on your recent search: <strong>' . htmlspecialchars($label) . '</strong>',
         'cart'    => 'Based on what you added to cart: <strong>' . htmlspecialchars($label) . '</strong>',
