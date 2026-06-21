@@ -1,0 +1,21 @@
+# Environment variables (never commit these!)
+.env
+*.env.local
+
+# PHP vendor directory (if using Composer)
+/vendor/
+composer.lock
+
+# XAMPP-specific exports (temp files)
+foodcrave_export.sql
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Uploaded files (these go to Supabase Storage in production)
+# api/uploads/ is kept for local dev

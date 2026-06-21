@@ -1,0 +1,40 @@
+<html>
+<head>
+<link rel="stylesheet" href="style.css?v=20260621-4">
+
+	<title>New User</title></head>	
+
+<body>
+
+<div id="notice" class="notice"></div>
+<div class="InfoBox">
+<div class="Head"><h1>Register</h1></div>
+<form action="InsertandVerify.php" method="POST">
+<input type="text" name="RName" placeholder="Name" required maxlength="50">
+<input type="email" name="REmail" placeholder="Email" required maxlength="255">
+<input type="password" name="RPass" placeholder="Password" required minlength="6" maxlength="255">
+<input type="tel" name="RTel" placeholder="Contact Number" required maxlength="20">
+
+<button type="submit" value="Submit" name="Action_Insert">Confirm</button>
+</form>
+<p class="form-link">
+	Already have an account? <a href="Login.html">Login</a>
+</p>
+</div>
+<script>
+	(function () {
+		var params = new URLSearchParams(window.location.search);
+		var msg = params.get('msg');
+		if (!msg) return;
+		var type = params.get('type') || 'error';
+		var notice = document.getElementById('notice');
+		notice.textContent = decodeURIComponent(msg);
+		notice.classList.add('show');
+		notice.classList.add(type === 'success' ? 'notice-success' : 'notice-error');
+	})();
+</script>
+</body>
+
+
+</html>
+

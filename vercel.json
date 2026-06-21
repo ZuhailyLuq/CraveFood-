@@ -1,0 +1,18 @@
+{
+  "functions": {
+    "api/*.php": {
+      "runtime": "vercel-php@0.7.2"
+    }
+  },
+  "routes": [
+    { "src": "/style.css", "dest": "/style.css" },
+    { "src": "/uploads/(.*)", "dest": "/uploads/$1" },
+    { "src": "/Login.html", "dest": "/Login.html" },
+    { "src": "/Register.html", "dest": "/Register.html" },
+    { "src": "/VendorLogin.html", "dest": "/VendorLogin.html" },
+    { "src": "/VendorRegister.html", "dest": "/VendorRegister.html" },
+    { "src": "/api/(.*)", "dest": "/api/$1" },
+    { "src": "/([^.]+)\\.php$", "dest": "/api/$1.php" },
+    { "src": "/", "dest": "/api/Homepage.php" }
+  ]
+}

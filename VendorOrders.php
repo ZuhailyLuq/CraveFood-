@@ -1,0 +1,193 @@
+<?php
+session_start();
+include('db.php');
+
+if (!isset($_SESSION['VendorID'])) {
+    header("Location: Login.html");
+    exit();
+}
+
+$vendorId = (int)$_SESSION['VendorID'];
+
+// Handle status update
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['Action_UpdateStatus'])) {
+    $orderIdToUpdate = (int)$_POST['OrderID'];
+    $newStatus = trim($_POST['NewStatus'] ?? '');
+    
+    // Verify that this order belongs to the vendor
+    $checkSql = "SELECT o.OrderID FROM orders o INNER JOIN MENU_FOOD mf ON o.FoodID = mf.FoodID WHERE o.OrderID = ? AND mf.VendorID = ?";
+    $checkStmt = mysqli_prepare($conn, $checkSql);
+    mysqli_stmt_bind_param($checkStmt, "ii", $orderIdToUpdate, $vendorId);
+    mysqli_stmt_execute($checkStmt);
+    $checkRes = mysqli_stmt_get_result($checkStmt);
+    
+    if (mysqli_num_rows($checkRes) > 0 && $newStatus !== '') {
+        $cancelReason = trim($_POST['CancelReason'] ?? '');
+        if ($newStatus !== 'Cancelled') {
+            $cancelReason = NULL; // Clear reason if not cancelled
+        }
+        $updateSql = "UPDATE orders SET Status = ?, CancelReason = ? WHERE OrderID = ?";
+        $updateStmt = mysqli_prepare($conn, $updateSql);
+        mysqli_stmt_bind_param($updateStmt, "ssi", $newStatus, $cancelReason, $orderIdToUpdate);
+        if (mysqli_stmt_execute($updateStmt)) {
+            header("Location: VendorOrders.php?type=success&msg=" . urlencode("Order #$orderIdToUpdate status updated to $newStatus."));
+            exit();
+        } else {
+            header("Location: VendorOrders.php?type=error&msg=" . urlencode("Failed to update status."));
+            exit();
+        }
+    } else {
+        header("Location: VendorOrders.php?type=error&msg=" . urlencode("Invalid order."));
+        exit();
+    }
+}
+
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['Action_Cancel'])) {
+    $orderIdToCancel = (int)$_POST['OrderID'];
+    $cancelReason = trim($_POST['CancelReason'] ?? '');
+    
+    $checkSql = "SELECT o.OrderID FROM orders o INNER JOIN MENU_FOOD mf ON o.FoodID = mf.FoodID WHERE o.OrderID = ? AND mf.VendorID = ?";
+    $checkStmt = mysqli_prepare($conn, $checkSql);
+    mysqli_stmt_bind_param($checkStmt, "ii", $orderIdToCancel, $vendorId);
+    mysqli_stmt_execute($checkStmt);
+    $checkRes = mysqli_stmt_get_result($checkStmt);
+    
+    if (mysqli_num_rows($checkRes) > 0 && $cancelReason !== '') {
+        $updateSql = "UPDATE orders SET Status = 'Cancelled', CancelReason = ? WHERE OrderID = ?";
+        $updateStmt = mysqli_prepare($conn, $updateSql);
+        mysqli_stmt_bind_param($updateStmt, "si", $cancelReason, $orderIdToCancel);
+        if (mysqli_stmt_execute($updateStmt)) {
+            header("Location: VendorOrders.php?type=success&msg=" . urlencode("Order #$orderIdToCancel cancelled."));
+            exit();
+        }
+    }
+    header("Location: VendorOrders.php?type=error&msg=" . urlencode("Failed to cancel order."));
+    exit();
+}
+
+// Fetch vendor's orders
+$sql = "SELECT o.OrderID, o.OrderType, o.Status, o.TotalAmount, o.PickupTime, mf.FoodName 
+        FROM orders o 
+        INNER JOIN MENU_FOOD mf ON o.FoodID = mf.FoodID 
+        WHERE mf.VendorID = ?
+        ORDER BY o.OrderID DESC";
+$stmt = mysqli_prepare($conn, $sql);
+mysqli_stmt_bind_param($stmt, "i", $vendorId);
+mysqli_stmt_execute($stmt);
+$result = mysqli_stmt_get_result($stmt);
+
+$orders = [];
+while ($row = mysqli_fetch_assoc($result)) {
+    $orders[] = $row;
+}
+?>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Vendor Orders - CraveFood</title>
+    <link rel="stylesheet" href="style.css?v=20260621-4">
+    <meta http-equiv="refresh" content="30">
+</head>
+<body>
+    <div class="navbar">
+        <div class="logo"><h2>CraveFood</h2></div>
+        <div class="nav-links">
+            <a href="VendorDashboard.php">Dashboard</a>
+            <a href="VendorFoodCreate.php">Add Food</a>
+            <a href="VendorProfileEdit.php">Store Profile</a>
+            <a href="VendorLogout.php">Logout</a>
+        </div>
+    </div>
+
+    <?php
+        $noticeMsg = isset($_GET['msg']) ? urldecode($_GET['msg']) : '';
+        $noticeType = isset($_GET['type']) ? $_GET['type'] : 'error';
+    ?>
+
+    <?php if ($noticeMsg !== ''): ?>
+        <div class="notice show <?php echo ($noticeType === 'success') ? 'notice-success' : 'notice-error'; ?>">
+            <?php echo htmlspecialchars($noticeMsg); ?>
+        </div>
+    <?php endif; ?>
+
+    <div class="dashboard-box" style="max-width: 1000px;">
+        <h2>Vendor Orders</h2>
+        <p class="settings-note">Manage incoming orders. This page refreshes every 30 seconds.</p>
+
+        <?php if (count($orders) === 0): ?>
+            <p class="settings-note">No orders yet.</p>
+        <?php else: ?>
+            <div style="overflow-x: auto;">
+                <table class="vendor-table">
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Food</th>
+                            <th>Order Type</th>
+                            <th>Pickup Time</th>
+                            <th>Amount</th>
+                            <th>Status</th>
+                            <th>Update</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <?php foreach ($orders as $order): ?>
+                        <tr>
+                            <td>#<?php echo (int)$order['OrderID']; ?></td>
+                            <td><?php echo htmlspecialchars((string)$order['FoodName']); ?></td>
+                            <td><?php echo htmlspecialchars((string)$order['OrderType']); ?></td>
+                            <td><?php echo !empty($order['PickupTime']) ? htmlspecialchars((string)$order['PickupTime']) : '-'; ?></td>
+                            <td>RM <?php echo number_format((float)$order['TotalAmount'], 2); ?></td>
+                            <td><span class="status-pill"><?php echo htmlspecialchars((string)$order['Status']); ?></span></td>
+                            <td>
+                                <div style="display: flex; align-items: center; gap: 6px; flex-wrap: wrap;">
+                                    <form action="VendorOrders.php" method="POST" style="margin: 0; display: flex; gap: 6px;">
+                                        <input type="hidden" name="OrderID" value="<?php echo (int)$order['OrderID']; ?>">
+                                        <select name="NewStatus" style="margin-bottom: 0; padding: 6px; width: 110px; font-size: 14px; border: 1px solid #f0c1c8; border-radius: 9px;">
+                                            <option value="Pending" <?php if($order['Status']==='Pending') echo 'selected'; ?>>Pending</option>
+                                            <option value="Preparing" <?php if($order['Status']==='Preparing') echo 'selected'; ?>>Preparing</option>
+                                            <option value="Cooking" <?php if($order['Status']==='Cooking') echo 'selected'; ?>>Cooking</option>
+                                            <option value="Ready" <?php if($order['Status']==='Ready') echo 'selected'; ?>>Ready</option>
+                                            <option value="Completed" <?php if($order['Status']==='Completed') echo 'selected'; ?>>Completed</option>
+                                            <?php if($order['Status']==='Cancelled'): ?>
+                                                <option value="Cancelled" selected>Cancelled</option>
+                                            <?php endif; ?>
+                                        </select>
+                                        <button type="submit" name="Action_UpdateStatus" class="btn-primary" style="padding: 6px 12px;">Update</button>
+                                    </form>
+                                    <?php if ($order['Status'] !== 'Cancelled' && $order['Status'] !== 'Completed'): ?>
+                                        <button type="button" class="btn-danger" style="padding: 6px 12px; margin: 0;" onclick="cancelOrder(<?php echo (int)$order['OrderID']; ?>)">Cancel</button>
+                                        <a href="VendorChat.php?order_id=<?php echo (int)$order['OrderID']; ?>" class="btn-primary" style="padding: 6px 12px; text-decoration: none; font-size: 14px;">💬 Chat</a>
+                                    <?php endif; ?>
+                                </div>
+                                <?php if ($order['Status'] === 'Cancelled' && !empty($order['CancelReason'])): ?>
+                                    <div style="font-size: 12px; color: #c1121f; margin-top: 6px; max-width: 200px;">Reason: <?php echo htmlspecialchars($order['CancelReason']); ?></div>
+                                <?php endif; ?>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+        <?php endif; ?>
+    </div>
+
+    <script>
+document.addEventListener('DOMContentLoaded', function() {
+    var page = window.location.pathname.split('/').pop().toLowerCase() || 'homepage.php';
+    if (page === '' || page === 'index.php') page = 'homepage.php';
+    var links = document.querySelectorAll('.nav-links a');
+    links.forEach(function(link) {
+        var href = (link.getAttribute('href') || '').toLowerCase();
+        if (href === page || (page.startsWith('advancesearch') && href === 'homepage.php')) {
+            link.classList.add('active');
+        }
+    });
+});
+</script>
+</body>
+</html>
+
+
+
+

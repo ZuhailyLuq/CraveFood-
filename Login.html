@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CraveFood - Login / Register</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css?v=20260621-4">
+    <style>
+        /* ── Reset & base ── */
+        *, body { font-family: 'Inter', 'Segoe UI', sans-serif; box-sizing: border-box; }
+        body {
+            background: #fdf5f6; /* Soft warm faint pink */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            color: #1e1e1e;
+        }
+
+        .auth-container {
+            width: 100%;
+            max-width: 440px;
+            padding: 20px;
+        }
+
+        .auth-box {
+            background: #fff;
+            border-radius: 20px;
+            box-shadow: 0 12px 40px rgba(193,18,31,0.08), 0 4px 12px rgba(0,0,0,0.03);
+            padding: 40px 32px 36px;
+            border: 1px solid #f0e4e7;
+        }
+
+        .auth-logo {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+        .auth-logo h1 {
+            color: #c1121f;
+            font-size: 2.2rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            margin: 0;
+        }
+
+        /* ── Tab System ── */
+        .auth-tabs {
+            display: flex;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 24px;
+            border: 2px solid #c1121f;
+        }
+        .auth-tab {
+            flex: 1;
+            padding: 12px;
+            text-align: center;
+            font-weight: 700;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            background: #fff;
+            color: #c1121f;
+            border: none;
+            outline: none;
+        }
+        .auth-tab.active {
+            background: #c1121f;
+            color: #fff;
+        }
+        .auth-tab:hover:not(.active) {
+            background: #fff5f6;
+        }
+
+        /* ── Forms ── */
+        .auth-form { display: none; }
+        .auth-form.active { display: block; }
+        
+        .auth-form label {
+            display: block;
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: #2d2d2d;
+            margin-bottom: 8px;
+            margin-top: 16px;
+        }
+        .auth-form label:first-child { margin-top: 0; }
+        
+        .auth-form input,
+        .auth-form select {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1.5px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 500;
+            color: #2d2d2d;
+            background: #fff;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            outline: none;
+        }
+        .auth-form input::placeholder {
+            color: #adb5bd;
+            font-weight: 400;
+        }
+        .auth-form input:focus,
+        .auth-form select:focus {
+            border-color: #c1121f;
+            box-shadow: 0 0 0 3px rgba(193, 18, 31, 0.1);
+        }
+
+        /* ── Password Wrapper ── */
+        .password-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+        .password-wrapper input {
+            padding-right: 44px; /* Space for the eye icon */
+        }
+        .btn-eye {
+            position: absolute;
+            right: 8px;
+            background: none;
+            border: none;
+            padding: 6px;
+            cursor: pointer;
+            color: #888;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 6px;
+            transition: background 0.2s, color 0.2s;
+        }
+        .btn-eye:hover {
+            background: #f8f9fa;
+            color: #2d2d2d;
+        }
+        .btn-eye svg {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+        }
+
+        /* ── Forgot Password ── */
+        .forgot-password-row {
+            text-align: right;
+            margin-top: 8px;
+        }
+        .forgot-link {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #888;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .forgot-link:hover {
+            color: #a00f1a;
+        }
+
+        /* ── Primary Button ── */
+        .btn-primary {
+            width: 100%;
+            padding: 14px;
+            background: #c1121f;
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 1.05rem;
+            cursor: pointer;
+            margin-top: 24px;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 12px rgba(193,18,31,0.2);
+        }
+        .btn-primary:hover {
+            background: #a00f1a;
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(193,18,31,0.25);
+        }
+        .btn-primary:active {
+            transform: scale(0.98);
+        }
+
+        /* ── Role Specific Fields ── */
+        .user-fields, .vendor-fields, .admin-fields { display: none; }
+        .user-fields.show, .vendor-fields.show, .admin-fields.show { display: block; }
+        
+        /* ── Notice ── */
+        .notice {
+            padding: 12px 16px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            display: none;
+            text-align: center;
+        }
+        .notice.show { display: block; }
+        .notice-error { background: #fdf2f2; color: #c1121f; border: 1px solid #f8d7da; }
+        .notice-success { background: #f0fdf4; color: #15803d; border: 1px solid #bbf7d0; }
+    </style>
+</head>
+<body>
+    <div class="auth-container">
+        <div id="notice" class="notice"></div>
+        <div class="auth-box">
+            
+            <div class="auth-logo">
+                <h1>🍽 CraveFood</h1>
+            </div>
+
+            <!-- Tabs -->
+            <div class="auth-tabs">
+                <button class="auth-tab active" id="tabLogin" onclick="switchTab('login')">Login</button>
+                <button class="auth-tab" id="tabRegister" onclick="switchTab('register')">Register</button>
+            </div>
+
+            <!-- LOGIN FORM -->
+            <form class="auth-form active" id="loginForm" action="AuthHandler.php" method="POST">
+                <input type="hidden" name="auth_action" value="login">
+
+                <label for="loginRole">I am a</label>
+                <select name="role" id="loginRole" class="role-select" onchange="updateLoginFields()">
+                    <option value="user">User</option>
+                    <option value="vendor">Vendor</option>
+                    <option value="admin">Admin</option>
+                </select>
+
+                <div id="loginUserFields" class="user-fields show">
+                    <label for="loginUsername">Username</label>
+                    <input type="text" name="login_username" id="loginUsername" placeholder="Enter your username" maxlength="50">
+                </div>
+
+                <div id="loginVendorFields" class="vendor-fields">
+                    <label for="loginShopName">Shop Name</label>
+                    <input type="text" name="login_shopname" id="loginShopName" placeholder="Enter your shop name" maxlength="100">
+                </div>
+
+                <div id="loginAdminFields" class="admin-fields">
+                    <label for="loginAdminName">Admin Username</label>
+                    <input type="text" name="login_admin_name" id="loginAdminName" placeholder="Enter admin username" maxlength="50">
+                </div>
+
+                <label for="loginPassword">Password</label>
+                <div class="password-wrapper">
+                    <input type="password" name="login_password" id="loginPassword" placeholder="Enter your password" required minlength="6" maxlength="255">
+                    <button type="button" class="btn-eye" aria-label="Toggle password visibility" onclick="togglePassword('loginPassword')">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>
+                        </svg>
+                    </button>
+                </div>
+                
+                <div class="forgot-password-row">
+                    <a href="#" class="forgot-link">Forgot Password?</a>
+                </div>
+
+                <button type="submit" class="btn-primary">Login</button>
+            </form>
+
+            <!-- REGISTER FORM -->
+            <form class="auth-form" id="registerForm" action="AuthHandler.php" method="POST">
+                <input type="hidden" name="auth_action" value="register">
+
+                <label for="registerRole">I am a</label>
+                <select name="role" id="registerRole" class="role-select" onchange="updateRegisterFields()">
+                    <option value="user">User</option>
+                    <option value="vendor">Vendor</option>
+                    <option value="admin">Admin</option>
+                </select>
+
+                <div id="regUserFields" class="user-fields show">
+                    <label for="regUsername">Username</label>
+                    <input type="text" name="reg_username" id="regUsername" placeholder="Choose a username" maxlength="50">
+                    <label for="regEmail">Email</label>
+                    <input type="email" name="reg_email" id="regEmail" placeholder="Enter your email" maxlength="255">
+                    <label for="regPhone">Contact Number</label>
+                    <input type="tel" name="reg_phone" id="regPhone" placeholder="Enter your phone number" maxlength="20">
+                </div>
+
+                <div id="regVendorFields" class="vendor-fields">
+                    <label for="regShopName">Shop Name</label>
+                    <input type="text" name="reg_shopname" id="regShopName" placeholder="Choose a shop name" maxlength="100">
+                </div>
+
+                <div id="regAdminFields" class="admin-fields">
+                    <label for="regAdminName">Admin Username</label>
+                    <input type="text" name="reg_admin_name" id="regAdminName" placeholder="Choose an admin username" maxlength="50">
+                    <label for="regAdminEmail">Admin Email</label>
+                    <input type="email" name="reg_admin_email" id="regAdminEmail" placeholder="Enter admin email" maxlength="255">
+                </div>
+
+                <label for="regPassword">Password</label>
+                <div class="password-wrapper">
+                    <input type="password" name="reg_password" id="regPassword" placeholder="Create a password" required minlength="6" maxlength="255">
+                    <button type="button" class="btn-eye" aria-label="Toggle password visibility" onclick="togglePassword('regPassword')">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <button type="submit" class="btn-primary">Register</button>
+            </form>
+
+        </div>
+    </div>
+
+    <script>
+        function switchTab(tab) {
+            var loginTab = document.getElementById('tabLogin');
+            var registerTab = document.getElementById('tabRegister');
+            var loginForm = document.getElementById('loginForm');
+            var registerForm = document.getElementById('registerForm');
+
+            if (tab === 'login') {
+                loginTab.classList.add('active');
+                registerTab.classList.remove('active');
+                loginForm.classList.add('active');
+                registerForm.classList.remove('active');
+            } else {
+                registerTab.classList.add('active');
+                loginTab.classList.remove('active');
+                registerForm.classList.add('active');
+                loginForm.classList.remove('active');
+            }
+        }
+
+        function updateLoginFields() {
+            var role = document.getElementById('loginRole').value;
+            document.getElementById('loginUserFields').className = 'user-fields' + (role === 'user' ? ' show' : '');
+            document.getElementById('loginVendorFields').className = 'vendor-fields' + (role === 'vendor' ? ' show' : '');
+            document.getElementById('loginAdminFields').className = 'admin-fields' + (role === 'admin' ? ' show' : '');
+        }
+
+        function updateRegisterFields() {
+            var role = document.getElementById('registerRole').value;
+            document.getElementById('regUserFields').className = 'user-fields' + (role === 'user' ? ' show' : '');
+            document.getElementById('regVendorFields').className = 'vendor-fields' + (role === 'vendor' ? ' show' : '');
+            document.getElementById('regAdminFields').className = 'admin-fields' + (role === 'admin' ? ' show' : '');
+        }
+
+        function togglePassword(inputId) {
+            var input = document.getElementById(inputId);
+            if (input.type === "password") {
+                input.type = "text";
+                // Optionally swap to eye-off SVG here if desired
+            } else {
+                input.type = "password";
+            }
+        }
+
+        // Show notice from URL params
+        (function () {
+            var params = new URLSearchParams(window.location.search);
+            var msg = params.get('msg');
+            if (!msg) return;
+            var type = params.get('type') || 'error';
+            var notice = document.getElementById('notice');
+            notice.textContent = decodeURIComponent(msg);
+            notice.classList.add('show');
+            notice.classList.add(type === 'success' ? 'notice-success' : 'notice-error');
+
+            // Auto-switch to register tab if coming from register error
+            var tab = params.get('tab');
+            if (tab === 'register') switchTab('register');
+        })();
+    </script>
+</body>
+</html>
+

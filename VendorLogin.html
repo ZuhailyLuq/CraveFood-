@@ -1,0 +1,41 @@
+<html>
+<head>
+    <link rel="stylesheet" href="style.css?v=20260621-4">
+    <title>Vendor Login</title>
+</head>
+<body>
+    <div id="notice" class="notice"></div>
+
+    <div class="InfoBox">
+        <div class="Head">
+            <h1>Vendor Login</h1>
+        </div>
+
+        <form action="VendorInsertandVerify.php" method="POST">
+            <input type="text" name="ShopName" placeholder="Shop Name" required maxlength="100">
+            <input type="password" name="VendorPassword" placeholder="Password" required minlength="6" maxlength="255">
+            <button type="submit" name="Action_Verify" value="Submit">Enter</button>
+        </form>
+
+        <p class="form-link">
+            Don't have an account? <a href="VendorRegister.html">Register</a><br><br>
+            Back to user login? <a href="Login.html">Login</a>
+        </p>
+    </div>
+
+    <script>
+        (function () {
+            var params = new URLSearchParams(window.location.search);
+            var msg = params.get('msg');
+            if (!msg) return;
+            var type = params.get('type') || 'error';
+            var notice = document.getElementById('notice');
+            notice.textContent = decodeURIComponent(msg);
+            notice.classList.add('show');
+            notice.classList.add(type === 'success' ? 'notice-success' : 'notice-error');
+        })();
+    </script>
+</body>
+</html>
+
+
