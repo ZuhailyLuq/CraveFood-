@@ -34,7 +34,7 @@ if (!empty($database_url)) {
     $db_password = urldecode($params['pass'] ?? '');
 } else {
     // Supabase Connection Pooler (IPv4, Session mode for broader compat)
-    $db_host     = env('DB_HOST',     'aws-0-ap-northeast-1.pooler.supabase.com');
+    $db_host     = env('DB_HOST',     'aws-1-ap-northeast-1.pooler.supabase.com');
     $db_port     = env('DB_PORT',     '5432');
     $db_name     = env('DB_NAME',     'postgres');
     $db_user     = env('DB_USER',     'postgres.zuojozzmfokpfemqcxcg');
