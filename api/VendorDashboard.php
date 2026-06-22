@@ -178,13 +178,19 @@ $adminNotifs = db_fetch_all($pdo,
                                 <td><?php echo htmlspecialchars((string)($item['Category'] ?? '')); ?></td>
                             <?php endif; ?>
                             <?php if ($hasStatus): ?>
-                                <td><span class="status-pill"><?php echo htmlspecialchars((string)($item['Status'] ?? '')); ?></span></td>
+                                <?php
+                                    $st = (string)($item['Status'] ?? '');
+                                    $bClass = 'badge-neutral';
+                                    if (strtolower($st) === 'available') $bClass = 'badge-success';
+                                    elseif (strtolower($st) === 'unavailable') $bClass = 'badge-warning';
+                                ?>
+                                <td><span class="badge-pill <?php echo $bClass; ?>"><?php echo htmlspecialchars($st); ?></span></td>
                             <?php endif; ?>
                             <td style="display:flex; gap:10px; align-items:center;">
                                 <a class="btn-advance-ghost" style="padding:6px 12px; font-size:0.8rem;" href="VendorFoodEdit.php?food_id=<?php echo (int)$item['FoodID']; ?>">Edit</a>
                                 <form action="VendorFoodDelete.php" method="POST" class="inline-delete-form" onsubmit="return confirm('Delete this food item?');">
                                     <input type="hidden" name="FoodID" value="<?php echo (int)$item['FoodID']; ?>">
-                                    <button type="submit" name="Action_Delete" value="Delete" class="btn-advance-ghost" style="padding:6px 12px; font-size:0.8rem; border-color:#c1121f; color:#c1121f;">Delete</button>
+                                    <button type="submit" name="Action_Delete" value="Delete" class="btn-outline btn-outline-danger">Delete</button>
                                 </form>
                             </td>
                         </tr>

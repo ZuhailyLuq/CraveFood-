@@ -165,24 +165,24 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['Action_Update'])) {
         <form class="auth-form" method="POST" action="VendorFoodEdit.php?food_id=<?php echo (int)$foodId; ?>" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="FoodName">Food Name</label>
-                <input type="text" id="FoodName" name="FoodName" required maxlength="100"
+                <input type="text" class="modern-input"  id="FoodName" name="FoodName" required maxlength="100"
                        value="<?php echo htmlspecialchars((string)$item['FoodName'] ?? ''); ?>">
             </div>
 
             <div class="form-group">
                 <label for="Price">Price (RM)</label>
-                <input type="number" id="Price" name="Price" step="0.01" min="0" required
+                <input type="number" class="modern-input"  id="Price" name="Price" step="0.01" min="0" required
                        value="<?php echo htmlspecialchars((string)($item['Price'] ?? '0')); ?>">
             </div>
 
             <div class="form-group">
                 <label for="Description">Description / Ingredients</label>
-                <textarea id="Description" name="Description" rows="4"><?php echo htmlspecialchars((string)($item['Description'] ?? '')); ?></textarea>
+                <textarea class="modern-input"  id="Description" name="Description" rows="4"><?php echo htmlspecialchars((string)($item['Description'] ?? '')); ?></textarea>
             </div>
 
             <div class="form-group">
                 <label for="Category">Category</label>
-                <select id="Category" name="Category" required>
+                <select class="modern-input"  id="Category" name="Category" required>
                     <option value="Main" <?php echo (($item['Category'] ?? '') === 'Main') ? 'selected' : ''; ?>>Main</option>
                     <option value="Drink" <?php echo (($item['Category'] ?? '') === 'Drink') ? 'selected' : ''; ?>>Drink</option>
                     <option value="Snack" <?php echo (($item['Category'] ?? '') === 'Snack') ? 'selected' : ''; ?>>Snack</option>
@@ -191,14 +191,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['Action_Update'])) {
 
             <div class="form-group">
                 <label for="DietaryTag">Dietary Tag</label>
-                <input type="text" id="DietaryTag" name="DietaryTag" maxlength="100"
+                <input type="text" class="modern-input"  id="DietaryTag" name="DietaryTag" maxlength="100"
                        value="<?php echo htmlspecialchars((string)($item['DietaryTag'] ?? '')); ?>"
                        placeholder="e.g., Halal, Vegetarian, Protein">
             </div>
 
             <div class="form-group">
                 <label for="Status">Status</label>
-                <select id="Status" name="Status">
+                <select class="modern-input"  id="Status" name="Status">
                     <option value="Available" <?php echo (($item['Status'] ?? 'Available') === 'Available') ? 'selected' : ''; ?>>Available</option>
                     <option value="Unavailable" <?php echo (($item['Status'] ?? '') === 'Unavailable') ? 'selected' : ''; ?>>Unavailable</option>
                 </select>
@@ -216,11 +216,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['Action_Update'])) {
                         <img id="previewImg" src="" alt="Preview">
                     </div>
                 <?php endif; ?>
-                <label for="Image" class="file-upload-label" id="uploadLabel" style="margin-top: 8px;">
-                    <span class="upload-icon">&#128205;·</span>
-                    <span class="upload-text">Click to choose a new image from your device</span>
+                <label for="Image" class="file-drop-zone" id="uploadLabel">
+                    <span class="file-drop-icon">&#128247;</span>
+                    <span class="file-drop-text">Click to choose an image</span>
+                    <span class="file-drop-subtext">Supported formats: JPG, PNG, GIF, WEBP</span>
+                    <input type="file" id="Image" name="Image" accept="image/jpeg,image/png,image/gif,image/webp" class="file-input-hidden" onchange="previewImage(this)">
                 </label>
-                <input type="file" id="Image" name="Image" accept="image/jpeg,image/png,image/gif,image/webp" class="file-input-hidden" onchange="previewImage(this)">
             </div>
 
             <button type="submit" name="Action_Update" value="Update" class="btn-primary btn-block">Update Food</button>

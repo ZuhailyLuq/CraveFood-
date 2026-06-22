@@ -92,7 +92,7 @@ $orders = db_fetch_all($pdo,
             <p class="hero-subtitle" style="margin-bottom:24px;">No orders yet.</p>
         <?php else: ?>
             <div style="overflow-x: auto;">
-                <table class="vendor-table">
+                <table class="vendor-status-table" style="width:100%; background:#fff; border-radius:12px; box-shadow:0 4px 16px rgba(0,0,0,0.04); overflow:hidden;">
                     <thead>
                         <tr>
                             <th>Order ID</th>
@@ -112,12 +112,22 @@ $orders = db_fetch_all($pdo,
                             <td><?php echo htmlspecialchars((string)$order['OrderType']); ?></td>
                             <td><?php echo !empty($order['PickupTime']) ? htmlspecialchars((string)$order['PickupTime']) : '-'; ?></td>
                             <td>RM <?php echo number_format((float)$order['TotalAmount'], 2); ?></td>
-                            <td><span class="status-pill"><?php echo htmlspecialchars((string)$order['Status']); ?></span></td>
+                            <td>
+                                <?php
+                                    $st = (string)$order['Status'];
+                                    $bClass = 'badge-neutral';
+                                    if ($st === 'Completed') $bClass = 'badge-success';
+                                    elseif ($st === 'Pending') $bClass = 'badge-warning';
+                                    elseif ($st === 'Preparing' || $st === 'Cooking' || $st === 'Ready') $bClass = 'badge-info';
+                                    elseif ($st === 'Cancelled') $bClass = 'badge-danger';
+                                ?>
+                                <span class="badge-pill <?php echo $bClass; ?>"><?php echo htmlspecialchars($st); ?></span>
+                            </td>
                             <td>
                                 <div style="display: flex; align-items: center; gap: 6px; flex-wrap: wrap;">
                                     <form action="VendorOrders.php" method="POST" style="margin: 0; display: flex; gap: 6px;">
                                         <input type="hidden" name="OrderID" value="<?php echo (int)$order['OrderID']; ?>">
-                                        <select name="NewStatus" style="margin-bottom: 0; padding: 6px; width: 110px; font-size: 14px; border: 1px solid #f0c1c8; border-radius: 9px;">
+                                        <select name="NewStatus" style="margin-bottom: 0; padding: 6px; width: 110px; font-size: 14px; border: 1px solid #e9ecef; border-radius: 9px; outline:none; background:#fff; color:#444;">
                                             <option value="Pending" <?php if($order['Status']==='Pending') echo 'selected'; ?>>Pending</option>
                                             <option value="Preparing" <?php if($order['Status']==='Preparing') echo 'selected'; ?>>Preparing</option>
                                             <option value="Cooking" <?php if($order['Status']==='Cooking') echo 'selected'; ?>>Cooking</option>
@@ -127,11 +137,11 @@ $orders = db_fetch_all($pdo,
                                                 <option value="Cancelled" selected>Cancelled</option>
                                             <?php endif; ?>
                                         </select>
-                                        <button type="submit" name="Action_UpdateStatus" class="btn-primary" style="padding: 6px 12px;">Update</button>
+                                        <button type="submit" name="Action_UpdateStatus" class="btn-outline btn-outline-primary" style="padding: 6px 12px; font-size:0.8rem;">Update</button>
                                     </form>
                                     <?php if ($order['Status'] !== 'Cancelled' && $order['Status'] !== 'Completed'): ?>
-                                        <button type="button" class="btn-danger" style="padding: 6px 12px; margin: 0;" onclick="cancelOrder(<?php echo (int)$order['OrderID']; ?>)">Cancel</button>
-                                        <a href="VendorChat.php?order_id=<?php echo (int)$order['OrderID']; ?>" class="btn-primary" style="padding: 6px 12px; text-decoration: none; font-size: 14px;">&#128172; Chat</a>
+                                        <button type="button" class="btn-outline btn-outline-danger" style="padding: 6px 12px; margin: 0; font-size:0.8rem;" onclick="cancelOrder(<?php echo (int)$order['OrderID']; ?>)">Cancel</button>
+                                        <a href="VendorChat.php?order_id=<?php echo (int)$order['OrderID']; ?>" class="btn-text-primary" style="text-decoration: none;">&#128172; Chat</a>
                                     <?php endif; ?>
                                 </div>
                                 <?php if ($order['Status'] === 'Cancelled' && !empty($order['CancelReason'])): ?>

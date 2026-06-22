@@ -94,19 +94,19 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['Action_Save'])) {
         <form class="auth-form" method="POST" action="VendorFoodCreate.php" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="FoodName">Food Name</label>
-                <input type="text" id="FoodName" name="FoodName" placeholder="e.g., Nasi Lemak" required maxlength="100">
+                <input type="text" class="modern-input"  id="FoodName" name="FoodName" placeholder="e.g., Nasi Lemak" required maxlength="100">
             </div>
             <div class="form-group">
                 <label for="Price">Price (RM)</label>
-                <input type="number" id="Price" name="Price" placeholder="e.g., 5.50" step="0.01" min="0" required>
+                <input type="number" class="modern-input"  id="Price" name="Price" placeholder="e.g., 5.50" step="0.01" min="0" required>
             </div>
             <div class="form-group">
                 <label for="Description">Description / Ingredients</label>
-                <textarea id="Description" name="Description" placeholder="Brief details..." rows="4"></textarea>
+                <textarea class="modern-input"  id="Description" name="Description" placeholder="Brief details..." rows="4"></textarea>
             </div>
             <div class="form-group">
                 <label for="Category">Category</label>
-                <select id="Category" name="Category" required>
+                <select class="modern-input"  id="Category" name="Category" required>
                     <option value="Main">Main</option>
                     <option value="Drink">Drink</option>
                     <option value="Snack">Snack</option>
@@ -114,22 +114,23 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['Action_Save'])) {
             </div>
             <div class="form-group">
                 <label for="DietaryTag">Dietary Tag</label>
-                <input type="text" id="DietaryTag" name="DietaryTag" placeholder="e.g., Halal, Vegetarian, Protein" maxlength="100">
+                <input type="text" class="modern-input"  id="DietaryTag" name="DietaryTag" placeholder="e.g., Halal, Vegetarian, Protein" maxlength="100">
             </div>
             <div class="form-group">
                 <label for="Status">Status</label>
-                <select id="Status" name="Status">
+                <select class="modern-input"  id="Status" name="Status">
                     <option value="Available" selected>Available</option>
                     <option value="Unavailable">Unavailable</option>
                 </select>
             </div>
             <div class="form-group">
                 <label>Product Image</label>
-                <label for="Image" class="file-upload-label" id="uploadLabel">
-                    <span class="upload-icon">&#128205;·</span>
-                    <span class="upload-text">Click to choose an image from your device</span>
+                <label for="Image" class="file-drop-zone" id="uploadLabel">
+                    <span class="file-drop-icon">&#128247;</span>
+                    <span class="file-drop-text">Click to choose an image</span>
+                    <span class="file-drop-subtext">Supported formats: JPG, PNG, GIF, WEBP</span>
+                    <input type="file" id="Image" name="Image" accept="image/jpeg,image/png,image/gif,image/webp" class="file-input-hidden" onchange="previewImage(this)">
                 </label>
-                <input type="file" id="Image" name="Image" accept="image/jpeg,image/png,image/gif,image/webp" required class="file-input-hidden" onchange="previewImage(this)">
                 <div class="image-preview-box" id="imagePreview">
                     <img id="previewImg" src="" alt="Preview">
                 </div>

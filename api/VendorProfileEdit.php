@@ -132,11 +132,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <form action="VendorProfileEdit.php" method="POST" class="settings-form" enctype="multipart/form-data">
             <div class="form-group">
                 <label>Shop Name</label>
-                <input type="text" name="ShopName" value="<?php echo htmlspecialchars((string)($vendor['ShopName'] ?? '')); ?>" required>
+                <input type="text" class="modern-input"  name="ShopName" value="<?php echo htmlspecialchars((string)($vendor['ShopName'] ?? '')); ?>" required>
             </div>
             <div class="form-group">
                 <label>Location (Address)</label>
-                <input type="text" name="Location" value="<?php echo htmlspecialchars((string)($vendor['Location'] ?? '')); ?>">
+                <input type="text" class="modern-input"  name="Location" value="<?php echo htmlspecialchars((string)($vendor['Location'] ?? '')); ?>">
             </div>
             <div class="form-group">
                 <label>Operating Hours</label>
@@ -152,14 +152,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
                 ?>
                 <div style="display: flex; gap: 10px; align-items: center;">
-                    <input type="time" name="OpenTime" value="<?php echo htmlspecialchars($currentOpenTime); ?>" style="flex: 1;" required>
+                    <input type="time" class="modern-input"  name="OpenTime" value="<?php echo htmlspecialchars($currentOpenTime); ?>" style="flex: 1;" required>
                     <span style="font-weight: 600; color: #555;">to</span>
-                    <input type="time" name="CloseTime" value="<?php echo htmlspecialchars($currentCloseTime); ?>" style="flex: 1;" required>
+                    <input type="time" class="modern-input"  name="CloseTime" value="<?php echo htmlspecialchars($currentCloseTime); ?>" style="flex: 1;" required>
                 </div>
             </div>
             <div class="form-group">
                 <label>Main Cuisine Category</label>
-                <input type="text" name="FoodType" value="<?php echo htmlspecialchars((string)($vendor['FoodType'] ?? '')); ?>" placeholder="e.g. Malay, Chinese, Western">
+                <input type="text" class="modern-input"  name="FoodType" value="<?php echo htmlspecialchars((string)($vendor['FoodType'] ?? '')); ?>" placeholder="e.g. Malay, Chinese, Western">
             </div>
             <div class="form-group">
                 <label>Store Image</label>
@@ -171,22 +171,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </label>
                     </div>
                 <?php endif; ?>
-                <input type="file" name="ImageFile" id="imageFileInput" accept="image/jpeg,image/png,image/gif,image/webp" onchange="previewImage(this)">
-                <small style="color: var(--gray-medium); display: block; margin-top: 4px;">Accepted: JPG, PNG, GIF, WEBP. Max size: 5MB</small>
+                <label for="imageFileInput" class="file-drop-zone" style="margin-top:10px;">
+                    <span class="file-drop-icon">&#128247;</span>
+                    <span class="file-drop-text">Click to upload a new store image</span>
+                    <span class="file-drop-subtext">Accepted: JPG, PNG, GIF, WEBP. Max size: 5MB</span>
+                    <input type="file" name="ImageFile" id="imageFileInput" accept="image/jpeg,image/png,image/gif,image/webp" onchange="previewImage(this)">
+                </label>
                 <div id="imagePreview" style="margin-top: 10px; display: none;">
                     <img id="previewImg" src="" alt="Preview" style="width: 200px; height: 140px; object-fit: cover; border-radius: var(--border-radius-md); border: 2px solid var(--gray-light);">
                 </div>
             </div>
             <div class="form-group">
                 <label>Store Description</label>
-                <textarea name="Description" rows="4"><?php echo htmlspecialchars((string)($vendor['Description'] ?? '')); ?></textarea>
+                <textarea class="modern-input"  name="Description" rows="4"><?php echo htmlspecialchars((string)($vendor['Description'] ?? '')); ?></textarea>
             </div>
             <div class="form-group">
                 <label>Map Location (Click on the map to pin your store)</label>
-                <div id="vendorMap" style="height: 300px; border-radius: var(--border-radius-md); margin-bottom: 10px;"></div>
+                <div class="map-frame" style="margin-bottom: 16px;"><div id="vendorMap" style="height: 300px;"></div></div>
                 <div style="display: flex; gap: 10px;">
-                    <input type="text" name="Latitude" id="Latitude" value="<?php echo htmlspecialchars((string)($vendor['Latitude'] ?? '')); ?>" placeholder="Latitude (Required)" readonly required style="flex: 1; background-color: var(--gray-light);">
-                    <input type="text" name="Longitude" id="Longitude" value="<?php echo htmlspecialchars((string)($vendor['Longitude'] ?? '')); ?>" placeholder="Longitude (Required)" readonly required style="flex: 1; background-color: var(--gray-light);">
+                    <input type="text" class="modern-input"  name="Latitude" id="Latitude" value="<?php echo htmlspecialchars((string)($vendor['Latitude'] ?? '')); ?>" placeholder="Latitude (Required)" readonly required style="flex: 1; background-color: var(--gray-light);">
+                    <input type="text" class="modern-input"  name="Longitude" id="Longitude" value="<?php echo htmlspecialchars((string)($vendor['Longitude'] ?? '')); ?>" placeholder="Longitude (Required)" readonly required style="flex: 1; background-color: var(--gray-light);">
                 </div>
             </div>
             <button type="submit" class="btn-primary btn-block">Save Changes</button>

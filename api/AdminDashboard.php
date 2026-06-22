@@ -151,13 +151,13 @@ function trendChip($pct) {
         }
         .stat-card {
             background: #fff;
-            border: 1px solid #f0f0f0;
-            border-radius: 18px;
+            border: 1px solid #ffe2e6;
+            border-radius: 16px;
             padding: 26px 24px 22px;
             display: flex;
             align-items: flex-start;
             gap: 20px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+            box-shadow: 0 6px 18px rgba(193, 18, 31, 0.08);
             transition: transform 0.2s, box-shadow 0.2s;
         }
         .stat-card:hover {
@@ -211,9 +211,9 @@ function trendChip($pct) {
         /* â”€â”€ Vendor Section Panel â”€â”€ */
         .vendor-panel {
             background: #fff;
-            border: 1px solid #f0f0f0;
-            border-radius: 18px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+            border: 1px solid #ffe2e6;
+            border-radius: 16px;
+            box-shadow: 0 6px 18px rgba(193, 18, 31, 0.08);
             overflow: hidden;
         }
         .vendor-panel-header {

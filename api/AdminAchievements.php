@@ -140,10 +140,10 @@ if ($editId > 0) {
         .panel {
             background: #fff;
             border: 1px solid #ffe2e6;
-            border-radius: 14px;
+            border-radius: 16px;
             padding: 24px;
             margin-bottom: 24px;
-            box-shadow: 0 4px 16px rgba(193,18,31,0.04);
+            box-shadow: 0 6px 18px rgba(193, 18, 31, 0.08);
         }
         .panel h2 { color: #c1121f; font-size: 1.3rem; margin: 0 0 20px; font-weight: 700; }
         
