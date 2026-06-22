@@ -30,7 +30,7 @@ $adminNotifs = db_fetch_all($pdo,
 <html>
 <head>
     <title>Vendor Dashboard - CraveFood</title>
-    <link rel="stylesheet" href="style.css?v=<?= time() ?>">
+    <link rel="stylesheet" href="style.css?v=20260622-1">
     <style>
         .admin-notif-banner {
             background: #fff3cd;
