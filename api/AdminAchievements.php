@@ -156,12 +156,14 @@ if ($editId > 0) {
             background: #fafafa;
         }
         .form-section legend {
-            background: #c1121f;
-            color: #fff;
+            background: #fff;
+            color: #1a1a1a;
             padding: 4px 12px;
             border-radius: 20px;
+            border: 1px solid #f0f0f0;
             font-size: 0.85rem;
-            font-weight: 600;
+            font-weight: 700;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
         }
         .form-grid {
             display: grid;
@@ -172,7 +174,7 @@ if ($editId > 0) {
         .form-grid input[type="text"], .form-grid input[type="number"], .form-grid select, .form-grid textarea {
             width: 100%;
             padding: 10px 12px;
-            border: 1px solid #ffd8de;
+            border: 1px solid #e8e8e8;
             border-radius: 8px;
             box-sizing: border-box;
             background: #fff;
@@ -180,7 +182,7 @@ if ($editId > 0) {
         }
         .form-grid input:focus, .form-grid select:focus, .form-grid textarea:focus {
             outline: none;
-            border-color: #c1121f;
+            border-color: #ff2a44;
         }
         .form-grid textarea { min-height: 80px; resize: vertical; }
         .full-width { grid-column: 1 / -1; }
@@ -191,7 +193,7 @@ if ($editId > 0) {
             gap: 12px;
             background: #fff;
             padding: 12px;
-            border: 1px solid #ffd8de;
+            border: 1px solid #e8e8e8;
             border-radius: 8px;
         }
         .checkbox-group label {
@@ -232,22 +234,7 @@ if ($editId > 0) {
             cursor: help;
         }
 
-        /* Table Improvements */
-        .achievement-table { width: 100%; border-collapse: collapse; }
-        .achievement-table th, .achievement-table td {
-            padding: 16px 14px;
-            border-bottom: 1px solid #f0f0f0;
-            text-align: left;
-            vertical-align: middle;
-        }
-        .achievement-table th {
-            background: #fff;
-            color: #888;
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            border-bottom: 2px solid #f0f0f0;
-        }
+        /* Clean up unused old classes */
         .achievement-table tbody tr:hover { background: #fafafa; }
         
         .task-title { font-weight: 700; font-size: 1.05rem; color: #333; margin-bottom: 4px; display: block; }
@@ -300,9 +287,13 @@ if ($editId > 0) {
 <body>
     <?php include('admin_header.php'); ?>
 
-    <div class="home-hero-wrap" style="align-items:flex-start; flex-direction:column;"><div class="home-hero-content" style="width:100%;">
-        <h1 class="hero-title" style="font-size:2rem;">Achievement Tasks & Rewards</h1>
-        <p class="hero-subtitle" style="margin-bottom:24px;">Welcome, <?php echo $adminName; ?>. Create tasks based on order history and set discount rewards for users to claim.</p>
+    <div class="home-hero-wrap" style="align-items:flex-start; flex-direction:column;">
+        <div class="welcome-header" style="margin-bottom:30px;">
+            <div class="welcome-text">
+                <h1 class="hero-title" style="font-size:2rem; font-weight:800; color:#1a1a1a; margin:0 0 8px; letter-spacing:-0.5px;">Achievement Tasks & Rewards</h1>
+                <p class="hero-subtitle" style="color:#666; font-size:0.95rem; margin:0;">Welcome, <span style="color:#ff2a44;font-weight:600;"><?php echo htmlspecialchars($adminName); ?></span>. Create tasks based on order history and set discount rewards for users to claim.</p>
+            </div>
+        </div>
 
         <?php if ($noticeMsg !== ''): ?>
             <div class="notice show <?php echo $noticeType === 'success' ? 'notice-success' : 'notice-error'; ?>">
@@ -475,9 +466,9 @@ if ($editId > 0) {
                                     <td><?php echo htmlspecialchars(getRewardTypeLabel($achievement['RewardType'], $achievement['RewardValue'])); ?></td>
                                     <td>
                                         <?php if ((int)$achievement['IsActive'] === 1): ?>
-                                            <span class="badge-active">Active</span>
+                                            <span class="badge-pill badge-success">ACTIVE</span>
                                         <?php else: ?>
-                                            <span class="badge-inactive">Inactive</span>
+                                            <span class="badge-pill badge-neutral">INACTIVE</span>
                                         <?php endif; ?>
                                     </td>
                                     <td>

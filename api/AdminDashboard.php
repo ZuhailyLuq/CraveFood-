@@ -151,18 +151,18 @@ function trendChip($pct) {
         }
         .stat-card {
             background: #fff;
-            border: 1px solid #ffe2e6;
+            border: 1px solid #f0f0f0;
             border-radius: 16px;
             padding: 26px 24px 22px;
             display: flex;
             align-items: flex-start;
             gap: 20px;
-            box-shadow: 0 6px 18px rgba(193, 18, 31, 0.08);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.04);
             transition: transform 0.2s, box-shadow 0.2s;
         }
         .stat-card:hover {
             transform: translateY(-3px);
-            box-shadow: 0 8px 30px rgba(0,0,0,0.09);
+            box-shadow: 0 12px 35px rgba(0,0,0,0.08);
         }
         .stat-icon {
             width: 52px;
@@ -211,9 +211,9 @@ function trendChip($pct) {
         /* â”€â”€ Vendor Section Panel â”€â”€ */
         .vendor-panel {
             background: #fff;
-            border: 1px solid #ffe2e6;
+            border: 1px solid #f0f0f0;
             border-radius: 16px;
-            box-shadow: 0 6px 18px rgba(193, 18, 31, 0.08);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.04);
             overflow: hidden;
         }
         .vendor-panel-header {
@@ -326,48 +326,7 @@ function trendChip($pct) {
         .last-update-never { font-size: 0.88rem; color: #ccc; font-style: italic; }
         .days-since { font-size: 0.88rem; color: #666; }
 
-        /* Status Badges */
-        .badge {
-            display: inline-block;
-            padding: 4px 11px;
-            border-radius: 20px;
-            font-size: 0.74rem;
-            font-weight: 700;
-            letter-spacing: 0.3px;
-            text-transform: uppercase;
-        }
-        .badge-outdated { background: #fce8e6; color: #c5221f; }
-        .badge-ok       { background: #e8f5e9; color: #1e8e3e; }
-        .badge-never    { background: #f3f3f3; color: #888;    }
-
-        /* Individual Notify button - secondary style */
-        .btn-notify {
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            background: transparent;
-            color: #c1121f;
-            border: 1.5px solid #f0a0a8;
-            padding: 6px 13px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 0.8rem;
-            font-weight: 600;
-            transition: background 0.2s, border-color 0.2s, transform 0.15s;
-            white-space: nowrap;
-        }
-        .btn-notify:hover {
-            background: #fce8e6;
-            border-color: #c1121f;
-            transform: translateY(-1px);
-        }
-        .btn-notify:disabled {
-            background: transparent;
-            color: #ccc;
-            border-color: #eee;
-            cursor: not-allowed;
-            transform: none;
-        }
+        /* Clean up unused old classes */
         .no-action { font-size: 0.82rem; color: #ccc; }
 
         /* Empty state */
@@ -416,10 +375,10 @@ function trendChip($pct) {
         <!-- â”€â”€ Welcome Header â”€â”€ -->
         <div class="welcome-header" style="margin-bottom:24px;">
             <div class="welcome-text">
-                <h1 class="hero-title" style="font-size:2rem;">&#128075; Welcome, <?php echo $adminName; ?></h1>
-                <p class="hero-subtitle">Admin Dashboard &mdash; here's your system overview for today.</p>
+                <h1 class="hero-title" style="font-size:2rem; font-weight:800; color:#1a1a1a; margin:0 0 8px; letter-spacing:-0.5px;">&#128075; Welcome, <span style="color:#ff2a44;"><?php echo $adminName; ?></span></h1>
+                <p class="hero-subtitle" style="color:#666; font-size:0.95rem; margin:0;">Admin Dashboard &mdash; here's your system overview for today.</p>
             </div>
-            <div class="welcome-date"><?php echo date('l, d F Y'); ?></div>
+            <div class="welcome-date" style="color:#888; font-weight:500; font-size:0.9rem;"><?php echo date('l, d F Y'); ?></div>
         </div>
 
         <!-- â”€â”€ Stat Cards â”€â”€ -->
@@ -547,17 +506,18 @@ function trendChip($pct) {
                                 </td>
                                 <td>
                                     <?php if ($statusKey === 'never'): ?>
-                                        <span class="badge badge-never">Never Updated</span>
+                                        <span class="badge-pill badge-neutral">Never Updated</span>
                                     <?php elseif ($statusKey === 'outdated'): ?>
-                                        <span class="badge badge-outdated">Outdated</span>
+                                        <span class="badge-pill badge-danger">Outdated</span>
                                     <?php else: ?>
-                                        <span class="badge badge-ok">Up to Date</span>
+                                        <span class="badge-pill badge-success">Up to Date</span>
                                     <?php endif; ?>
                                 </td>
                                 <td style="text-align:right;">
                                     <?php if ($v['IsOutdated']): ?>
                                         <button type="button"
-                                                class="btn-notify"
+                                                class="btn-outline btn-outline-danger"
+                                                style="padding:6px 12px; font-size:0.8rem;"
                                                 id="btn-notify-<?php echo $v['VendorID']; ?>"
                                                 onclick="notifyVendor(<?php echo $v['VendorID']; ?>, '<?php echo htmlspecialchars(addslashes($v['ShopName']), ENT_QUOTES); ?>')">
                                             <svg viewBox="0 0 24 24" style="width:13px;height:13px;fill:currentColor;"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg>
