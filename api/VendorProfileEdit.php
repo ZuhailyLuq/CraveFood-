@@ -115,16 +115,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
 </head>
 <body>
-    <div class="navbar">
-        <div class="logo"><h2>CraveFood</h2></div>
-        <div class="nav-links">
-            <a href="VendorDashboard.php">Dashboard</a>
-            <a href="VendorOrders.php">Orders</a>
-            <a href="VendorFoodCreate.php">Add Food</a>
-
-            <a href="VendorLogout.php">Logout</a>
-        </div>
-    </div>
+    <?php include('vendor_header.php'); ?>
 
     <?php
         $noticeMsg = isset($_GET['msg']) ? urldecode($_GET['msg']) : '';
@@ -137,7 +128,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <?php endif; ?>
 
     <div class="settings-box">
-        <h2>Edit Store Profile</h2>
+        <h1 class="hero-title" style="text-align:center;">Edit Store Profile</h1>
         <form action="VendorProfileEdit.php" method="POST" class="settings-form" enctype="multipart/form-data">
             <div class="form-group">
                 <label>Shop Name</label>
@@ -199,7 +190,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
             </div>
             <button type="submit" class="btn-primary btn-block">Save Changes</button>
-        </form>
+        </form></div>
     </div>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>

@@ -71,15 +71,7 @@ $orders = db_fetch_all($pdo,
     <meta http-equiv="refresh" content="30">
 </head>
 <body>
-    <div class="navbar">
-        <div class="logo"><h2>CraveFood</h2></div>
-        <div class="nav-links">
-            <a href="VendorDashboard.php">Dashboard</a>
-            <a href="VendorFoodCreate.php">Add Food</a>
-            <a href="VendorProfileEdit.php">Store Profile</a>
-            <a href="VendorLogout.php">Logout</a>
-        </div>
-    </div>
+    <?php include('vendor_header.php'); ?>
 
     <?php
         $noticeMsg = isset($_GET['msg']) ? urldecode($_GET['msg']) : '';
@@ -94,10 +86,10 @@ $orders = db_fetch_all($pdo,
 
     <div class="dashboard-box" style="max-width: 1000px;">
         <h2>Vendor Orders</h2>
-        <p class="settings-note">Manage incoming orders. This page refreshes every 30 seconds.</p>
+        <p class="hero-subtitle" style="margin-bottom:24px;">Manage incoming orders. This page refreshes every 30 seconds.</p>
 
         <?php if (count($orders) === 0): ?>
-            <p class="settings-note">No orders yet.</p>
+            <p class="hero-subtitle" style="margin-bottom:24px;">No orders yet.</p>
         <?php else: ?>
             <div style="overflow-x: auto;">
                 <table class="vendor-table">

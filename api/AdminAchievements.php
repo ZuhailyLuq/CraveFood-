@@ -298,18 +298,11 @@ if ($editId > 0) {
     </style>
 </head>
 <body>
-    <div class="navbar">
-        <div class="logo"><h2>CraveFood</h2></div>
-        <div class="nav-links">
-            <a href="AdminDashboard.php">Dashboard</a>
-            <a href="AdminAchievements.php">Achievements</a>
-            <a href="AdminLogout.php">Logout</a>
-        </div>
-    </div>
+    <?php include('admin_header.php'); ?>
 
-    <div class="admin-wrap">
-        <h1 class="admin-title">Achievement Tasks & Rewards</h1>
-        <p class="admin-subtitle">Welcome, <?php echo $adminName; ?>. Create tasks based on order history and set discount rewards for users to claim.</p>
+    <div class="home-hero-wrap" style="align-items:flex-start; flex-direction:column;"><div class="home-hero-content" style="width:100%;">
+        <h1 class="hero-title" style="font-size:2rem;">Achievement Tasks & Rewards</h1>
+        <p class="hero-subtitle" style="margin-bottom:24px;">Welcome, <?php echo $adminName; ?>. Create tasks based on order history and set discount rewards for users to claim.</p>
 
         <?php if ($noticeMsg !== ''): ?>
             <div class="notice show <?php echo $noticeType === 'success' ? 'notice-success' : 'notice-error'; ?>">
@@ -317,7 +310,7 @@ if ($editId > 0) {
             </div>
         <?php endif; ?>
 
-        <div class="panel">
+        <div class="panel" style="background:#fff; border-radius:12px; box-shadow:0 4px 16px rgba(0,0,0,0.04); border:none;">
             <h2><?php echo $editAchievement ? 'Edit Task' : 'Create New Task'; ?></h2>
             <form method="POST">
                 <input type="hidden" name="action" value="<?php echo $editAchievement ? 'update' : 'create'; ?>">
@@ -433,13 +426,13 @@ if ($editId > 0) {
                         <?php if ($editAchievement): ?>
                             <a href="AdminAchievements.php" class="btn-secondary" style="display:inline-block;padding:10px 16px;text-decoration:none;">Cancel Edit</a>
                         <?php endif; ?>
-                        <button type="submit" class="btn-primary"><?php echo $editAchievement ? 'Save Changes' : 'Create Task'; ?></button>
+                        <button type="submit" class="btn-advance-centered"><?php echo $editAchievement ? 'Save Changes' : 'Create Task'; ?></button>
                     </div>
                 </div>
             </form>
         </div>
 
-        <div class="panel">
+        <div class="panel" style="background:#fff; border-radius:12px; box-shadow:0 4px 16px rgba(0,0,0,0.04); border:none;">
             <h2>Existing Tasks</h2>
             <?php if (count($achievements) === 0): ?>
                 <p style="color:#888;">No achievement tasks yet. Create one above.</p>
@@ -550,7 +543,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 </script>
-</body>
+</div></div></body>
 </html>
 
 

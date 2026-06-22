@@ -156,21 +156,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['Action_Update'])) {
     </style>
 </head>
 <body>
-    <div class="navbar">
-        <div class="logo"><h2>CraveFood</h2></div>
-        <div class="nav-links">
-            <a href="VendorDashboard.php">Dashboard</a>
-            <a href="VendorOrders.php">Orders</a>
-            <a href="VendorFoodCreate.php">Add Food</a>
-            <a href="VendorLogout.php">Logout</a>
-        </div>
-    </div>
+    <?php include('vendor_header.php'); ?>
 
     <div class="settings-box">
-        <h2>Edit Food Item</h2>
+        <h1 class="hero-title" style="text-align:center;">Edit Food Item</h1>
         <p class="settings-note">Only your vendor items can be edited.</p>
 
-        <form method="POST" action="VendorFoodEdit.php?food_id=<?php echo (int)$foodId; ?>" enctype="multipart/form-data">
+        <form class="auth-form" method="POST" action="VendorFoodEdit.php?food_id=<?php echo (int)$foodId; ?>" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="FoodName">Food Name</label>
                 <input type="text" id="FoodName" name="FoodName" required maxlength="100"
@@ -232,7 +224,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['Action_Update'])) {
             </div>
 
             <button type="submit" name="Action_Update" value="Update" class="btn-primary btn-block">Update Food</button>
-        </form>
+        </form></div>
 
         <a href="VendorDashboard.php" class="btn-return" style="margin-top: 14px; display: inline-block;">Back to Dashboard</a>
     </div>

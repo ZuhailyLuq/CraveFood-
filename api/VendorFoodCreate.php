@@ -75,15 +75,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['Action_Save'])) {
     </style>
 </head>
 <body>
-    <div class="navbar">
-        <div class="logo"><h2>CraveFood</h2></div>
-        <div class="nav-links">
-            <a href="VendorDashboard.php">Dashboard</a>
-            <a href="VendorOrders.php">Orders</a>
-            <a href="VendorProfileEdit.php">Store Profile</a>
-            <a href="VendorLogout.php">Logout</a>
-        </div>
-    </div>
+    <?php include('vendor_header.php'); ?>
 
     <?php
         $noticeMsg  = isset($_GET['msg']) ? urldecode($_GET['msg']) : '';
@@ -96,10 +88,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['Action_Save'])) {
     <?php endif; ?>
 
     <div class="settings-box">
-        <h2>Add Food Item</h2>
+        <h1 class="hero-title" style="text-align:center;">Add Food Item</h1>
         <p class="settings-note">Create a new menu item for your vendor.</p>
 
-        <form method="POST" action="VendorFoodCreate.php" enctype="multipart/form-data">
+        <form class="auth-form" method="POST" action="VendorFoodCreate.php" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="FoodName">Food Name</label>
                 <input type="text" id="FoodName" name="FoodName" placeholder="e.g., Nasi Lemak" required maxlength="100">
@@ -143,7 +135,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['Action_Save'])) {
                 </div>
             </div>
             <button type="submit" name="Action_Save" value="Save" class="btn-primary btn-block">Save Food</button>
-        </form>
+        </form></div>
         <a href="VendorDashboard.php" class="btn-return" style="margin-top:14px;display:inline-block;">Back to Dashboard</a>
     </div>
 

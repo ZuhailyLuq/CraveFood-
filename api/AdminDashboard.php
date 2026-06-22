@@ -428,22 +428,15 @@ function trendChip($pct) {
     </style>
 </head>
 <body>
-    <div class="navbar">
-        <div class="logo"><h2>CraveFood</h2></div>
-        <div class="nav-links">
-            <a href="AdminDashboard.php">Dashboard</a>
-            <a href="AdminAchievements.php">Achievements</a>
-            <a href="AdminLogout.php">Logout</a>
-        </div>
-    </div>
+    <?php include('admin_header.php'); ?>
 
-    <div class="admin-wrap">
+    <div class="home-hero-wrap" style="align-items:flex-start; flex-direction:column; padding-bottom:60px;"><div class="home-hero-content" style="width:100%;">
 
         <!-- â”€â”€ Welcome Header â”€â”€ -->
-        <div class="welcome-header">
+        <div class="welcome-header" style="margin-bottom:24px;">
             <div class="welcome-text">
-                <h1>&#128075; Welcome, <?php echo $adminName; ?></h1>
-                <p>Admin Dashboard &mdash; here's your system overview for today.</p>
+                <h1 class="hero-title" style="font-size:2rem;">&#128075; Welcome, <?php echo $adminName; ?></h1>
+                <p class="hero-subtitle">Admin Dashboard &mdash; here's your system overview for today.</p>
             </div>
             <div class="welcome-date"><?php echo date('l, d F Y'); ?></div>
         </div>
@@ -497,7 +490,7 @@ function trendChip($pct) {
         <!-- â”€â”€ Vendor Update Status Section â”€â”€ -->
         <div class="section-gap">
             <div class="section-label">Vendor Update Status</div>
-            <div class="vendor-panel">
+            <div class="vendor-panel" style="background:#fff; border-radius:12px; box-shadow:0 4px 16px rgba(0,0,0,0.04); overflow:hidden;">
 
                 <!-- Panel Header -->
                 <div class="vendor-panel-header">
@@ -513,7 +506,7 @@ function trendChip($pct) {
                             <?php echo $outdatedCount; ?> outdated vendor<?php echo $outdatedCount !== 1 ? 's' : ''; ?>
                         </div>
                         <?php if ($outdatedCount > 0): ?>
-                        <button type="button" class="btn-notify-all" id="btnNotifyAll" onclick="notifyAllOutdated()">
+                        <button type="button" class="btn-advance-ghost" style="padding:6px 12px; font-size:0.8rem;"-all" id="btnNotifyAll" onclick="notifyAllOutdated()">
                             <svg viewBox="0 0 24 24" style="width:15px;height:15px;fill:#fff;"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg>
                             Notify All Outdated
                         </button>
@@ -711,5 +704,5 @@ function trendChip($pct) {
             });
     }
     </script>
-</body>
+</div></div></body>
 </html>

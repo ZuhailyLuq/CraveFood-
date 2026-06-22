@@ -103,16 +103,7 @@ $adminNotifs = db_fetch_all($pdo,
     </style>
 </head>
 <body>
-    <div class="navbar">
-        <div class="logo"><h2>CraveFood</h2></div>
-        <div class="nav-links">
-            <a href="VendorDashboard.php">Dashboard</a>
-            <a href="VendorOrders.php">Orders</a>
-            <a href="VendorFoodCreate.php">Add Food</a>
-            <a href="VendorProfileEdit.php">Store Profile</a>
-            <a href="VendorLogout.php">Logout</a>
-        </div>
-    </div>
+    <?php include('vendor_header.php'); ?>
 
     <?php
         $noticeMsg = isset($_GET['msg']) ? urldecode($_GET['msg']) : '';
@@ -141,19 +132,19 @@ $adminNotifs = db_fetch_all($pdo,
         <?php endforeach; ?>
     <?php endif; ?>
 
-    <div class="dashboard-box">
-        <h2>Vendor Dashboard</h2>
-        <p class="settings-note">
+    <div class="home-hero-wrap" style="margin-top:20px; align-items:flex-start; flex-direction:column;"><div class="home-hero-content" style="width:100%;">
+        <h1 class="hero-title" style="font-size:2rem;">Vendor <span>Dashboard</span></h1>
+        <p class="hero-subtitle" style="margin-bottom:24px;">
             Manage your food menu.
             <?php if ($shopName !== '') echo 'Shop: <strong>' . htmlspecialchars($shopName) . '</strong>'; ?>
         </p>
 
         <?php if (count($items) === 0): ?>
-            <p class="settings-note">You don't have any food items yet.</p>
+            <p class="hero-subtitle" style="margin-bottom:24px;">You don't have any food items yet.</p>
             <a href="VendorFoodCreate.php" class="btn-advance-centered">Add your first food</a>
         <?php else: ?>
             <div style="overflow-x: auto;">
-                <table class="vendor-table">
+                <table class="vendor-status-table" style="width:100%; background:#fff; border-radius:12px; box-shadow:0 4px 16px rgba(0,0,0,0.04); overflow:hidden;">
                     <thead>
                         <tr>
                             <th>Food</th>
@@ -189,11 +180,11 @@ $adminNotifs = db_fetch_all($pdo,
                             <?php if ($hasStatus): ?>
                                 <td><span class="status-pill"><?php echo htmlspecialchars((string)($item['Status'] ?? '')); ?></span></td>
                             <?php endif; ?>
-                            <td class="vendor-actions">
-                                <a class="btn-secondary" href="VendorFoodEdit.php?food_id=<?php echo (int)$item['FoodID']; ?>">Edit</a>
+                            <td style="display:flex; gap:10px; align-items:center;">
+                                <a class="btn-advance-ghost" style="padding:6px 12px; font-size:0.8rem;" href="VendorFoodEdit.php?food_id=<?php echo (int)$item['FoodID']; ?>">Edit</a>
                                 <form action="VendorFoodDelete.php" method="POST" class="inline-delete-form" onsubmit="return confirm('Delete this food item?');">
                                     <input type="hidden" name="FoodID" value="<?php echo (int)$item['FoodID']; ?>">
-                                    <button type="submit" name="Action_Delete" value="Delete" class="btn-danger">Delete</button>
+                                    <button type="submit" name="Action_Delete" value="Delete" class="btn-advance-ghost" style="padding:6px 12px; font-size:0.8rem; border-color:#c1121f; color:#c1121f;">Delete</button>
                                 </form>
                             </td>
                         </tr>
