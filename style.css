@@ -1449,3 +1449,16 @@ a:hover {
         overflow-x: hidden !important;
     }
 }
+
+
+/* ==========================================================================
+   ADMIN RESPONSIVE WRAPPERS
+========================================================================== */
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+.table-responsive .premium-table {
+    white-space: nowrap; /* Prevent table cells from squeezing text on mobile */
+}

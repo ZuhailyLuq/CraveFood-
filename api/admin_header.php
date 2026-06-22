@@ -118,6 +118,23 @@
     color: #cc001b;
     text-decoration: underline;
 }
+@media (max-width: 860px) {
+    .premium-table th, .premium-table td {
+        padding: 12px 10px;
+        font-size: 0.85rem;
+    }
+    .quick-search-shell {
+        flex-direction: column;
+    }
+    .quick-segment {
+        border-right: none;
+        border-bottom: 1px solid #efefef;
+    }
+    .quick-search-btn {
+        width: 100%;
+        padding: 12px 0;
+    }
+}
 </style>
 <div class="navbar">
     <div class="logo" onclick="window.location.href='AdminDashboard.php'">

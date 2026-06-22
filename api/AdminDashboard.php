@@ -362,9 +362,24 @@ function trendChip($pct) {
         .toast-admin.show { opacity: 1; transform: translateY(0); }
         .toast-admin.toast-error { background: #c5221f; }
 
-        /* â”€â”€ No-results row â”€â”€ */
+        /* ── No-results row ── */
         #no-results-row { display: none; }
         #no-results-row td { text-align: center; padding: 36px; color: #bbb; font-size: 0.9rem; }
+
+        @media (max-width: 860px) {
+            .action-toolbar {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .toolbar-left, .toolbar-right {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .btn-action {
+                width: 100%;
+                justify-content: center;
+            }
+        }
     </style>
 </head>
 <body>
@@ -472,7 +487,7 @@ function trendChip($pct) {
 
             <!-- Table -->
             <?php if (count($vendors) > 0): ?>
-            <div style="overflow-x: auto;">
+            <div class="table-responsive">
                     <table class="premium-table" id="vendorTable">
                         <thead>
                             <tr>

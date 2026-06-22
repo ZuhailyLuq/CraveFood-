@@ -282,6 +282,25 @@ if ($editId > 0) {
         .btn-toggle:hover { color: #e37400; border-color: #fce8b2; background: #fef7e0; }
         .btn-delete:hover { color: #d93025; border-color: #fad2cf; background: #fce8e6; }
         .btn-icon svg { width: 16px; height: 16px; fill: currentColor; }
+
+        @media (max-width: 768px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            .form-footer {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 15px;
+            }
+            .form-actions {
+                width: 100%;
+                flex-direction: column;
+            }
+            .btn-secondary, .btn-advance-centered {
+                width: 100%;
+                text-align: center;
+            }
+        }
     </style>
 </head>
 <body>
@@ -428,7 +447,7 @@ if ($editId > 0) {
             <?php if (count($achievements) === 0): ?>
                 <p style="color:#888;">No achievement tasks yet. Create one above.</p>
             <?php else: ?>
-                <div style="overflow-x:auto;">
+                <div class="table-responsive">
                 <table class="premium-table">
                         <thead>
                             <tr>
