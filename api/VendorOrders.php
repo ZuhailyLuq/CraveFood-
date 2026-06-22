@@ -92,7 +92,7 @@ $orders = db_fetch_all($pdo,
             <p class="hero-subtitle" style="margin-bottom:24px;">No orders yet.</p>
         <?php else: ?>
             <div style="overflow-x: auto;">
-                <table class="vendor-table" style="width:100%; background:#fff; border-radius:12px; box-shadow:0 4px 16px rgba(0,0,0,0.04); overflow:hidden;">
+                <table class="premium-table">
                     <thead>
                         <tr>
                             <th>Order ID</th>

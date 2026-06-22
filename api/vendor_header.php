@@ -1,4 +1,39 @@
 <style>
+/* Premium Table */
+.premium-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+    overflow: hidden;
+    margin-top: 10px;
+}
+.premium-table th {
+    background: #fdfdfd;
+    color: #555;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 0.5px;
+    padding: 14px 20px;
+    border-bottom: 2px solid #f0f0f0;
+    text-align: left;
+}
+.premium-table td {
+    padding: 16px 20px;
+    border-bottom: 1px solid #f5f5f5;
+    vertical-align: middle;
+    color: #333;
+}
+.premium-table tr:last-child td {
+    border-bottom: none;
+}
+.premium-table tr:hover td {
+    background: #fafafa;
+}
+
 /* Status Badges */
 .badge-pill {
     display: inline-flex;
