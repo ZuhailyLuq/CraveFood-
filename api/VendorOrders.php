@@ -84,7 +84,7 @@ $orders = db_fetch_all($pdo,
         </div>
     <?php endif; ?>
 
-    <div class="dashboard-box" style="max-width: 1000px;">
+    <div style="padding: 40px 20px; width: 100%; box-sizing: border-box;">
         <h2>Vendor Orders</h2>
         <p class="hero-subtitle" style="margin-bottom:24px;">Manage incoming orders. This page refreshes every 30 seconds.</p>
 
