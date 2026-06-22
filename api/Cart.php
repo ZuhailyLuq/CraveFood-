@@ -501,7 +501,7 @@ $activeOrder = db_fetch_one($pdo,
                 </div>
 
                 <div class="summary-actions">
-                    <a href="OrderOption.php?from_cart=1" class="btn-proceed">Proceed to Order â†’</a>
+                    <a href="OrderOption.php?from_cart=1" class="btn-proceed">Proceed to Order &rarr;</a>
                 </div>
             </div>
 
