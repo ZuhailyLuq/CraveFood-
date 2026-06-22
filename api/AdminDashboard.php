@@ -420,22 +420,30 @@ function trendChip($pct) {
                     <div class="stat-body">
                         <div class="stat-number"><?php echo number_format($orderCount); ?></div>
                         <div class="stat-label">Total Orders</div>
-                           <!-- Action Toolbar -->
-                <div class="quick-search-shell" style="margin: 0; max-width: 100%; border-radius: 0; border-left: none; border-right: none; box-shadow: none; border-top: 1px solid #f0f0f0; border-bottom: 1px solid #f0f0f0;">
-                    
-                    <!-- Notify All Button embedded as a segment -->
-                    <div class="quick-segment" style="flex: 0.5; border-right: 1px solid #efefef; justify-content: center; padding-left: 24px;">
-                        <div class="outdated-badge" style="margin-bottom: 6px; align-self: flex-start;">
-                            <svg viewBox="0 0 24 24" style="width:14px;height:14px;fill:#c1121f;flex-shrink:0;"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
-                            <?php echo $outdatedCount; ?> outdated vendor<?php echo $outdatedCount !== 1 ? 's' : ''; ?>
-                        </div>
-                        <?php if ($outdatedCount > 0): ?>
-                        <button type="button" class="btn-notify-all" id="btnNotifyAll" onclick="notifyAllOutdated()" style="align-self: flex-start;">
-                            <svg viewBox="0 0 24 24" style="width:15px;height:15px;fill:#fff;"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg>
+                    </div>
+                </div>
+            </div> <!-- End metrics grid -->
+
+            <!-- Action Toolbar & Search Bar -->
+            <div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 20px; margin-bottom: 20px;">
+                <!-- Notification block -->
+                <div style="display: flex; flex-direction: column; gap: 8px;">
+                    <div class="outdated-badge" style="display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; background: #fdf2f2; color: #c1121f; border-radius: 20px; font-size: 0.85rem; font-weight: 700; max-width: max-content;">
+                        <svg viewBox="0 0 24 24" style="width:14px;height:14px;fill:#c1121f;flex-shrink:0;"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+                        <?php echo $outdatedCount; ?> outdated vendor<?php echo $outdatedCount !== 1 ? 's' : ''; ?>
+                    </div>
+                    <?php if ($outdatedCount > 0): ?>
+                    <form method="POST" action="patch_admin_metrics.php" style="display:inline;">
+                        <button type="submit" name="Action_NotifyAllOutdated" class="btn-primary" style="padding: 8px 16px; font-size: 0.85rem; border-radius: 8px; width: auto; margin-top: 0;">
+                            <svg viewBox="0 0 24 24" style="width:15px;height:15px;fill:#fff;margin-right:6px;"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg>
                             Notify All Outdated
                         </button>
-                        <?php endif; ?>
-                    </div>
+                    </form>
+                    <?php endif; ?>
+                </div>
+
+                <!-- Search Input -->
+                <div class="quick-search-shell" style="margin: 0; max-width: 600px;">
 
                     <!-- Search Input -->
                     <div class="quick-segment">
@@ -460,10 +468,11 @@ function trendChip($pct) {
                         </div>
                     </div>
                 </div>
+            </div> <!-- End Action Toolbar flexbox -->
 
-                <!-- Table -->
-                <?php if (count($vendors) > 0): ?>
-                <div style="overflow-x: auto;">
+            <!-- Table -->
+            <?php if (count($vendors) > 0): ?>
+            <div style="overflow-x: auto;">
                     <table class="premium-table" id="vendorTable">
                         <thead>
                             <tr>
