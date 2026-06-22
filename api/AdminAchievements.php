@@ -438,7 +438,7 @@ if ($editId > 0) {
                 <p style="color:#888;">No achievement tasks yet. Create one above.</p>
             <?php else: ?>
                 <div style="overflow-x:auto;">
-                    <table class="achievement-table">
+                <table class="premium-table">
                         <thead>
                             <tr>
                                 <th>Task</th>

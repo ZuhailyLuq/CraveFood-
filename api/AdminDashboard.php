@@ -262,7 +262,7 @@ function trendChip($pct) {
             display: inline-flex;
             align-items: center;
             gap: 7px;
-            background: #c1121f;
+            background: #ff2a44;
             color: #fff;
             border: none;
             padding: 9px 18px;
@@ -273,7 +273,7 @@ function trendChip($pct) {
             transition: background 0.2s, transform 0.15s;
             white-space: nowrap;
         }
-        .btn-notify-all:hover    { background: #a10e1a; transform: translateY(-1px); }
+        .btn-notify-all:hover    { background: #cc001b; transform: translateY(-1px); }
         .btn-notify-all:disabled { background: #ddd; color: #aaa; cursor: not-allowed; transform: none; }
 
         /* Search & Filter */
@@ -318,27 +318,8 @@ function trendChip($pct) {
         .vendor-status-table {
             width: 100%;
             border-collapse: collapse;
+            display: none; /* replaced by premium-table */
         }
-        .vendor-status-table th {
-            background: #fff;
-            color: #999;
-            font-weight: 700;
-            text-align: left;
-            padding: 12px 24px;
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
-            border-bottom: 1px solid #f0f0f0;
-        }
-        .vendor-status-table td {
-            padding: 15px 24px;
-            border-bottom: 1px solid #f7f7f7;
-            font-size: 0.9rem;
-            vertical-align: middle;
-            color: #333;
-        }
-        .vendor-status-table tbody tr:last-child td { border-bottom: none; }
-        .vendor-status-table tbody tr:hover { background: #fefefe; }
         .vendor-name { font-weight: 700; font-size: 0.95rem; color: #1a1a1a; }
         .vendor-id   { font-size: 0.78rem; color: #bbb; margin-top: 2px; }
         .last-update-date { font-size: 0.88rem; color: #555; }
@@ -514,11 +495,11 @@ function trendChip($pct) {
                     </div>
                     <div class="toolbar-right">
                         <div class="toolbar-search">
-                            <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
-                            <input type="text" id="vendorSearch" placeholder="Search vendors..." oninput="filterTable()">
+                            <svg viewBox="0 0 24 24"><path d="M10 2a8 8 0 0 1 6.32 12.9l4.97 4.97-1.41 1.41-4.97-4.97A8 8 0 1 1 10 2zm0 2a6 6 0 1 0 0 12 6 6 0 0 0 0-12z"/></svg>
+                            <input type="text" id="vendorSearch" class="modern-input" style="padding-left:32px; width:220px;" placeholder="Search vendors..." oninput="filterTable()">
                         </div>
                         <div class="toolbar-filter">
-                            <select id="statusFilter" onchange="filterTable()">
+                            <select id="vendorStatusFilter" class="modern-input" style="padding:10px 14px;" onchange="filterTable()">
                                 <option value="all">All Statuses</option>
                                 <option value="outdated">Outdated</option>
                                 <option value="ok">Up to Date</option>
@@ -531,7 +512,7 @@ function trendChip($pct) {
                 <!-- Table -->
                 <?php if (count($vendors) > 0): ?>
                 <div style="overflow-x: auto;">
-                    <table class="vendor-status-table" id="vendorTable">
+                    <table class="premium-table" id="vendorTable">
                         <thead>
                             <tr>
                                 <th>Vendor</th>

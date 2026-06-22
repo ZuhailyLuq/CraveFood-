@@ -1,3 +1,112 @@
+<style>
+/* Premium Table */
+.premium-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+    overflow: hidden;
+    margin-top: 10px;
+}
+.premium-table th {
+    background: #fdfdfd;
+    color: #555;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 0.5px;
+    padding: 14px 20px;
+    border-bottom: 2px solid #f0f0f0;
+    text-align: left;
+}
+.premium-table td {
+    padding: 16px 20px;
+    border-bottom: 1px solid #f5f5f5;
+    vertical-align: middle;
+    color: #333;
+}
+.premium-table tr:last-child td {
+    border-bottom: none;
+}
+.premium-table tr:hover td {
+    background: #fafafa;
+}
+
+/* Status Badges */
+.badge-pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+.badge-success { background: #e8f5e9; color: #1e8e3e; }
+.badge-warning { background: #fff3cd; color: #856404; }
+.badge-info    { background: #eef4ff; color: #1a73e8; }
+.badge-danger  { background: #fce8e6; color: #c5221f; }
+.badge-neutral { background: #f3f3f3; color: #666666; }
+
+/* Outlined Minimalist Buttons */
+.btn-outline {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    background: #fff;
+    border: 1.5px solid #eaeaea;
+    padding: 8px 16px;
+    border-radius: 10px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #444;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-decoration: none;
+}
+.btn-outline:hover {
+    border-color: #ccc;
+    background: #fcfcfc;
+}
+.btn-outline-primary {
+    border-color: rgba(255, 42, 68, 0.4);
+    color: #ff2a44;
+}
+.btn-outline-primary:hover {
+    background: #fff0f2;
+    border-color: #ff2a44;
+    transform: translateY(-1px);
+}
+.btn-outline-danger {
+    border-color: rgba(193, 18, 31, 0.4);
+    color: #c1121f;
+}
+.btn-outline-danger:hover {
+    background: #fdf2f2;
+    border-color: #c1121f;
+    transform: translateY(-1px);
+}
+.btn-text-primary {
+    background: transparent;
+    border: none;
+    color: #ff2a44;
+    font-weight: 600;
+    font-size: 0.85rem;
+    cursor: pointer;
+    padding: 4px 8px;
+    transition: color 0.2s;
+}
+.btn-text-primary:hover {
+    color: #cc001b;
+    text-decoration: underline;
+}
+</style>
 <div class="navbar">
     <div class="logo" onclick="window.location.href='AdminDashboard.php'">
         <h2><span>crave</span>food</h2>
