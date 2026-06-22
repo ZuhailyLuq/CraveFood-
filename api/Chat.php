@@ -351,6 +351,99 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 </script>
+<script>
+const orderId = <?php echo (int)$orderId; ?>;
+const myRole = 'user';
+let lastMessageId = 0;
+let pollTimer = null;
+
+function sendMessage() {
+    const input = document.getElementById('chatInput');
+    const btn = document.getElementById('chatSendBtn');
+    const msg = input.value.trim();
+    if (!msg) return;
+
+    input.disabled = true;
+    btn.disabled = true;
+
+    const formData = new FormData();
+    formData.append('action', 'send');
+    formData.append('order_id', orderId);
+    formData.append('message', msg);
+
+    fetch('ChatActions.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(r => r.json())
+    .then(data => {
+        input.disabled = false;
+        btn.disabled = false;
+        if (data.success) {
+            input.value = '';
+            fetchMessages(); 
+        } else {
+            alert(data.message || 'Failed to send message.');
+        }
+        input.focus();
+    })
+    .catch(err => {
+        input.disabled = false;
+        btn.disabled = false;
+        alert('Network error while sending.');
+    });
+}
+
+function fetchMessages() {
+    fetch(`ChatActions.php?action=fetch&order_id=${orderId}&after_id=${lastMessageId}`)
+    .then(r => r.json())
+    .then(data => {
+        if (!data.success) return;
+
+        const container = document.getElementById('chatMessages');
+        const empty = document.getElementById('chatEmpty');
+        
+        if (data.messages && data.messages.length > 0) {
+            if (empty) empty.style.display = 'none';
+            
+            data.messages.forEach(m => {
+                if (m.id > lastMessageId) lastMessageId = m.id;
+                
+                const isMine = (m.sender === myRole);
+                const bubbleClass = isMine ? 'user' : 'vendor';
+                
+                const div = document.createElement('div');
+                div.className = `chat-bubble ${bubbleClass}`;
+                
+                const textDiv = document.createElement('div');
+                textDiv.textContent = m.message;
+                
+                div.innerHTML = `${textDiv.innerHTML}<div class="bubble-time">${m.time}</div>`;
+                container.appendChild(div);
+            });
+            container.scrollTop = container.scrollHeight;
+        }
+
+        if (data.order_active === false) {
+            clearInterval(pollTimer);
+            const inputArea = document.getElementById('chatInputArea');
+            if (inputArea) inputArea.style.display = 'none';
+        }
+    })
+    .catch(console.error);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const input = document.getElementById('chatInput');
+    if (input) {
+        input.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') sendMessage();
+        });
+    }
+    fetchMessages();
+    pollTimer = setInterval(fetchMessages, 3000);
+});
+</script>
 </body>
 </html>
 
