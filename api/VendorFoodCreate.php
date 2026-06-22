@@ -242,6 +242,21 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['Action_Save'])) {
                     <span class="upload-text">Click to choose an image</span>
                     <span class="upload-subtext" style="display:block;margin-top:4px;">Supported formats: JPG, PNG, GIF, WEBP</span>
                     <input type="file" id="Image" name="Image" accept="image/jpeg,image/png,image/gif,image/webp" class="file-input-hidden" onchange="previewImage(this)">
+                </label>
+                <div class="image-preview-box" id="imagePreview">
+                    <img id="previewImg" src="#" alt="Preview">
+                </div>
+            </div>
+            <button type="submit" name="Action_Save" class="btn-primary">Add Food Item</button>
+        </form>
+        </div>
+        <a href="VendorDashboard.php" class="btn-return">Return to Dashboard</a>
+    </div>
+
+    <script>
+    function previewImage(input) {
+        var preview = document.getElementById('imagePreview');
+        var img = document.getElementById('previewImg');
         if (input.files && input.files[0]) {
             var reader = new FileReader();
             reader.onload = function(e) { img.src = e.target.result; preview.style.display = 'block'; };
