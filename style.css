@@ -133,18 +133,13 @@ a:hover {
 .navbar .logo h2 {
     margin: 0;
     color: var(--primary);
-    font-size: 1.55rem;
+    font-size: 1.8rem;
     font-weight: 800;
-    letter-spacing: -1px;
-    text-transform: lowercase;
+    letter-spacing: -0.5px;
     cursor: pointer;
     display: flex;
     align-items: center;
-    gap: 4px;
-}
-
-.navbar .logo h2 span {
-    color: var(--primary);
+    gap: 6px;
 }
 
 .nav-links {

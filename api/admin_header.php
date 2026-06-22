@@ -138,7 +138,7 @@
 </style>
 <div class="navbar">
     <div class="logo" onclick="window.location.href='AdminDashboard.php'">
-        <h2><span>crave</span>food</h2>
+        <h2>&#127869; CraveFood</h2>
     </div>
     <div class="nav-links">
         <a href="AdminDashboard.php">
