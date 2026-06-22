@@ -344,6 +344,21 @@ $vendorJson = json_encode($vendorMapData, JSON_UNESCAPED_UNICODE);
             padding: 3px 9px;
             border-radius: 999px;
         }
+        .custom-map-tooltip {
+            background: transparent !important;
+            border: none !important;
+            box-shadow: none !important;
+            padding: 0 !important;
+        }
+        .custom-map-tooltip::before {
+            display: none !important;
+        }
+        .custom-map-tooltip .as-vendor-card {
+            pointer-events: auto;
+            min-width: 200px;
+            white-space: normal;
+            margin-bottom: 0;
+        }
         .as-vendor-card {
             background: #fff;
             border: 1px solid #f0e4e7;
@@ -633,45 +648,7 @@ $vendorJson = json_encode($vendorMapData, JSON_UNESCAPED_UNICODE);
             </div>
 
 
-            <div class="as-divider"></div>
 
-            <!-- Vendor results list -->
-            <div class="as-result-header">
-                <span class="as-result-title">Matching Vendors</span>
-                <span class="as-result-count-badge" id="sidebarCount">
-                    <?php echo count($vendorMapData); ?>
-                </span>
-            </div>
-            <div id="vendorList">
-                <?php if (count($vendorMapData) === 0): ?>
-                <div class="as-empty-state">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
-                    </svg>
-                    <p>No vendors match your filters</p>
-                </div>
-                <?php else: ?>
-                <?php foreach ($vendorMapData as $v): ?>
-                <div class="as-vendor-card"
-                     onclick="focusVendorOnMap(<?php echo $v['vendorId']; ?>)"
-                     data-vendor-id="<?php echo $v['vendorId']; ?>">
-                    <p class="as-vendor-name"><?php echo htmlspecialchars($v['shopName']); ?></p>
-                    <?php if (!empty($v['location'])): ?>
-                    <p class="as-vendor-loc"><?php echo htmlspecialchars($v['location']); ?></p>
-                    <?php endif; ?>
-                    <div class="as-vendor-meta">
-                        <span class="as-vendor-badge red"><?php echo $v['matchedItems']; ?> item<?php echo $v['matchedItems']!==1?'s':''; ?></span>
-                        <?php if ($v['latitude'] && $v['longitude']): ?>
-                        <span class="as-vendor-badge"><?php echo ($v['distanceKm'] !== null) ? '&#128205; ' . $v['distanceKm'] . ' km' : '&#128205; On map'; ?></span>
-                        <?php endif; ?>
-                    </div>
-                    <a class="as-vendor-view-btn" href="VendorInfo.php?vendor_id=<?php echo $v['vendorId']; ?>">
-                        View menu →
-                    </a>
-                </div>
-                <?php endforeach; ?>
-                <?php endif; ?>
-            </div>
 
         </div><!-- /.as-sidebar-inner -->
     </aside>
@@ -775,14 +752,32 @@ document.addEventListener('DOMContentLoaded', function() {
     vendors.forEach(function(v) {
         if (v.latitude !== null && v.longitude !== null) {
             var marker = L.marker([v.latitude, v.longitude], { icon: vendorIcon }).addTo(map);
-            marker.bindPopup(
-                '<div style="font-family:Inter,sans-serif;min-width:140px;">' +
-                '<strong style="font-size:0.9rem;">' + escapeHtml(v.shopName) + '</strong>' +
-                (v.location ? '<br><span style="font-size:0.75rem;color:#888;">' + escapeHtml(v.location) + '</span>' : '') +
-                '<br><span style="font-size:0.75rem;color:#c1121f;font-weight:600;">' + v.matchedItems + ' matched item' + (v.matchedItems !== 1 ? 's' : '') + '</span>' +
-                '<br><a href="VendorInfo.php?vendor_id=' + v.vendorId + '" style="font-size:0.78rem;color:#c1121f;font-weight:600;text-decoration:none;">View menu &rarr;</a>' +
-                '</div>'
-            );
+            
+            var itemsText = v.matchedItems + ' item' + (v.matchedItems !== 1 ? 's' : '');
+            var distanceText = (v.distanceKm !== null) ? '&#128205; ' + v.distanceKm + ' km' : '&#128205; On map';
+            
+            var tooltipHtml = '<div class="as-vendor-card" style="box-shadow: 0 6px 20px rgba(0,0,0,0.15);" onclick="window.location.href=\'VendorInfo.php?vendor_id=' + v.vendorId + '\'">' +
+                '<p class="as-vendor-name">' + escapeHtml(v.shopName) + '</p>' +
+                (v.location ? '<p class="as-vendor-loc">' + escapeHtml(v.location) + '</p>' : '') +
+                '<div class="as-vendor-meta">' +
+                    '<span class="as-vendor-badge red">' + itemsText + '</span>' +
+                    '<span class="as-vendor-badge">' + distanceText + '</span>' +
+                '</div>' +
+                '<a class="as-vendor-view-btn" href="VendorInfo.php?vendor_id=' + v.vendorId + '">View menu &rarr;</a>' +
+            '</div>';
+
+            marker.bindTooltip(tooltipHtml, {
+                permanent: true,
+                direction: 'top',
+                offset: [0, -25],
+                className: 'custom-map-tooltip',
+                interactive: true
+            });
+
+            marker.on('click', function() {
+                window.location.href = 'VendorInfo.php?vendor_id=' + v.vendorId;
+            });
+
             markers.push(marker);
             markerMap[v.vendorId] = marker;
         }
