@@ -1,4 +1,16 @@
 <style>
+/* FORCE SEARCH SVGs TO SHRINK GLOBALLY */
+.quick-search-shell { display: flex; align-items: stretch; background: #ffffff; border-radius: 6px; border: 1px solid #e0e0e0; box-shadow: 0 4px 16px rgba(0,0,0,0.06); overflow: hidden; width: 100%; max-width: 900px; margin-bottom: 20px; }
+.quick-segment { display: flex; flex-direction: row; align-items: center; padding: 12px 18px; border-right: 1px solid #efefef; background: #ffffff; flex: 1; gap: 10px; }
+.quick-segment svg { width: 18px !important; height: 18px !important; fill: #888; stroke: #888; stroke-width: 0; flex-shrink: 0; }
+.quick-segment svg[stroke="currentColor"] { fill: none; stroke-width: 2px; }
+.quick-segment-inner { display: flex; flex-direction: column; width: 100%; text-align: left; }
+.quick-segment-inner label { font-size: 10px; color: #888; margin-bottom: 2px; text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px; }
+.quick-segment select, .quick-segment input { border: none; outline: none; width: 100%; font-size: 14px; color: #333; background: transparent; padding: 2px 0; font-weight: 600; cursor: pointer; }
+.quick-search-input { flex: 1.5; }
+.quick-search-btn { width: 60px; height: auto; align-self: stretch; border: none; background: #ff2a44; color: #ffffff; cursor: pointer; transition: background 0.2s; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.quick-search-btn svg { width: 20px !important; height: 20px !important; fill: none; stroke: #ffffff; stroke-width: 2.5px; }
+
 /* Premium Table */
 .premium-table {
     width: 100%;
