@@ -420,45 +420,38 @@ function trendChip($pct) {
                     <div class="stat-body">
                         <div class="stat-number"><?php echo number_format($orderCount); ?></div>
                         <div class="stat-label">Total Orders</div>
-                        <?php echo trendChip($orderTrend); ?>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-
-        <!-- â”€â”€ Vendor Update Status Section â”€â”€ -->
-        <div class="section-gap">
-            <div class="section-label">Vendor Update Status</div>
-            <div class="vendor-panel" style="background:#fff; border-radius:12px; box-shadow:0 4px 16px rgba(0,0,0,0.04); overflow:hidden;">
-
-                <!-- Panel Header -->
-                <div class="vendor-panel-header">
-                    <h2>&#128205;‹ Vendor Profile Health</h2>
-                    <p>Vendors who haven't updated their profile in over <?php echo $thresholdDays; ?> days are flagged. Send reminders to keep information current.</p>
-                </div>
-
-                <!-- Action Toolbar -->
-                <div class="action-toolbar">
-                    <div class="toolbar-left">
-                        <div class="outdated-badge">
+                           <!-- Action Toolbar -->
+                <div class="quick-search-shell" style="margin: 0; max-width: 100%; border-radius: 0; border-left: none; border-right: none; box-shadow: none; border-top: 1px solid #f0f0f0; border-bottom: 1px solid #f0f0f0;">
+                    
+                    <!-- Notify All Button embedded as a segment -->
+                    <div class="quick-segment" style="flex: 0.5; border-right: 1px solid #efefef; justify-content: center; padding-left: 24px;">
+                        <div class="outdated-badge" style="margin-bottom: 6px; align-self: flex-start;">
                             <svg viewBox="0 0 24 24" style="width:14px;height:14px;fill:#c1121f;flex-shrink:0;"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
                             <?php echo $outdatedCount; ?> outdated vendor<?php echo $outdatedCount !== 1 ? 's' : ''; ?>
                         </div>
                         <?php if ($outdatedCount > 0): ?>
-                        <button type="button" class="btn-advance-ghost" style="padding:6px 12px; font-size:0.8rem;"-all" id="btnNotifyAll" onclick="notifyAllOutdated()">
+                        <button type="button" class="btn-notify-all" id="btnNotifyAll" onclick="notifyAllOutdated()" style="align-self: flex-start;">
                             <svg viewBox="0 0 24 24" style="width:15px;height:15px;fill:#fff;"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg>
                             Notify All Outdated
                         </button>
                         <?php endif; ?>
                     </div>
-                    <div class="toolbar-right">
-                        <div class="toolbar-search">
-                            <svg viewBox="0 0 24 24"><path d="M10 2a8 8 0 0 1 6.32 12.9l4.97 4.97-1.41 1.41-4.97-4.97A8 8 0 1 1 10 2zm0 2a6 6 0 1 0 0 12 6 6 0 0 0 0-12z"/></svg>
-                            <input type="text" id="vendorSearch" class="modern-input" style="padding-left:32px; width:220px;" placeholder="Search vendors..." oninput="filterTable()">
+
+                    <!-- Search Input -->
+                    <div class="quick-segment">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                        <div class="quick-segment-inner">
+                            <label>Vendor Name</label>
+                            <input type="text" id="vendorSearch" placeholder="Search vendors..." oninput="filterTable()" class="quick-search-input">
                         </div>
-                        <div class="toolbar-filter">
-                            <select id="vendorStatusFilter" class="modern-input" style="padding:10px 14px;" onchange="filterTable()">
+                    </div>
+
+                    <!-- Filter Select -->
+                    <div class="quick-segment" style="border-right: none;">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon></svg>
+                        <div class="quick-segment-inner">
+                            <label>Filter Status</label>
+                            <select id="vendorStatusFilter" onchange="filterTable()">
                                 <option value="all">All Statuses</option>
                                 <option value="outdated">Outdated</option>
                                 <option value="ok">Up to Date</option>

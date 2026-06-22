@@ -1137,3 +1137,118 @@ a:hover {
     border-color: #ff2a44;
     box-shadow: 0 0 0 3px rgba(255, 42, 68, 0.1);
 }
+
+/* Premium Table UI for Vendor and Admin Dashboards */
+.premium-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 14px;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    margin-top: 5px;
+}
+.premium-table thead tr {
+    box-shadow: none;
+    background: transparent;
+}
+.premium-table thead tr:hover {
+    transform: none;
+    box-shadow: none;
+}
+.premium-table th {
+    background: transparent;
+    border: none;
+    padding: 8px 24px;
+    color: #888;
+    font-size: 0.8rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    text-align: left;
+}
+.premium-table tbody tr {
+    background: #fff;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    border-radius: 16px;
+    transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.2s ease;
+}
+.premium-table tbody tr:hover {
+    transform: translateY(-3px) scale(1.005);
+    box-shadow: 0 12px 30px rgba(255,42,68,0.1);
+    z-index: 10;
+    position: relative;
+}
+.premium-table td {
+    padding: 22px 24px;
+    border: none;
+    border-bottom: 1px solid transparent;
+    border-top: 1px solid transparent;
+    vertical-align: middle;
+    color: #333;
+    font-size: 0.95rem;
+}
+.premium-table td:first-child { 
+    border-top-left-radius: 16px; 
+    border-bottom-left-radius: 16px; 
+    border-left: 2px solid transparent;
+}
+.premium-table td:last-child { 
+    border-top-right-radius: 16px; 
+    border-bottom-right-radius: 16px; 
+    border-right: 2px solid transparent;
+}
+.premium-table tbody tr:hover td:first-child {
+    border-left: 2px solid #ff2a44;
+}
+
+/* Badge Pills for Statuses */
+.badge-pill {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 12px;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+.badge-pending, .badge-warning {
+    background: #fff8e6;
+    color: #b38600;
+}
+.badge-completed, .badge-success {
+    background: #e9f8ee;
+    color: #216a3a;
+}
+.badge-cancelled, .badge-danger {
+    background: #ffe8ec;
+    color: #c1121f;
+}
+.badge-gray {
+    background: #f0f0f0;
+    color: #666;
+}
+
+/* Premium Outline Buttons */
+.btn-outline {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 16px;
+    background: #fff;
+    border: 1.5px solid #ff2a44;
+    color: #ff2a44;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+}
+.btn-outline:hover {
+    background: #ff2a44;
+    color: #fff;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(255, 42, 68, 0.15);
+}
