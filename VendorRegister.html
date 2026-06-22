@@ -2,6 +2,37 @@
 <head>
     <link rel="stylesheet" href="style.css?v=20260622-1">
     <title>Vendor Register</title>
+
+    <style>
+        .back-home-btn {
+            position: absolute;
+            top: 24px;
+            left: 24px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #666;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            background: #fff;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            transition: all 0.2s ease;
+            z-index: 9999;
+        }
+        .back-home-btn svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+        .back-home-btn:hover {
+            color: #c1121f;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(193,18,31,0.1);
+        }
+    </style>
 </head>
 <body>
     <a href="Homepage.php" class="back-home-btn">
