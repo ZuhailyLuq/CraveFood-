@@ -103,12 +103,174 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
         header("Location: VendorProfileEdit.php?type=error&msg=" . urlencode("Failed to update profile."));
         exit();
+<?php
+require_once __DIR__ . '/session.php';
+require_once 'db.php';
+require_once 'db_helpers.php';
+
+if (!isset($_SESSION['VendorID'])) {
+    header("Location: Login.html");
+    exit();
+}
+
+$vendorId = (int)$_SESSION['VendorID'];
+
+$vendor = db_fetch_one($pdo,
+    'SELECT "ShopName", "OpenHours", "Location", "FoodType", "Description", "Image", "Latitude", "Longitude" FROM vendor WHERE "VendorID" = ?',
+    [$vendorId]
+);
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $shopName = trim($_POST['ShopName'] ?? '');
+    $openTime = trim($_POST['OpenTime'] ?? '');
+    $closeTime = trim($_POST['CloseTime'] ?? '');
+    
+    if ($openTime !== '' && $closeTime !== '') {
+        $openHours = date("h:i A", strtotime($openTime)) . " - " . date("h:i A", strtotime($closeTime));
+    } else {
+        $openHours = '';
+    }
+    $location = trim($_POST['Location'] ?? '');
+    $foodType = trim($_POST['FoodType'] ?? '');
+    $description = trim($_POST['Description'] ?? '');
+
+    // Handle image upload
+    $image = $vendor['Image'] ?? ''; // Keep existing image by default
+
+    // Check if vendor wants to remove the current image
+    if (isset($_POST['RemoveImage']) && $_POST['RemoveImage'] === '1') {
+        // Delete old file if it exists
+        if (!empty($vendor['Image']) && file_exists($vendor['Image'])) {
+            unlink($vendor['Image']);
+        }
+        $image = '';
+    }
+
+    // Handle new file upload
+    if (isset($_FILES['ImageFile']) && $_FILES['ImageFile']['error'] === UPLOAD_ERR_OK) {
+        $uploadDir = 'uploads/vendor/';
+        if (!is_dir($uploadDir)) {
+            mkdir($uploadDir, 0755, true);
+        }
+
+        $allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+        $fileType = $_FILES['ImageFile']['type'];
+        $fileSize = $_FILES['ImageFile']['size'];
+        $maxSize = 5 * 1024 * 1024; // 5MB
+
+        if (!in_array($fileType, $allowedTypes)) {
+            header("Location: VendorProfileEdit.php?type=error&msg=" . urlencode("Invalid image type. Only JPG, PNG, GIF, and WEBP are allowed."));
+            exit();
+        }
+
+        if ($fileSize > $maxSize) {
+            header("Location: VendorProfileEdit.php?type=error&msg=" . urlencode("Image file is too large. Maximum size is 5MB."));
+            exit();
+        }
+
+        // Generate unique filename
+        $ext = pathinfo($_FILES['ImageFile']['name'], PATHINFO_EXTENSION);
+        $newFileName = 'vendor_' . $vendorId . '_' . time() . '.' . $ext;
+        $targetPath = $uploadDir . $newFileName;
+
+        if (move_uploaded_file($_FILES['ImageFile']['tmp_name'], $targetPath)) {
+            // Delete old file if it exists
+            if (!empty($vendor['Image']) && file_exists($vendor['Image']) && $vendor['Image'] !== $targetPath) {
+                unlink($vendor['Image']);
+            }
+            $image = $targetPath;
+        } else {
+            header("Location: VendorProfileEdit.php?type=error&msg=" . urlencode("Failed to upload image."));
+            exit();
+        }
+    }
+    $latitude = trim($_POST['Latitude'] ?? '');
+    $longitude = trim($_POST['Longitude'] ?? '');
+
+    if ($shopName === '' || $latitude === '' || $longitude === '') {
+        header("Location: VendorProfileEdit.php?type=error&msg=" . urlencode("Shop name and Map Location are required."));
+        exit();
+    }
+
+    $rows = db_execute($pdo,
+        'UPDATE vendor SET "ShopName" = ?, "OpenHours" = ?, "Location" = ?, "FoodType" = ?, "Description" = ?, "Image" = ?, "Latitude" = ?, "Longitude" = ?, "LastUpdate" = NOW() WHERE "VendorID" = ?',
+        [$shopName, $openHours, $location, $foodType, $description, $image, $latitude, $longitude, $vendorId]
+    );
+
+    if ($rows > 0) {
+        $_SESSION['ShopName'] = $shopName;
+        db_execute($pdo,
+            'UPDATE admin_notifications SET "IsRead" = TRUE WHERE "VendorID" = ? AND "IsRead" = FALSE',
+            [$vendorId]
+        );
+        header("Location: VendorDashboard.php?type=success&msg=" . urlencode("Profile updated successfully."));
+        exit();
+    } else {
+        header("Location: VendorProfileEdit.php?type=error&msg=" . urlencode("Failed to update profile."));
+        exit();
     }
 }
 ?>
 <!DOCTYPE html>
 <html>
 <head>
+    <style>
+        .premium-form-card {
+            background: #fff;
+            border: 1px solid #f0f0f0;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.04);
+            padding: 32px;
+            max-width: 650px;
+            margin: 0 auto;
+        }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; font-weight: 700; color: #333; margin-bottom: 8px; font-size: 0.9rem; }
+        .modern-input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #e8e8e8;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            color: #333;
+            background: #fdfdfd;
+            transition: border-color 0.2s, background 0.2s;
+            box-sizing: border-box;
+        }
+        .modern-input:focus {
+            outline: none;
+            border-color: #ff2a44;
+            background: #fff;
+        }
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: #ff2a44;
+            color: #fff;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.1s;
+            width: 100%;
+            margin-top: 10px;
+        }
+        .btn-primary:hover { background: #cc001b; transform: translateY(-2px); }
+        .btn-return { display: block; text-align: center; margin-top: 20px; color: #666; font-weight: 600; text-decoration: none; transition: color 0.2s; }
+        .btn-return:hover { color: #333; }
+        
+        .image-preview-box { margin-top:10px; max-width:220px; border-radius:12px; overflow:hidden; border:2px dashed #e8e8e8; }
+        .image-preview-box img { width:100%; display:block; }
+        .file-upload-label { display:inline-block; padding:16px 20px; background:#fff; border:2px dashed #e8e8e8; border-radius:12px; cursor:pointer; text-align:center; width:100%; box-sizing:border-box; transition:border-color 0.2s,background 0.2s; }
+        .file-upload-label:hover { border-color:#ff2a44; background:#fff0f2; }
+        .file-upload-label .upload-icon { font-size:1.8rem; display:block; margin-bottom:8px; }
+        .file-upload-label .upload-text { font-size:0.95rem; color:#444; font-weight:600; }
+        .file-upload-label .upload-subtext { font-size:0.8rem; color:#888; }
+        .file-input-hidden { display:none; }
+    </style>
     <title>Edit Profile - Vendor - CraveFood</title>
     <link rel="stylesheet" href="../style.css?v=<?= time() ?>">
     <!-- Leaflet CSS -->
@@ -127,9 +289,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     <?php endif; ?>
 
-    <div class="settings-box">
-        <h1 class="hero-title" style="text-align:center;">Edit Store Profile</h1>
-        <form action="VendorProfileEdit.php" method="POST" class="settings-form" enctype="multipart/form-data">
+    <div style="padding: 40px 20px;">
+        <div style="text-align:center; margin-bottom:30px;">
+            <h1 class="hero-title" style="font-size:2.2rem; font-weight:800; color:#1a1a1a; margin:0 0 8px; letter-spacing:-0.5px;">Edit Store Profile</h1>
+            <p style="color:#666; font-size:1rem; margin:0;">Update your shop details, operating hours, and location map.</p>
+        </div>
+
+        <div class="premium-form-card">
+        <form action="VendorProfileEdit.php" method="POST" enctype="multipart/form-data">
             <div class="form-group">
                 <label>Shop Name</label>
                 <input type="text" class="modern-input"  name="ShopName" value="<?php echo htmlspecialchars((string)($vendor['ShopName'] ?? '')); ?>" required>
@@ -176,31 +343,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <span class="file-drop-text">Click to upload a new store image</span>
                     <span class="file-drop-subtext">Accepted: JPG, PNG, GIF, WEBP. Max size: 5MB</span>
                     <input type="file" name="ImageFile" id="imageFileInput" accept="image/jpeg,image/png,image/gif,image/webp" onchange="previewImage(this)">
-                </label>
-                <div id="imagePreview" style="margin-top: 10px; display: none;">
-                    <img id="previewImg" src="" alt="Preview" style="width: 200px; height: 140px; object-fit: cover; border-radius: var(--border-radius-md); border: 2px solid var(--gray-light);">
-                </div>
-            </div>
-            <div class="form-group">
-                <label>Store Description</label>
-                <textarea class="modern-input"  name="Description" rows="4"><?php echo htmlspecialchars((string)($vendor['Description'] ?? '')); ?></textarea>
-            </div>
-            <div class="form-group">
-                <label>Map Location (Click on the map to pin your store)</label>
-                <div class="map-frame" style="margin-bottom: 16px;"><div id="vendorMap" style="height: 300px;"></div></div>
-                <div style="display: flex; gap: 10px;">
-                    <input type="text" class="modern-input"  name="Latitude" id="Latitude" value="<?php echo htmlspecialchars((string)($vendor['Latitude'] ?? '')); ?>" placeholder="Latitude (Required)" readonly required style="flex: 1; background-color: var(--gray-light);">
-                    <input type="text" class="modern-input"  name="Longitude" id="Longitude" value="<?php echo htmlspecialchars((string)($vendor['Longitude'] ?? '')); ?>" placeholder="Longitude (Required)" readonly required style="flex: 1; background-color: var(--gray-light);">
-                </div>
-            </div>
-            <button type="submit" class="btn-primary btn-block">Save Changes</button>
-        </form></div>
-    </div>
-
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-    <script>
-document.addEventListener('DOMContentLoaded', function() {
-
     /* â”€â”€ Navbar active link â”€â”€ */
     var page = window.location.pathname.split('/').pop().toLowerCase() || 'homepage.php';
     if (page === '' || page === 'index.php') page = 'homepage.php';
