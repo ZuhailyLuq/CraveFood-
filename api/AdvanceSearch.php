@@ -344,16 +344,20 @@ $vendorJson = json_encode($vendorMapData, JSON_UNESCAPED_UNICODE);
             padding: 3px 9px;
             border-radius: 999px;
         }
-        .custom-map-tooltip {
+        .custom-map-popup .leaflet-popup-content-wrapper {
             background: transparent !important;
             border: none !important;
             box-shadow: none !important;
             padding: 0 !important;
         }
-        .custom-map-tooltip::before {
+        .custom-map-popup .leaflet-popup-tip-container {
             display: none !important;
         }
-        .custom-map-tooltip .as-vendor-card {
+        .custom-map-popup .leaflet-popup-content {
+            margin: 0 !important;
+            width: auto !important;
+        }
+        .custom-map-popup .as-vendor-card {
             pointer-events: auto;
             min-width: 200px;
             white-space: normal;
@@ -512,6 +516,10 @@ $vendorJson = json_encode($vendorMapData, JSON_UNESCAPED_UNICODE);
            RESPONSIVE &mdash; Mobile / Tablet
         â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
         @media (max-width: 860px) {
+            html, body {
+                height: auto;
+                overflow: auto;
+            }
             .as-shell {
                 flex-direction: column;
                 height: auto;
@@ -530,8 +538,12 @@ $vendorJson = json_encode($vendorMapData, JSON_UNESCAPED_UNICODE);
             .as-sidebar-inner { padding-bottom: 100px; }
             .as-map-area {
                 order: 1;
-                height: 50vh;
-                min-height: 280px;
+                height: 400px;
+                min-height: 400px;
+                flex: none !important;
+                width: 100%;
+                position: relative;
+                z-index: 10;
             }
             .as-locate-btn { bottom: 14px; }
         }
@@ -725,6 +737,9 @@ document.addEventListener('DOMContentLoaded', function() {
     /* Force Leaflet to recalculate size after layout settles */
     setTimeout(function() { map.invalidateSize(); }, 200);
     setTimeout(function() { map.invalidateSize(); }, 600);
+    window.addEventListener('resize', function() {
+        if (map) map.invalidateSize();
+    });
 
     /* â”€â”€ Vendor data from PHP â”€â”€ */
     var vendors = <?php echo $vendorJson; ?>;
@@ -756,7 +771,7 @@ document.addEventListener('DOMContentLoaded', function() {
             var itemsText = v.matchedItems + ' item' + (v.matchedItems !== 1 ? 's' : '');
             var distanceText = (v.distanceKm !== null) ? '&#128205; ' + v.distanceKm + ' km' : '&#128205; On map';
             
-            var tooltipHtml = '<div class="as-vendor-card" style="box-shadow: 0 6px 20px rgba(0,0,0,0.15);" onclick="window.location.href=\'VendorInfo.php?vendor_id=' + v.vendorId + '\'">' +
+            var popupHtml = '<div class="as-vendor-card" style="box-shadow: 0 6px 20px rgba(0,0,0,0.15);" onclick="window.location.href=\'VendorInfo.php?vendor_id=' + v.vendorId + '\'">' +
                 '<p class="as-vendor-name">' + escapeHtml(v.shopName) + '</p>' +
                 (v.location ? '<p class="as-vendor-loc">' + escapeHtml(v.location) + '</p>' : '') +
                 '<div class="as-vendor-meta">' +
@@ -766,16 +781,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 '<a class="as-vendor-view-btn" href="VendorInfo.php?vendor_id=' + v.vendorId + '">View menu &rarr;</a>' +
             '</div>';
 
-            marker.bindTooltip(tooltipHtml, {
-                permanent: true,
-                direction: 'top',
-                offset: [0, -25],
-                className: 'custom-map-tooltip',
-                interactive: true
-            });
-
-            marker.on('click', function() {
-                window.location.href = 'VendorInfo.php?vendor_id=' + v.vendorId;
+            marker.bindPopup(popupHtml, {
+                offset: [0, -10],
+                className: 'custom-map-popup'
             });
 
             markers.push(marker);
