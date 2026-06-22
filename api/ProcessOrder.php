@@ -85,12 +85,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['Action_Order'])) {
     $allSuccess  = true;
 
     foreach ($adjustedItems as $item) {
-        $rows = db_execute($pdo,
-            'INSERT INTO orders ("UserID", "FoodID", "OrderType", "PickupTime", "TotalAmount", "Status") VALUES (?, ?, ?, ?, ?, ?)',
+        $row = db_fetch_one($pdo,
+            'INSERT INTO orders ("UserID", "FoodID", "OrderType", "PickupTime", "TotalAmount", "Status") VALUES (?, ?, ?, ?, ?, ?) RETURNING "OrderID"',
             [$UserID, $item['FoodID'], $OrderType, $PickupTime, $item['TotalAmount'], $Status]
         );
-        if ($rows > 0) {
-            $lastOrderId = db_last_id($pdo, 'orders_OrderID_seq');
+        if ($row && isset($row['OrderID'])) {
+            $lastOrderId = $row['OrderID'];
         } else {
             $allSuccess = false;
         }
