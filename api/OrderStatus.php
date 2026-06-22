@@ -25,7 +25,7 @@ if ($orderId > 0) {
     $order = db_fetch_one($pdo,
         'SELECT o."OrderID", o."OrderType", o."PickupTime", o."TotalAmount", o."Status",
                 NULL AS ReservationMode, NULL AS SeatCount,
-                o."CancelReason",
+                o."CancelReason", o."Quantity",
                 mf."FoodName", v."ShopName"
          FROM orders o
          INNER JOIN menu_food mf ON mf."FoodID" = o."FoodID"
@@ -464,7 +464,7 @@ if ($status === 'cancelled') {
                 <!-- Order Summary -->
                 <div class="summary-box">
                     <div class="summary-row">
-                        <span class="item-name">1x <?php echo htmlspecialchars($order['FoodName']); ?></span>
+                        <span class="item-name"><?php echo (int)($order['Quantity'] ?? 1); ?>x <?php echo htmlspecialchars($order['FoodName']); ?></span>
                         <span class="item-price">RM <?php echo number_format((float)$order['TotalAmount'], 2); ?></span>
                     </div>
                     

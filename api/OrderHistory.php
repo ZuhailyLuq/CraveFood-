@@ -13,7 +13,7 @@ $userId = (int)$_SESSION['UserID'];
 // Schema is fixed &mdash; OrderDate column exists in Supabase as "OrderDate"
 $orders = db_fetch_all($pdo,
     'SELECT o."OrderID", o."OrderType", o."PickupTime", o."TotalAmount", o."Status",
-            o."CancelReason", o."OrderDate" AS CreatedDate,
+            o."CancelReason", o."OrderDate" AS CreatedDate, o."Quantity",
             NULL AS ReservationMode, NULL AS SeatCount,
             mf."FoodName", mf."VendorID", v."ShopName"
      FROM orders o
@@ -410,7 +410,7 @@ $activeOrder = db_fetch_one($pdo,
                             <div class="card-header-left">
                                 <div class="order-summary">
                                     <span class="order-id">#<?php echo (int)$order['OrderID']; ?></span>
-                                    <span class="order-name"><?php echo htmlspecialchars($order['FoodName']); ?></span>
+                                    <span class="order-name"><?php echo (int)($order['Quantity'] ?? 1); ?>x <?php echo htmlspecialchars($order['FoodName']); ?></span>
                                 </div>
                                 <?php if (!empty($order['DisplayDate'])): ?>
                                     <div class="order-date"><?php echo htmlspecialchars($order['DisplayDate']); ?></div>

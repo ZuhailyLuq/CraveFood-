@@ -86,8 +86,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['Action_Order'])) {
 
     foreach ($adjustedItems as $item) {
         $row = db_fetch_one($pdo,
-            'INSERT INTO orders ("UserID", "FoodID", "OrderType", "PickupTime", "TotalAmount", "Status") VALUES (?, ?, ?, ?, ?, ?) RETURNING "OrderID"',
-            [$UserID, $item['FoodID'], $OrderType, $PickupTime, $item['TotalAmount'], $Status]
+            'INSERT INTO orders ("UserID", "FoodID", "OrderType", "PickupTime", "TotalAmount", "Status", "Quantity") VALUES (?, ?, ?, ?, ?, ?, ?) RETURNING "OrderID"',
+            [$UserID, $item['FoodID'], $OrderType, $PickupTime, $item['TotalAmount'], $Status, $item['Quantity']]
         );
         if ($row && isset($row['OrderID'])) {
             $lastOrderId = $row['OrderID'];

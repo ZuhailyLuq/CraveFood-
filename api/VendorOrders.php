@@ -55,7 +55,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['Action_Cancel'])) {
 }
 
 $orders = db_fetch_all($pdo,
-    'SELECT o."OrderID", o."OrderType", o."Status", o."TotalAmount", o."PickupTime", o."CancelReason", mf."FoodName"
+    'SELECT o."OrderID", o."OrderType", o."Status", o."TotalAmount", o."PickupTime", o."CancelReason", o."Quantity", mf."FoodName"
      FROM orders o
      INNER JOIN menu_food mf ON o."FoodID" = mf."FoodID"
      WHERE mf."VendorID" = ?
@@ -84,7 +84,7 @@ $orders = db_fetch_all($pdo,
         </div>
     <?php endif; ?>
 
-    <div style="padding: 40px 20px; width: 100%; box-sizing: border-box;">
+    <div style="padding: 40px 20px; width: 100%; max-width: 1200px; margin: 0 auto; box-sizing: border-box;">
         <h2>Vendor Orders</h2>
         <p class="hero-subtitle" style="margin-bottom:24px;">Manage incoming orders. This page refreshes every 30 seconds.</p>
 
@@ -108,7 +108,7 @@ $orders = db_fetch_all($pdo,
                     <?php foreach ($orders as $order): ?>
                         <tr>
                             <td>#<?php echo (int)$order['OrderID']; ?></td>
-                            <td><?php echo htmlspecialchars((string)$order['FoodName']); ?></td>
+                            <td><?php echo (int)($order['Quantity'] ?? 1); ?>x <?php echo htmlspecialchars((string)$order['FoodName']); ?></td>
                             <td><?php echo htmlspecialchars((string)$order['OrderType']); ?></td>
                             <td><?php echo !empty($order['PickupTime']) ? htmlspecialchars((string)$order['PickupTime']) : '-'; ?></td>
                             <td>RM <?php echo number_format((float)$order['TotalAmount'], 2); ?></td>
