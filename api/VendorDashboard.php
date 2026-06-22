@@ -30,7 +30,7 @@ $adminNotifs = db_fetch_all($pdo,
 <html>
 <head>
     <title>Vendor Dashboard - CraveFood</title>
-    <link rel="stylesheet" href="../style.css?v=<?= time() ?>">
+    <link rel="stylesheet" href="../style.css?v=<?php echo time(); ?>">
     <style>
         .admin-notif-banner {
             background: #fff3cd;
@@ -187,10 +187,10 @@ $adminNotifs = db_fetch_all($pdo,
                                 <td><span class="badge-pill <?php echo $bClass; ?>"><?php echo htmlspecialchars($st); ?></span></td>
                             <?php endif; ?>
                             <td style="display:flex; gap:10px; align-items:center;">
-                                <a class="btn-advance-ghost" style="padding:6px 12px; font-size:0.8rem;" href="VendorFoodEdit.php?food_id=<?php echo (int)$item['FoodID']; ?>">Edit</a>
+                                <a class="btn-outline btn-outline-primary" style="padding:6px 12px; font-size:0.8rem;" href="VendorFoodEdit.php?food_id=<?php echo (int)$item['FoodID']; ?>">Edit</a>
                                 <form action="VendorFoodDelete.php" method="POST" class="inline-delete-form" onsubmit="return confirm('Delete this food item?');">
                                     <input type="hidden" name="FoodID" value="<?php echo (int)$item['FoodID']; ?>">
-                                    <button type="submit" name="Action_Delete" value="Delete" class="btn-outline btn-outline-danger">Delete</button>
+                                    <button type="submit" name="Action_Delete" value="Delete" class="btn-outline btn-outline-danger" style="padding:6px 12px; font-size:0.8rem;">Delete</button>
                                 </form>
                             </td>
                         </tr>

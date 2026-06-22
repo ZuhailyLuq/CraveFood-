@@ -67,7 +67,7 @@ $orders = db_fetch_all($pdo,
 <html>
 <head>
     <title>Vendor Orders - CraveFood</title>
-    <link rel="stylesheet" href="../style.css?v=<?= time() ?>">
+    <link rel="stylesheet" href="../style.css?v=<?php echo time(); ?>">
     <meta http-equiv="refresh" content="30">
 </head>
 <body>
