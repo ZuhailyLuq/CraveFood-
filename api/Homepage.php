@@ -112,6 +112,7 @@ foreach ($_SESSION['cart']['items'] as $ci) {
 <!DOCTYPE html>
 <html>
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CraveFood - Campus Food Discovery &amp; Exploration</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -177,6 +178,7 @@ foreach ($_SESSION['cart']['items'] as $ci) {
         @media (max-width: 768px) {
             .home-hero-wrap { flex-direction: column; text-align: center; gap: 20px; margin: 20px auto; }
             .home-hero-content { text-align: center; }
+            .hero-title { font-size: 1.8rem; }
             .hero-mascot { display: none; }
         }
 
@@ -269,6 +271,11 @@ foreach ($_SESSION['cart']['items'] as $ci) {
         }
         .quick-search-btn:hover {
             background: var(--primary-hover);
+        }
+        @media (max-width: 768px) {
+            .quick-search-shell { flex-direction: column; }
+            .quick-segment { border-right: none; border-bottom: 1px solid #efefef; }
+            .quick-search-btn { width: 100%; padding: 14px 0; }
         }
         .btn-advance-ghost {
             display: inline-block;
