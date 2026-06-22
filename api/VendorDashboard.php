@@ -144,7 +144,7 @@ $adminNotifs = db_fetch_all($pdo,
             <a href="VendorFoodCreate.php" class="btn-advance-centered">Add your first food</a>
         <?php else: ?>
             <div style="overflow-x: auto;">
-                <table class="vendor-status-table" style="width:100%; background:#fff; border-radius:12px; box-shadow:0 4px 16px rgba(0,0,0,0.04); overflow:hidden;">
+                <table class="vendor-table" style="width:100%; background:#fff; border-radius:12px; box-shadow:0 4px 16px rgba(0,0,0,0.04); overflow:hidden;">
                     <thead>
                         <tr>
                             <th>Food</th>
