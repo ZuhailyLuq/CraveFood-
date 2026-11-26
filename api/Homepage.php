@@ -68,6 +68,19 @@ if (!$isSearch) {
     $recommendedFoods = fetchRecommendedFoods($pdo, $recommendProfile);
 }
 
+// ── OSM Imported Vendors (shown on homepage only, not search) ──────
+$importedVendors = [];
+if (!$isSearch) {
+    $importedVendors = db_fetch_all($pdo,
+        'SELECT "VendorID","ShopName","Location","FoodType","Amenity","Categories",
+                "DietaryInfo","OpenHours","Phone","ExternalURL","Latitude","Longitude"
+         FROM vendor
+         WHERE "VendorType" = \'imported\' AND ("Status" = \'Available\' OR "Status" IS NULL)
+         ORDER BY "ShopName" ASC
+         LIMIT 30'
+    );
+}
+
 $foodRows = db_fetch_all($pdo, $sql, $params);
 
 // Process results for search (group by vendor)
@@ -870,6 +883,71 @@ foreach ($_SESSION['cart']['items'] as $ci) {
                 </svg>
             </div>
         </div>
+
+
+
+
+        <!-- ══ OSM Imported Vendors Section ══ -->
+        <?php if (!$isSearch && count($importedVendors) > 0): ?>
+        <div class="recommendations-section" style="margin-bottom:0;">
+            <div class="section-header-row">
+                <h2 class="section-title-v2">🗺 Nearby Restaurants &amp; Stalls</h2>
+                <small style="color:#aaa;font-size:.75rem;">
+                    Data © <a href="https://www.openstreetmap.org/copyright" target="_blank"
+                      style="color:#aaa;">OpenStreetMap contributors</a>, ODbL
+                </small>
+            </div>
+            <div class="rec-food-grid" style="grid-template-columns: repeat(auto-fill, minmax(280px,1fr));">
+                <?php foreach ($importedVendors as $iv): ?>
+                <div class="rec-food-card" style="cursor:default;">
+                    <!-- Placeholder image area -->
+                    <div class="card-img-wrap" style="background:#f0f4f0;display:flex;align-items:center;justify-content:center;">
+                        <span style="font-size:3rem;">🏪</span>
+                        <span style="position:absolute;top:10px;left:10px;background:#2e7d32;color:#fff;
+                              font-size:10px;font-weight:800;padding:3px 8px;border-radius:3px;
+                              text-transform:uppercase;">OSM</span>
+                    </div>
+                    <div class="rec-card-body">
+                        <p class="rec-card-shop" style="margin-bottom:2px;">
+                            <?= htmlspecialchars($iv['Amenity'] ?? $iv['FoodType'] ?? 'Restaurant') ?>
+                            <?php if ($iv['DietaryInfo'] && stripos($iv['DietaryInfo'], 'Halal') !== false): ?>
+                                · <span style="color:#856404;font-weight:700;">✓ Halal</span>
+                            <?php endif; ?>
+                        </p>
+                        <p class="rec-card-name"><?= htmlspecialchars($iv['ShopName']) ?></p>
+                        <?php if ($iv['Categories']): ?>
+                            <p style="font-size:.78rem;color:#888;margin:0 0 4px;">
+                                🍽 <?= htmlspecialchars($iv['Categories']) ?>
+                            </p>
+                        <?php endif; ?>
+                        <?php if ($iv['Location']): ?>
+                            <p style="font-size:.78rem;color:#888;margin:0 0 4px;">
+                                📍 <?= htmlspecialchars($iv['Location']) ?>
+                            </p>
+                        <?php endif; ?>
+                        <?php if ($iv['OpenHours']): ?>
+                            <p style="font-size:.78rem;color:#888;margin:0 0 4px;">
+                                🕐 <?= htmlspecialchars($iv['OpenHours']) ?>
+                            </p>
+                        <?php endif; ?>
+                        <div class="price-action-row" style="border-top:1px solid #f0f0f0;padding-top:10px;margin-top:auto;gap:8px;flex-wrap:wrap;">
+                            <?php if ($iv['ExternalURL']): ?>
+                                <a href="<?= htmlspecialchars($iv['ExternalURL']) ?>" target="_blank"
+                                   style="font-size:.78rem;color:#3b80d0;text-decoration:none;font-weight:600;">
+                                    🔗 View on OSM ↗
+                                </a>
+                            <?php endif; ?>
+                            <a href="VendorClaim.php?vendor_id=<?= (int)$iv['VendorID'] ?>"
+                               style="font-size:.78rem;color:#ff2a44;text-decoration:none;font-weight:700;margin-left:auto;">
+                                Claim →
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <?php endforeach; ?>
+            </div>
+        </div>
+        <?php endif; ?>
 
 
 

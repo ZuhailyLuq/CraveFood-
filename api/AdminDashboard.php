@@ -20,6 +20,14 @@ $userCount   = (int)($userRow['c']   ?? 0);
 $vendorCount = (int)($vendorRow['c'] ?? 0);
 $orderCount  = (int)($orderRow['c']  ?? 0);
 
+// OSM imported vendor stats (safe — returns 0 if columns don't exist yet)
+try {
+    $importedRow        = db_fetch_one($pdo, "SELECT COUNT(*) AS c FROM vendor WHERE \"VendorType\" = 'imported'");
+    $pendingClaimsRow   = db_fetch_one($pdo, "SELECT COUNT(*) AS c FROM vendor_claim_requests WHERE \"Status\" = 'pending'");
+} catch (Exception $e) { $importedRow = $pendingClaimsRow = ['c' => 0]; }
+$importedCount      = (int)($importedRow['c']      ?? 0);
+$pendingClaimsCount = (int)($pendingClaimsRow['c'] ?? 0);
+
 /* â”€â”€ Weekly trends â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 function weekCountPDO(PDO $pdo, string $table, string $col, int $weeksAgo): int {
     $start = date('Y-m-d', strtotime("-" . ($weeksAgo + 1) . " week"));
@@ -435,6 +443,21 @@ function trendChip($pct) {
                     <div class="stat-body">
                         <div class="stat-number"><?php echo number_format($orderCount); ?></div>
                         <div class="stat-label">Total Orders</div>
+                    </div>
+                </div>
+
+                <!-- OSM imported vendors stat card -->
+                <div class="stat-card" style="cursor:pointer;" onclick="window.location='AdminVendorSync.php'">
+                    <div class="stat-icon" style="background:#e8f5e9;">
+                        <svg viewBox="0 0 24 24" style="fill:#2e7d32;"><path d="M20.5 3l-.16.03L15 5.1 9 3 3.36 4.9c-.21.07-.36.25-.36.48V20.5c0 .28.22.5.5.5l.16-.03L9 18.9l6 2.1 5.64-1.9c.21-.07.36-.25.36-.48V3.5c0-.28-.22-.5-.5-.5zM15 19l-6-2.11V5l6 2.11V19z"/></svg>
+                    </div>
+                    <div class="stat-body">
+                        <div class="stat-number"><?php echo number_format($importedCount); ?></div>
+                        <div class="stat-label">OSM Vendors
+                            <?php if ($pendingClaimsCount > 0): ?>
+                                <span style="display:inline-block;background:#ff2a44;color:#fff;border-radius:10px;padding:1px 7px;font-size:.7rem;margin-left:4px;"><?= $pendingClaimsCount ?> claims</span>
+                            <?php endif; ?>
+                        </div>
                     </div>
                 </div>
             </div> <!-- End metrics grid -->
